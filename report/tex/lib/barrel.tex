@@ -1,0 +1,76 @@
+\usepackage[14pt]{extsizes}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2cm, bottom=2cm}
+\usepackage[small]{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{indentfirst}
+\usepackage{pdfpages}
+\setlength{\columnsep}{0.8cm}
+
+\usepackage{caption}
+\captionsetup[lstlisting]{justification=raggedright,singlelinecheck=false}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\small,
+    inputencoding=utf8,
+    keepspaces=true,
+    columns=flexible,
+    upquote=true,
+    literate={а}{{\char224}}1 {б}{{\char225}}1 {в}{{\char226}}1
+             {г}{{\char227}}1 {д}{{\char228}}1 {е}{{\char229}}1
+             {ё}{{\"e}}1 {ж}{{\char230}}1 {з}{{\char231}}1
+             {и}{{\char232}}1 {й}{{\char233}}1 {к}{{\char234}}1
+             {л}{{\char235}}1 {м}{{\char236}}1 {н}{{\char237}}1
+             {о}{{\char238}}1 {п}{{\char239}}1 {р}{{\char240}}1
+             {с}{{\char241}}1 {т}{{\char242}}1 {у}{{\char243}}1
+             {ф}{{\char244}}1 {х}{{\char245}}1 {ц}{{\char246}}1
+             {ч}{{\char247}}1 {ш}{{\char248}}1 {щ}{{\char249}}1
+             {ъ}{{\char250}}1 {ы}{{\char251}}1 {ь}{{\char252}}1
+             {э}{{\char253}}1 {ю}{{\char254}}1 {я}{{\char255}}1
+             {А}{{\char192}}1 {Б}{{\char193}}1 {В}{{\char194}}1
+             {Г}{{\char195}}1 {Д}{{\char196}}1 {Е}{{\char197}}1
+             {Ё}{{\"E}}1 {Ж}{{\char198}}1 {З}{{\char199}}1
+             {И}{{\char200}}1 {Й}{{\char201}}1 {К}{{\char202}}1
+             {Л}{{\char203}}1 {М}{{\char204}}1 {Н}{{\char205}}1
+             {О}{{\char206}}1 {П}{{\char207}}1 {Р}{{\char208}}1
+             {С}{{\char209}}1 {Т}{{\char210}}1 {У}{{\char211}}1
+             {Ф}{{\char212}}1 {Х}{{\char213}}1 {Ц}{{\char214}}1
+             {Ч}{{\char215}}1 {Ш}{{\char216}}1 {Щ}{{\char217}}1
+             {Ъ}{{\char218}}1 {Ы}{{\char219}}1 {Ь}{{\char220}}1
+             {Э}{{\char221}}1 {Ю}{{\char222}}1 {Я}{{\char223}}1
+             {№}{{\textnumero}}1 {═}{{-}}1 {─}{{-}}1 {╗}{{+}}1
+             {╝}{{+}}1 {╔}{{+}}1 {╚}{{+}}1 {║}{{|}}1 {┌}{{+}}1
+             {┬}{{+}}1 {┐}{{+}}1 {└}{{+}}1 {┴}{{+}}1 {┼}{{+}}1
+             {┘}{{+}}1 {│}{{|}}1 {┤}{{+}}1 {├}{{+}}1 {→}{{->}}1
+             {•}{{-}}1 {△}{{$\triangle$}}1 {∩}{{$\cap$}}1
+             {∪}{{$\cup$}}1 {∖}{{$\setminus$}}1 {¯}{{$\overline{\ }$}}1
+             {×}{{$\times$}}1 {⚠️}{{!}}1
+}
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    pdfborder={0 0 0}
+]{hyperref}
+
+\input{./tex/lib/macroses.tex}

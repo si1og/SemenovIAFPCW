@@ -1,0 +1,57 @@
+% The tikz-er2 package.
+% Ver. 1.0
+% (c) Pavel Caldo
+% January 2009
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tikz-er2}[2009/01/31 Entity-relationship diagrams using the
+Tikz library]
+
+\RequirePackage{tikz}
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{fit}
+
+\tikzstyle{every entity} = []
+\tikzstyle{every weak entity} = []
+\tikzstyle{every attribute} = []
+\tikzstyle{every relationship} = []
+\tikzstyle{every link} = []
+\tikzstyle{every isa} = []
+
+\tikzstyle{link} = [>=triangle 60, draw, thick, every link]
+
+\tikzstyle{total} = [link, double, double distance=3pt]
+
+\tikzstyle{entity} = [rectangle, draw, black, very thick,
+                      minimum width=6em, minimum height=3em,
+                      every entity]
+
+\tikzstyle{weak entity} = [entity, double, double distance=2pt,
+                           every weak entity]
+
+\tikzstyle{ident relationship} = [relationship, double, double distance=2pt]
+
+\tikzstyle{attribute} = [ellipse, draw, thin, black,
+                         minimum width=4em, minimum height=2em,
+                         text width=4em, align=center,
+                         every attribute]
+
+\tikzstyle{multi attribute} = [attribute, double, double distance=1.5pt]
+
+\tikzstyle{derived attribute} = [attribute, dashed]
+
+\tikzstyle{key attribute} = [attribute]
+
+\tikzstyle{relationship} = [diamond, draw, black, very thick,
+                            minimum width=6em, minimum height=4em,
+                            aspect=1.5,
+                            every relationship]
+
+\tikzstyle{isa} = [regular polygon, regular polygon sides=3,
+                   draw, black, very thick,
+                   minimum width=4em, minimum height=4em,
+                   every isa]
+
+\newcommand{\key}[1]{\underline{#1}}

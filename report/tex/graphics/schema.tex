@@ -1,0 +1,64 @@
+% Схема объектов предметной области
+% «Учёт компьютерных шрифтов в электронной типографии»
+\begin{figure}[H]
+\begin{tikzpicture}[
+    node distance=4em and 8em,
+    every node/.style={font=\small},
+    entity/.style={rectangle, draw, very thick, minimum width=4em, minimum height=2.5em},
+    link/.style={draw, thick}
+]
+
+\node[entity] (kat) {Категория};
+\node[entity] (izd) [right=1.5em of kat] {Издательство};
+\node[entity] (fmt) [right=1.5em of izd] {Формат};
+\node[entity] (yaz) [right=1.5em of fmt] {Язык};
+\node[entity] (os) [right=1.5em of yaz] {ОС};
+
+
+\node[entity] (garn) [below=3em of kat] {Гарнитура};
+\node[entity] (lic) [right=2em of garn] {Лицензия};
+\node[entity] (podder) [right=2em of lic] {Алфавит};
+\node[entity] (rab) [right=2em of podder] {Рабочая станция};
+
+\node[entity] (nach) [below=3em of garn] {Начертание};
+
+\node[entity] (isp) [below=3em of nach] {Установка};
+
+
+% Категория — Гарнитура
+\draw[link] (kat) -- node[left, near start] {1} node[left, near end] {$\infty$} (garn);
+
+% Издательство — Гарнитура
+\draw[link] (izd) -- node[left, near start] {1} node[left, near end] {$\infty$} (garn);
+
+% Издательство — Лицензия
+\draw[link] (izd) -- node[above, near start] {1} node[left, near end] {$\infty$} (lic);
+
+% Гарнитура - Лицензия
+\draw[link] (garn) -- node[above, near start] {1} node[above, near end] {$\infty$} (lic);
+
+% Формат — Начертание
+\draw[link] (fmt) to[out=-130, in=5, looseness=1.5] node[above, near start] {1} node[above, near end] {$\infty$} (nach);
+
+% ОС — Рабочая станция
+\draw[link] (os) -- node[left, near start] {1} node[left, near end] {$\infty$} (rab);
+
+% Гарнитура — Начертание
+\draw[link] (garn) -- node[left, near start] {1} node[left, near end] {$\infty$} (nach);
+
+% Начертание — Использование
+\draw[link] (nach) -- node[left, near start] {1} node[left, near end] {$\infty$} (isp);
+
+% Рабочая станция — Использование
+\draw[link] (rab) to[out=-120, in=5] node[left, near start] {1} node[above, near end] {$\infty$} (isp);
+
+% Начертание 1 — ∞ Поддержка языка
+\draw[link] (nach) to[out=-10, in=-130, looseness=1] node[left, near start] {1} node[left, near end] {$\infty$} (podder);
+
+% Поддержка языка ∞ — 1 Язык
+\draw[link] (podder) -- node[right, near start] {$\infty$} node[right, near end] {1} (yaz);
+
+\end{tikzpicture}
+\caption{Схема объектов предметной области <<Учёт компьютерных шрифтов в электронной типографии>>}
+\label{fig:db-schema}
+\end{figure}

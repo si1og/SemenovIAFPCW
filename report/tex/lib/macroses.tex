@@ -1,0 +1,14 @@
+\newcommand{\screenshot}[3][0.9]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#1\textwidth]{img/#2}
+        \caption{#3}
+        \label{fig:#2}
+    \end{figure}
+}
+
+% Source - https://tex.stackexchange.com/a/89932
+% Posted by Huugo, modified by community. See post 'Timeline' for change history
+% Retrieved 2026-03-08, License - CC BY-SA 3.0
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}

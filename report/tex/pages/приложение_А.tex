@@ -1,0 +1,166 @@
+\section*{Приложение A. Заголовочный файл и реализация класса \texttt{Z8}}
+\addcontentsline{toc}{section}{Приложение A. Заголовочный файл и реализация класса \texttt{Z8}}
+
+\begin{lstlisting}[language=C++, numbers=left, basicstyle=\ttfamily\scriptsize]
+// z8.h
+#pragma once
+#include <string>
+#include <map>
+#include <vector>
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+#include "constants.h"
+
+
+class Z8 {
+protected:
+    std::map<char, char> plusOneRule;
+    std::map<char, char> minusOneRule;
+    std::vector<char> alphabet;
+
+    // "0"
+    char additiveIdentity;
+
+    // "1"
+    char multiplicativeIdentity;
+
+public:
+    Z8();
+    Z8(int variant);
+    virtual ~Z8();
+
+    void initVariant();
+    char next(char c) const;
+    char prev(char c) const;
+
+    bool isZero(char c) const;
+    bool isOne(char c) const;
+
+    char getZero() const;
+    char getOne() const;
+
+    const std::vector<char>& getAlphabet() const;
+    int getBase() const;
+
+    bool isValidChar(char c) const;
+
+    void printPlusOneTable() const;
+    void printInfo() const;
+};
+
+// z8.cpp
+#include "z8.h"
+
+Z8::Z8() : additiveIdentity('a'), multiplicativeIdentity('b') {
+    alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    initVariant();
+}
+
+Z8::~Z8() {}
+
+void Z8::initVariant() {
+    // a+1=b, b+1=g, c+1=a, d+1=h, e+1=f, f+1=c, g+1=d, h+1=e
+    char rule[8] = {'b', 'g', 'a', 'h', 'f', 'c', 'd', 'e'};
+
+    plusOneRule.clear();
+    minusOneRule.clear();
+
+    for (int i = 0; i < 8; ++i) {
+        char from = alphabet[i];
+        char to = rule[i];
+        plusOneRule[from] = to;
+        minusOneRule[to] = from;
+    }
+
+    std::cout << "\n╔════════════════════════════════════════════════════════╗\n";
+    std::cout << "║           СИСТЕМА Z8 УСПЕШНО ИНИЦИАЛИЗИРОВАНА          ║\n";
+    std::cout << "╚════════════════════════════════════════════════════════╝\n";
+    std::cout << "  Вариант: 49\n";
+    std::cout << "  Основание системы: " << getBase() << "\n";
+    std::cout << "  Аддитивная единица (ноль): " << additiveIdentity << "\n";
+    std::cout << "  Мультипликативная единица: " << multiplicativeIdentity << "\n";
+    std::cout << "  Максимальная разрядность: " << MAX_DIGITS << "\n\n";
+}
+
+char Z8::next(char c) const {
+    auto it = plusOneRule.find(c);
+    if (it == plusOneRule.end()) {
+        throw std::invalid_argument(std::string("Символ '") + c + "' не принадлежит алфавиту");
+    }
+    return it->second;
+}
+
+char Z8::prev(char c) const {
+    auto it = minusOneRule.find(c);
+    if (it == minusOneRule.end()) {
+        throw std::invalid_argument(std::string("Символ '") + c + "' не принадлежит алфавиту");
+    }
+    return it->second;
+}
+
+bool Z8::isZero(char c) const {
+    return c == additiveIdentity;
+}
+
+bool Z8::isOne(char c) const {
+    return c == multiplicativeIdentity;
+}
+
+char Z8::getZero() const {
+    return additiveIdentity;
+}
+
+char Z8::getOne() const {
+    return multiplicativeIdentity;
+}
+
+const std::vector<char>& Z8::getAlphabet() const {
+    return alphabet;
+}
+
+int Z8::getBase() const {
+    return static_cast<int>(alphabet.size());
+}
+
+bool Z8::isValidChar(char c) const {
+    for (char ch : alphabet) {
+        if (ch == c) return true;
+    }
+    return false;
+}
+
+void Z8::printPlusOneTable() const {
+    std::cout << "\n  Таблица правила +1:\n";
+    std::cout << "  ┌─────┬─────┐\n";
+    std::cout << "  │  x  │ x+1 │\n";
+    std::cout << "  ├─────┼─────┤\n";
+
+    for (char c : alphabet) {
+        std::cout << "  │  " << c << "  │  " << next(c) << "  │\n";
+    }
+
+    std::cout << "  └─────┴─────┘\n\n";
+}
+
+void Z8::printInfo() const {
+    std::cout << "\n╔════════════════════════════════════════════════════════╗\n";
+    std::cout << "║                    ИНФОРМАЦИЯ О СИСТЕМЕ                ║\n";
+    std::cout << "╚════════════════════════════════════════════════════════╝\n\n";
+
+    std::cout << "  Вариант: 49\n";
+    std::cout << "  Основание системы: Z" << getBase() << "\n";
+    std::cout << "  Алфавит: {";
+    for (size_t i = 0; i < alphabet.size(); ++i) {
+        std::cout << alphabet[i];
+        if (i < alphabet.size() - 1) std::cout << ", ";
+    }
+    std::cout << "}\n";
+    std::cout << "  Аддитивная единица (0): " << additiveIdentity << "\n";
+    std::cout << "  Мультипликативная единица (1): " << multiplicativeIdentity << "\n";
+    std::cout << "  Максимальная разрядность: " << MAX_DIGITS << "\n";
+
+    printPlusOneTable();
+}
+
+\end{lstlisting}

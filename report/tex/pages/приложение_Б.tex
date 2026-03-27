@@ -1,0 +1,548 @@
+\section*{Приложение Б. Заголовочный файл и реализация класса \texttt{Operations}}
+\addcontentsline{toc}{section}{Приложение Б. Заголовочный файл и реализация класса \texttt{Operations}}
+
+\begin{lstlisting}[language=C++, numbers=left, basicstyle=\ttfamily\scriptsize]
+// operations.h
+#pragma once
+#include "z8.h"
+#include <string>
+
+struct DivisionResult {
+    std::string quotient;
+    std::string remainder;
+    bool isOverflow;
+    bool isDivByZero;
+    bool isZeroByZero;
+
+    DivisionResult() : isOverflow(false), isDivByZero(false), isZeroByZero(false) {}
+};
+
+struct OperationResult {
+    std::string value;
+    bool isOverflow;
+    bool isNegative;
+
+    OperationResult() : isOverflow(false), isNegative(false) {}
+    OperationResult(const std::string& v, bool neg = false, bool ovf = false)
+        : value(v), isNegative(neg), isOverflow(ovf) {}
+};
+
+class Operations : public Z8 {
+public:
+    std::string trimLeadingZeros(const std::string& num) const;
+    bool isZeroNumber(const std::string& num) const;
+    int compareAbs(const std::string& a, const std::string& b) const;
+
+    std::string addPositive(const std::string& a, const std::string& b) const;
+    std::string subtractPositive(const std::string& a, const std::string& b) const;
+
+    std::string multiplyByDigit(const std::string& num, char digit) const;
+    std::string multiplyPositive(const std::string& a, const std::string& b) const;
+
+    std::string increment(const std::string& num) const;
+    std::string decrement(const std::string& num) const;
+
+    std::string getMaxPositive() const;
+    std::string getMaxNegative() const;
+
+public:
+    Operations();
+    Operations(int variant);
+    ~Operations();
+
+    OperationResult add(const std::string& a, const std::string& b) const;
+    OperationResult subtract(const std::string& a, const std::string& b) const;
+    OperationResult multiply(const std::string& a, const std::string& b) const;
+    DivisionResult divide(const std::string& a, const std::string& b) const;
+
+    OperationResult power(const std::string& base, const std::string& exp) const;
+
+    std::string gcd(const std::string& a, const std::string& b) const;
+    OperationResult lcm(const std::string& a, const std::string& b) const;
+
+    bool isValidNumber(const std::string& num) const;
+
+    std::string normalize(const std::string& num) const;
+    std::string abs(const std::string& num) const;
+
+    bool isNegative(const std::string& num) const;
+    std::string negate(const std::string& num) const;
+
+    void printResult(const std::string& operation,
+                     const std::string& a,
+                     const std::string& b,
+                     const OperationResult& result) const;
+    void printDivisionResult(const std::string& a,
+                             const std::string& b,
+                             const DivisionResult& result) const;
+};
+
+// operations.cpp
+#include "operations.h"
+#include <algorithm>
+
+Operations::Operations() : Z8() {}
+Operations::~Operations() {}
+
+std::string Operations::trimLeadingZeros(const std::string& num) const {
+    if (num.empty()) return std::string(1, getZero());
+
+    size_t start = 0;
+    while (start < num.length() - 1 && num[start] == getZero()) {
+        ++start;
+    }
+
+    return num.substr(start);
+}
+
+std::string Operations::abs(const std::string& num) const {
+    if (num.empty()) return std::string(1, getZero());
+    if (num[0] == '-') return num.substr(1);
+    return num;
+}
+
+bool Operations::isZeroNumber(const std::string& num) const {
+    std::string n = abs(num);
+    n = trimLeadingZeros(n);
+    return n.length() == 1 && n[0] == getZero();
+}
+
+bool Operations::isNegative(const std::string& num) const {
+    return !num.empty() && num[0] == '-';
+}
+
+std::string Operations::negate(const std::string& num) const {
+    if (isZeroNumber(num)) return std::string(1, getZero());
+
+    if (isNegative(num)) {
+        return num.substr(1);
+    } else {
+        return "-" + num;
+    }
+}
+
+std::string Operations::normalize(const std::string& num) const {
+    if (num.empty()) return std::string(1, getZero());
+
+    bool neg = isNegative(num);
+    std::string absNum = neg ? num.substr(1) : num;
+
+    absNum = trimLeadingZeros(absNum);
+
+    if (absNum.length() == 1 && absNum[0] == getZero()) {
+        return std::string(1, getZero());
+    }
+
+    return neg ? "-" + absNum : absNum;
+}
+
+bool Operations::isValidNumber(const std::string& num) const {
+    if (num.empty()) return false;
+
+    size_t start = 0;
+    if (num[0] == '-') {
+        if (num.length() == 1) return false;
+        start = 1;
+    }
+
+    for (size_t i = start; i < num.length(); ++i) {
+        if (!isValidChar(num[i])) return false;
+    }
+
+    return true;
+}
+
+int Operations::compareAbs(const std::string& a, const std::string& b) const {
+    // нормализуем по модулю
+    std::string normA = trimLeadingZeros(abs(a));
+    std::string normB = trimLeadingZeros(abs(b));
+
+    if (normA.length() != normB.length()) {
+        return normA.length() > normB.length() ? 1 : -1;
+    }
+
+    for (size_t i = 0; i < normA.length(); ++i) {
+        if (normA[i] == normB[i]) continue;
+
+        char ca = normA[i];
+        char cb = normB[i];
+
+        int posA = 0, posB = 0;
+        char cur = getZero();
+        for (int j = 0; j < getBase(); ++j) {
+            if (cur == ca) posA = j;
+            if (cur == cb) posB = j;
+            cur = next(cur);
+        }
+
+        // выше запоминаем последние позиции, которые совпали с cur:
+        // cur двигается по цепочке a -> ...
+        //
+        // => у кого позиция больше, тот больше
+
+        return posA > posB ? 1 : -1;
+    }
+
+    return 0;
+}
+
+std::string Operations::getMaxPositive() const {
+    char maxDigit = prev(getZero());
+    return std::string(MAX_DIGITS, maxDigit);
+}
+
+std::string Operations::getMaxNegative() const {
+    return "-" + getMaxPositive();
+}
+
+std::string Operations::increment(const std::string& num) const {
+    if (num.empty()) return std::string(1, getOne());
+
+    std::string result = num;
+
+    // берем последнюю цифру:
+    // 1) берем след. цифру по цепочке от последней цифры (п. a -> b)
+    // 2) записываем обновленную цифру в result на позицию последней цифры
+    // а) если обновлённая цифра 0 - повторяем для предпоследней цифры ... и т.д.
+    // б) если не 0 - возвращаем result
+    for (int i = static_cast<int>(result.length()) - 1; i >= 0; --i) {
+        char nextChar = next(result[i]);
+        result[i] = nextChar;
+
+        if (nextChar != getZero()) {
+            return result;
+        }
+    }
+
+    // если все цифры в результате операции 0, возвращаем 1 + нули
+    return std::string(1, getOne()) + result;
+}
+
+
+// ан-но, как с increment, но с prev
+std::string Operations::decrement(const std::string& num) const {
+    if (isZeroNumber(num)) {
+        return "-" + std::string(1, getOne());
+    }
+
+    std::string result = num;
+
+    for (int i = static_cast<int>(result.length()) - 1; i >= 0; --i) {
+        if (result[i] != getZero()) {
+            result[i] = prev(result[i]);
+            return trimLeadingZeros(result);
+        }
+        result[i] = prev(getZero());
+    }
+
+    return trimLeadingZeros(result);
+}
+
+std::string Operations::addPositive(const std::string& a, const std::string& b) const {
+    std::string numA = trimLeadingZeros(a);
+    std::string numB = trimLeadingZeros(b);
+
+    size_t maxLen = std::max(numA.length(), numB.length());
+    while (numA.length() < maxLen) numA = std::string(1, getZero()) + numA; 
+    while (numB.length() < maxLen) numB = std::string(1, getZero()) + numB;
+
+    std::string result(maxLen, getZero());
+    char carry = getZero();
+
+    for (int i = static_cast<int>(maxLen) - 1; i >= 0; --i) {
+        char sum = numA[i];
+        char newCarry = getZero();
+
+        char counter = numB[i];
+        while (counter != getZero()) {
+            sum = next(sum);
+            if (sum == getZero()) {
+                newCarry = next(newCarry);
+            }
+            counter = prev(counter);
+        }
+        while (carry != getZero()) {
+            sum = next(sum);
+            if (sum == getZero()) {
+                newCarry = next(newCarry);
+            }
+            carry = prev(carry);
+        }
+
+        result[i] = sum;
+        carry = newCarry;
+    }
+
+    if (carry != getZero()) {
+        result = std::string(1, carry) + result;
+    }
+
+    return trimLeadingZeros(result);
+}
+
+std::string Operations::subtractPositive(const std::string& a, const std::string& b) const {
+    std::string numA = trimLeadingZeros(a);
+    std::string numB = trimLeadingZeros(b);
+
+    if (compareAbs(numA, numB) < 0) {
+        throw std::logic_error("subtractPositive: a < b");
+    }
+
+    size_t maxLen = numA.length();
+    while (numB.length() < maxLen) numB = std::string(1, getZero()) + numB;
+
+    std::string result(maxLen, getZero());
+    char borrow = getZero();
+
+    for (int i = static_cast<int>(maxLen) - 1; i >= 0; --i) {
+        char diff = numA[i];
+        char newBorrow = getZero();
+
+        char counter = numB[i];
+        while (counter != getZero()) {
+            if (diff == getZero()) {
+                newBorrow = next(newBorrow);  
+                diff = prev(getZero());
+            } else {
+                diff = prev(diff);
+            }
+            counter = prev(counter);
+        }
+
+        while (borrow != getZero()) {
+            if (diff == getZero()) {
+                newBorrow = next(newBorrow);
+                diff = prev(getZero());
+            } else {
+                diff = prev(diff);
+            }
+            borrow = prev(borrow);
+        }
+
+        result[i] = diff;
+        borrow = newBorrow;
+    }
+
+    return trimLeadingZeros(result);
+}
+
+std::string Operations::multiplyByDigit(const std::string& num, char digit) const {
+    if (digit == getZero()) return std::string(1, getZero());
+    if (digit == getOne()) return num;
+
+    std::string result(1, getZero());
+
+    char counter = digit;
+    while (counter != getZero()) {
+        result = addPositive(result, num);
+        counter = prev(counter);
+    }
+
+    return result;
+}
+
+std::string Operations::multiplyPositive(const std::string& a, const std::string& b) const {
+    if (isZeroNumber(a) || isZeroNumber(b)) {
+        return std::string(1, getZero());
+    }
+
+    std::string numA = trimLeadingZeros(a);
+    std::string numB = trimLeadingZeros(b);
+
+    std::string result(1, getZero());
+
+    for (size_t i = 0; i < numB.length(); ++i) {
+        char digit = numB[numB.length() - 1 - i];
+        if (digit != getZero()) {
+            std::string partial = multiplyByDigit(numA, digit);
+
+            for (size_t j = 0; j < i; ++j) {
+                partial += getZero();
+            }
+
+            result = addPositive(result, partial);
+        }
+    }
+
+    return trimLeadingZeros(result);
+}
+
+OperationResult Operations::add(const std::string& a, const std::string& b) const {
+    OperationResult res;
+
+    std::string normA = normalize(a);
+    std::string normB = normalize(b);
+
+    bool negA = isNegative(normA);
+    bool negB = isNegative(normB);
+    std::string absA = abs(normA);
+    std::string absB = abs(normB);
+
+    if (!negA && !negB) {
+        res.value = addPositive(absA, absB);
+        res.isNegative = false;
+    } else if (negA && negB) {
+        res.value = addPositive(absA, absB);
+        res.isNegative = true;
+    } else if (!negA && negB) {
+        int cmp = compareAbs(absA, absB);
+        if (cmp >= 0) {
+            res.value = subtractPositive(absA, absB);
+            res.isNegative = false;
+        } else {
+            res.value = subtractPositive(absB, absA);
+            res.isNegative = true;
+        }
+    } else {
+        int cmp = compareAbs(absB, absA);
+        if (cmp >= 0) {
+            res.value = subtractPositive(absB, absA);
+            res.isNegative = false;
+        } else {
+            res.value = subtractPositive(absA, absB);
+            res.isNegative = true;
+        }
+    }
+
+    if (res.value.length() > MAX_DIGITS) {
+        res.isOverflow = true;
+    }
+
+    res.value = trimLeadingZeros(res.value);
+    if (isZeroNumber(res.value)) {
+        res.isNegative = false;
+    }
+
+    return res;
+}
+
+OperationResult Operations::subtract(const std::string& a, const std::string& b) const {
+    return add(a, negate(b));
+}
+
+OperationResult Operations::multiply(const std::string& a, const std::string& b) const {
+    OperationResult res;
+
+    std::string normA = normalize(a);
+    std::string normB = normalize(b);
+
+    if (isZeroNumber(normA) || isZeroNumber(normB)) {
+        res.value = std::string(1, getZero());
+        res.isNegative = false;
+        return res;
+    }
+
+    bool negA = isNegative(normA);
+    bool negB = isNegative(normB);
+
+    res.value = multiplyPositive(abs(normA), abs(normB));
+    res.isNegative = (negA != negB);
+
+    if (res.value.length() > MAX_DIGITS) {
+        res.isOverflow = true;
+    }
+
+    if (isZeroNumber(res.value)) {
+        res.isNegative = false;
+    }
+
+    return res;
+}
+
+DivisionResult Operations::divide(const std::string& a, const std::string& b) const {
+    DivisionResult res;
+
+    std::string normA = normalize(a);
+    std::string normB = normalize(b);
+
+    bool negA = isNegative(normA);
+    bool negB = isNegative(normB);
+    std::string absA = abs(normA);
+    std::string absB = abs(normB);
+
+    if (isZeroNumber(normB)) {
+        if (isZeroNumber(normA)) {
+            res.isZeroByZero = true;
+            res.quotient = "[" + getMaxNegative() + "; " + getMaxPositive() + "]";
+            res.remainder = std::string(1, getZero());
+        } else {
+            res.isDivByZero = true;
+            res.quotient = "пустое множество";
+            res.remainder = "пустое множество";
+        }
+        return res;
+    }
+
+    // 0 / x = 0
+    if (isZeroNumber(normA)) {
+        res.quotient = std::string(1, getZero());
+        res.remainder = std::string(1, getZero());
+        return res;
+    }
+
+    std::string quotient(1, getZero());
+    std::string remainder = absA;
+
+    while (compareAbs(remainder, absB) >= 0) {
+        remainder = subtractPositive(remainder, absB);
+        quotient = increment(quotient);
+    }
+
+    // -a / b с остатком
+    if (negA && !negB && !isZeroNumber(remainder)) {
+        quotient = increment(quotient);
+        remainder = subtractPositive(absB, remainder);
+    }
+
+    bool negResult = (negA != negB);
+
+    res.quotient = trimLeadingZeros(quotient);
+    res.remainder = trimLeadingZeros(remainder);
+
+    if (negResult && !isZeroNumber(res.quotient)) {
+        res.quotient = "-" + res.quotient;
+    }
+
+    if (abs(res.quotient).length() > MAX_DIGITS) {
+        res.isOverflow = true;
+    }
+
+    return res;
+}
+
+void Operations::printResult(const std::string& operation,
+                              const std::string& a,
+                              const std::string& b,
+                              const OperationResult& result) const {
+    std::cout << "\n  " << a << " " << operation << " " << b << " = ";
+
+    if (result.isOverflow) {
+        std::cout << "ПЕРЕПОЛНЕНИЕ (";
+        if (result.isNegative) std::cout << "-";
+        std::cout << result.value << ")\n";
+    } else {
+        if (result.isNegative) std::cout << "-";
+        std::cout << result.value << "\n";
+    }
+}
+
+void Operations::printDivisionResult(const std::string& a,
+                                      const std::string& b,
+                                      const DivisionResult& result) const {
+    std::cout << "\n  " << a << " / " << b << " = ";
+
+    if (result.isDivByZero) {
+        std::cout << " (деление на ноль)\n";
+    } else if (result.isZeroByZero) {
+        std::cout << result.quotient << " (неопределённость 0/0)\n";
+    } else if (result.isOverflow) {
+        std::cout << "ПЕРЕПОЛНЕНИЕ\n";
+    } else {
+        std::cout << result.quotient;
+        if (!isZeroNumber(result.remainder)) {
+            std::cout << "(" << result.remainder << ")";
+        }
+        std::cout << "\n";
+    }
+}
+\end{lstlisting}
