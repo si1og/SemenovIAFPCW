@@ -1,0 +1,46 @@
+% Диаграмма Ганта — этапы курсовой работы
+% Требует: \usepackage{pgfgantt} в преамбуле
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{ganttchart}[
+    x unit=0.28cm,
+    y unit title=0.6cm,
+    y unit chart=0.7cm,
+    vgrid={*6{draw=black!8}, *1{draw=black!25}},
+    hgrid,
+    title height=1,
+    title label font=\footnotesize\bfseries,
+    bar label font=\footnotesize,
+    bar label node/.append style={left=0cm, anchor=east},
+    bar height=0.5,
+    bar/.append style={
+        pattern=north east lines,
+        pattern color=black!50,
+        draw=black!60
+    },
+    time slot format=isodate,
+    time slot unit=day,
+    calendar week text={\shortdayname{} \pgfcalendarcurrentday.\pgfcalendarcurrentmonth},
+]{2026-04-09}{2026-05-22}
+
+\gantttitle[title label font=\footnotesize\bfseries]{Апрель}{22}
+\gantttitle[title label font=\footnotesize\bfseries]{Май}{22} \\
+\gantttitlelist[title label font=\tiny]{9,...,30}{1}
+\gantttitlelist[title label font=\tiny]{1,...,22}{1} \\
+
+\ganttbar{Этап 1: ТЗ}{2026-04-09}{2026-04-17} \\
+\ganttbar{Этап 2: Диаграмма типов}{2026-04-17}{2026-04-24} \\
+\ganttbar{Этап 3: Реализация}{2026-04-24}{2026-05-15} \\
+\ganttbar{Этап 4: Отчёт и защита}{2026-05-15}{2026-05-22}
+
+\ganttlink{elem0}{elem1}
+\ganttlink{elem1}{elem2}
+\ganttlink{elem2}{elem3}
+
+\end{ganttchart}
+}
+\caption{Диаграмма Ганта~--- этапы выполнения курсовой работы}
+\label{fig:gantt}
+\end{figure}
