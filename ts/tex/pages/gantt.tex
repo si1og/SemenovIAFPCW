@@ -1,6 +1,5 @@
 % Диаграмма Ганта — этапы курсовой работы
 % Требует: \usepackage{pgfgantt} в преамбуле
-
 \begin{figure}[htbp]
 \centering
 \resizebox{\textwidth}{!}{
@@ -21,24 +20,24 @@
         draw=black!60
     },
     time slot format=isodate,
-    time slot unit=day,
-    calendar week text={\shortdayname{} \pgfcalendarcurrentday.\pgfcalendarcurrentmonth},
-]{2026-04-09}{2026-05-22}
-
+    time slot unit=day
+]{2026-04-09}{2026-05-28}
 \gantttitle[title label font=\footnotesize\bfseries]{Апрель}{22}
-\gantttitle[title label font=\footnotesize\bfseries]{Май}{22} \\
-\gantttitlelist[title label font=\tiny]{9,...,30}{1}
-\gantttitlelist[title label font=\tiny]{1,...,22}{1} \\
-
+\gantttitle[title label font=\footnotesize\bfseries]{Май}{28} \\
+\gantttitle[title label font=\footnotesize]{9--15}{7}
+\gantttitle[title label font=\footnotesize]{16--22}{7}
+\gantttitle[title label font=\footnotesize]{23--30}{8}
+\gantttitle[title label font=\footnotesize]{1--7}{7}
+\gantttitle[title label font=\footnotesize]{8--14}{7}
+\gantttitle[title label font=\footnotesize]{15--21}{7}
+\gantttitle[title label font=\footnotesize]{22--28}{7} \\
 \ganttbar{Этап 1: ТЗ}{2026-04-09}{2026-04-17} \\
 \ganttbar{Этап 2: Диаграмма типов}{2026-04-17}{2026-04-24} \\
 \ganttbar{Этап 3: Реализация}{2026-04-24}{2026-05-15} \\
 \ganttbar{Этап 4: Отчёт и защита}{2026-05-15}{2026-05-22}
-
 \ganttlink{elem0}{elem1}
 \ganttlink{elem1}{elem2}
 \ganttlink{elem2}{elem3}
-
 \end{ganttchart}
 }
 \caption{Диаграмма Ганта~--- этапы выполнения курсовой работы}
