@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="g8gxatPBcLfHt5_yAsHy">
-    <mxGraphModel dx="3505" dy="2713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2521" dy="2415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -17,10 +17,10 @@
           <mxGeometry height="160" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-11" parent="1" style="swimlane;" value="  Config.App " vertex="1">
-          <mxGeometry height="260" width="480" x="840" y="250" as="geometry" />
+          <mxGeometry height="210" width="480" x="840" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-12" parent="1WdxroztGDoRLidxNaA0-11" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Config экспортирует функции:&lt;/div&gt;&lt;div&gt;defaultConfig :: AppConfig — конфигурация по умолчанию.&lt;/div&gt;&lt;div&gt;defaultLogConfig :: LogConfig — настройки логирования.&lt;/div&gt;&lt;div&gt;defaultThresholds :: DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Config экспортирует типы:&lt;/div&gt;&lt;div&gt;AppConfig — общая конфигурация приложения.&lt;/div&gt;&lt;div&gt;LogConfig — настройки логирования.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги анализа.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;FilePath, Maybe, Bool, Double.&lt;/div&gt;" vertex="1">
-          <mxGeometry height="200" width="445" x="15" y="40" as="geometry" />
+        <mxCell id="1WdxroztGDoRLidxNaA0-12" parent="1WdxroztGDoRLidxNaA0-11" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Config экспортирует функции:&lt;/div&gt;&lt;div&gt;defaultConfig :: AppConfig — конфигурация по умолчанию.&lt;/div&gt;&lt;div&gt;defaultLogConfig :: LogConfig — настройки логирования.&lt;/div&gt;&lt;div&gt;defaultThresholds :: DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Config экспортирует типы:&lt;/div&gt;&lt;div&gt;AppConfig — общая конфигурация приложения.&lt;/div&gt;&lt;div&gt;LogConfig — настройки логирования.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги анализа.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-19" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -31,7 +31,7 @@
         <mxCell id="1WdxroztGDoRLidxNaA0-20" parent="1" style="swimlane;" value="Input.BDF" vertex="1">
           <mxGeometry height="250" width="510" x="-450" y="195" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-21" parent="1WdxroztGDoRLidxNaA0-20" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Input.BDF экспортирует функции:&lt;/div&gt;&lt;div&gt;readBDFFile :: FilePath -&amp;gt; IO (Either AppError String) — чтение BDF-файла.&lt;/div&gt;&lt;div&gt;parseBDFContent :: String -&amp;gt; Either ParseError BDFFont — разбор содержимого BDF-файла.&lt;/div&gt;&lt;div&gt;loadBDFFont :: FilePath -&amp;gt; IO (Either AppError BDFFont) — чтение и разбор BDF-файла.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;FilePath, String, IO, Either, AppError, ParseError, BDFFont.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-21" parent="1WdxroztGDoRLidxNaA0-20" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Input.BDF экспортирует функции:&lt;/div&gt;&lt;div&gt;readBDFFile :: FilePath -&amp;gt; IO (Either AppError String) — чтение BDF-файла.&lt;/div&gt;&lt;div&gt;parseBDFContent :: String -&amp;gt; Either ParseError BDFFont — разбор содержимого BDF-файла.&lt;/div&gt;&lt;div&gt;loadBDFFont :: FilePath -&amp;gt; IO (Either AppError BDFFont) — чтение и разбор BDF-файла.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="180" width="471.25" x="18.75" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-22" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
@@ -47,46 +47,46 @@
           <mxGeometry height="30" width="60" x="750" y="290" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-32" parent="1" style="swimlane;" value="Analyze.Metrics" vertex="1">
-          <mxGeometry height="380" width="490" x="250" y="550" as="geometry" />
+          <mxGeometry height="220" width="490" x="250" y="550" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-33" parent="1WdxroztGDoRLidxNaA0-32" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Analyze.Metrics экспортирует функции:&lt;/div&gt;&lt;div&gt;analyzeFont :: BDFFont -&amp;gt; FontMetrics — расчёт всех метрик шрифта.&lt;/div&gt;&lt;div&gt;buildGlyphMetrics :: BDFFont -&amp;gt; Glyph -&amp;gt; GlyphMetrics — расчёт метрик одного глифа.&lt;/div&gt;&lt;div&gt;calcReadability :: Glyph -&amp;gt; ReadabilityScore — оценка читаемости.&lt;/div&gt;&lt;div&gt;calcProportion :: Glyph -&amp;gt; ProportionScore — оценка пропорций.&lt;/div&gt;&lt;div&gt;calcFillDensity :: Glyph -&amp;gt; FillRatio — плотность заполнения.&lt;/div&gt;&lt;div&gt;calcDistinctness :: Glyph -&amp;gt; [Glyph] -&amp;gt; DistinctnessScore — различимость относительно других глифов.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Analyze.Metrics экспортирует типы:&lt;/div&gt;&lt;div&gt;FontMetrics — метрики всего шрифта.&lt;/div&gt;&lt;div&gt;GlyphMetrics — метрики отдельного глифа.&lt;/div&gt;&lt;div&gt;ReadabilityScore — оценка читаемости.&lt;/div&gt;&lt;div&gt;ProportionScore — оценка пропорций.&lt;/div&gt;&lt;div&gt;FillRatio — плотность заполнения.&lt;/div&gt;&lt;div&gt;DistinctnessScore — оценка различимости.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;BDFFont, Glyph, Bitmap, Double, List.&lt;/div&gt;" vertex="1">
-          <mxGeometry height="310" width="455" x="15" y="40" as="geometry" />
+        <mxCell id="1WdxroztGDoRLidxNaA0-33" parent="1WdxroztGDoRLidxNaA0-32" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Analyze.Metrics экспортирует функции:&lt;/div&gt;&lt;div&gt;analyzeFont :: BDFFont -&amp;gt; FontMetrics — расчёт всех метрик шрифта.&lt;/div&gt;&lt;div&gt;buildGlyphMetrics :: BDFFont -&amp;gt; Glyph -&amp;gt; GlyphMetrics — расчёт метрик одного глифа.&lt;/div&gt;&lt;div&gt;calcReadability :: Glyph -&amp;gt; ReadabilityScore — оценка читаемости.&lt;/div&gt;&lt;div&gt;calcProportion :: Glyph -&amp;gt; ProportionScore — оценка пропорций.&lt;/div&gt;&lt;div&gt;calcFillDensity :: Glyph -&amp;gt; FillRatio — плотность заполнения.&lt;/div&gt;&lt;div&gt;calcDistinctness :: Glyph -&amp;gt; [Glyph] -&amp;gt; DistinctnessScore — различимость относительно других глифов.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="455" x="17.5" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-35" parent="1" style="swimlane;" value="  Output" vertex="1">
           <mxGeometry height="220" width="510" x="-440" y="560" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-36" parent="1WdxroztGDoRLidxNaA0-35" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Output экспортирует функции:&lt;/div&gt;&lt;div&gt;printReport :: AnalysisReport -&amp;gt; IO () — вывод отчёта в консоль.&lt;/div&gt;&lt;div&gt;printError :: AppError -&amp;gt; IO () — вывод ошибки.&lt;/div&gt;&lt;div&gt;writeReportToFile :: FilePath -&amp;gt; AnalysisReport -&amp;gt; IO (Either AppError ()) — запись отчёта в файл.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;AnalysisReport, AppError, FilePath, IO, Either.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-36" parent="1WdxroztGDoRLidxNaA0-35" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Output экспортирует функции:&lt;/div&gt;&lt;div&gt;printReport :: AnalysisReport -&amp;gt; IO () — вывод отчёта в консоль.&lt;/div&gt;&lt;div&gt;printError :: AppError -&amp;gt; IO () — вывод ошибки.&lt;/div&gt;&lt;div&gt;writeReportToFile :: FilePath -&amp;gt; AnalysisReport -&amp;gt; IO (Either AppError ()) — запись отчёта в файл.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="160" width="475" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-43" parent="1" style="swimlane;" value="Logging" vertex="1">
           <mxGeometry height="260" width="510" x="-440" y="850" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-44" parent="1WdxroztGDoRLidxNaA0-43" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Logging экспортирует функции:&lt;/div&gt;&lt;div&gt;initLogging :: LogConfig -&amp;gt; IO () — подготовка файла журнала.&lt;/div&gt;&lt;div&gt;logEvent :: LogConfig -&amp;gt; LogLevel -&amp;gt; Text -&amp;gt; IO () — запись события.&lt;/div&gt;&lt;div&gt;formatEntry :: LogEntry -&amp;gt; Text — форматирование записи журнала.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Logging экспортирует типы:&lt;/div&gt;&lt;div&gt;LogLevel — уровень логирования.&lt;/div&gt;&lt;div&gt;LogEntry — запись журнала.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;LogConfig, LogLevel, LogEntry, Text, IO.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-44" parent="1WdxroztGDoRLidxNaA0-43" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Logging экспортирует функции:&lt;/div&gt;&lt;div&gt;initLogging :: LogConfig -&amp;gt; IO () — подготовка файла журнала.&lt;/div&gt;&lt;div&gt;logEvent :: LogConfig -&amp;gt; LogLevel -&amp;gt; Text -&amp;gt; IO () — запись события.&lt;/div&gt;&lt;div&gt;formatEntry :: LogEntry -&amp;gt; Text — форматирование записи журнала.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Logging экспортирует типы:&lt;/div&gt;&lt;div&gt;LogLevel — уровень логирования.&lt;/div&gt;&lt;div&gt;LogEntry — запись журнала.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="200" width="475" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-63" parent="1" style="swimlane;" value="Diagnose.Anomaly" vertex="1">
           <mxGeometry height="320" width="495" x="245" y="980" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-64" parent="1WdxroztGDoRLidxNaA0-63" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Diagnose.Anomaly экспортирует функции:&lt;/div&gt;&lt;div&gt;detectAnomalies :: DetectionThresholds -&amp;gt; FontMetrics -&amp;gt; [Anomaly] — поиск аномальных глифов.&lt;/div&gt;&lt;div&gt;classifyAnomaly :: DetectionThresholds -&amp;gt; GlyphMetrics -&amp;gt; [AnomalyReason] — определение причин аномалии.&lt;/div&gt;&lt;div&gt;isAnomalous :: DetectionThresholds -&amp;gt; GlyphMetrics -&amp;gt; Bool — проверка глифа на аномальность.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Diagnose.Anomaly экспортирует типы:&lt;/div&gt;&lt;div&gt;Anomaly — найденная аномалия глифа.&lt;/div&gt;&lt;div&gt;AnomalyReason — причина аномальности.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;DetectionThresholds, FontMetrics, GlyphMetrics, Anomaly, AnomalyReason, Bool, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-64" parent="1WdxroztGDoRLidxNaA0-63" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Diagnose.Anomaly экспортирует функции:&lt;/div&gt;&lt;div&gt;detectAnomalies :: DetectionThresholds -&amp;gt; FontMetrics -&amp;gt; [Anomaly] — поиск аномальных глифов.&lt;/div&gt;&lt;div&gt;classifyAnomaly :: DetectionThresholds -&amp;gt; GlyphMetrics -&amp;gt; [AnomalyReason] — определение причин аномалии.&lt;/div&gt;&lt;div&gt;isAnomalous :: DetectionThresholds -&amp;gt; GlyphMetrics -&amp;gt; Bool — проверка глифа на аномальность.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Diagnose.Anomaly экспортирует типы:&lt;/div&gt;&lt;div&gt;Anomaly — найденная аномалия глифа.&lt;/div&gt;&lt;div&gt;AnomalyReason — причина аномальности.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="260" width="455" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-84" parent="1" style="swimlane;" value="    Diagnose.Replacement " vertex="1">
-          <mxGeometry height="330" width="480" x="930" y="980" as="geometry" />
+          <mxGeometry height="230" width="480" x="930" y="980" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-85" parent="1WdxroztGDoRLidxNaA0-84" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Diagnose.Replacement экспортирует функции:&lt;/div&gt;&lt;div&gt;findReplacement :: ReferenceDB -&amp;gt; Anomaly -&amp;gt; Maybe ReplacementSuggestion — подбор замены для одной аномалии.&lt;/div&gt;&lt;div&gt;findReplacements :: ReferenceDB -&amp;gt; [Anomaly] -&amp;gt; [ReplacementSuggestion] — подбор замен для всех аномалий.&lt;/div&gt;&lt;div&gt;bitmapSimilarity :: Bitmap -&amp;gt; Bitmap -&amp;gt; SimilarityScore — оценка сходства bitmap-изображений.&lt;/div&gt;&lt;div&gt;normalizeBitmap :: Bitmap -&amp;gt; Bitmap — нормализация bitmap перед сравнением.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Diagnose.Replacement экспортирует типы:&lt;/div&gt;&lt;div&gt;ReplacementSuggestion — предложенная замена глифа.&lt;/div&gt;&lt;div&gt;SimilarityScore — оценка визуального сходства.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;ReferenceDB, Anomaly, Bitmap, SimilarityScore, ReplacementSuggestion, Maybe, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="270" width="445" x="15" y="40" as="geometry" />
+        <mxCell id="1WdxroztGDoRLidxNaA0-85" parent="1WdxroztGDoRLidxNaA0-84" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Diagnose.Replacement экспортирует функции:&lt;/div&gt;&lt;div&gt;findReplacement :: ReferenceDB -&amp;gt; Anomaly -&amp;gt; Maybe ReplacementSuggestion — подбор замены для одной аномалии.&lt;/div&gt;&lt;div&gt;findReplacements :: ReferenceDB -&amp;gt; [Anomaly] -&amp;gt; [ReplacementSuggestion] — подбор замен для всех аномалий.&lt;/div&gt;&lt;div&gt;bitmapSimilarity :: Bitmap -&amp;gt; Bitmap -&amp;gt; SimilarityScore — оценка сходства bitmap-изображений.&lt;/div&gt;&lt;div&gt;normalizeBitmap :: Bitmap -&amp;gt; Bitmap — нормализация bitmap перед сравнением.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-91" parent="1" style="swimlane;" value="   Reference.Database" vertex="1">
-          <mxGeometry height="280" width="480" x="840" y="-85" as="geometry" />
+          <mxGeometry height="195" width="480" x="840" y="-40" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-92" parent="1WdxroztGDoRLidxNaA0-91" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Reference.Database экспортирует функции:&lt;/div&gt;&lt;div&gt;defaultReferencePath :: FilePath — путь к эталонному шрифту Terminus 8x16.&lt;/div&gt;&lt;div&gt;buildReferenceDB :: BDFFont -&amp;gt; ReferenceDB — построение базы эталонов из BDF-шрифта.&lt;/div&gt;&lt;div&gt;findReferenceGlyphs :: ReferenceDB -&amp;gt; Char -&amp;gt; [ReferenceGlyph] — поиск эталонов по символу.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Reference.Database экспортирует типы:&lt;/div&gt;&lt;div&gt;ReferenceDB — база эталонных глифов.&lt;/div&gt;&lt;div&gt;ReferenceGlyph — эталонный глиф.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;FilePath, BDFFont, ReferenceDB, ReferenceGlyph, Char, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="220" width="445" x="15" y="40" as="geometry" />
+        <mxCell id="1WdxroztGDoRLidxNaA0-92" parent="1WdxroztGDoRLidxNaA0-91" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Reference.Database экспортирует функции:&lt;/div&gt;&lt;div&gt;defaultReferencePath :: FilePath — путь к эталонному шрифту Terminus 8x16.&lt;/div&gt;&lt;div&gt;buildReferenceDB :: BDFFont -&amp;gt; ReferenceDB — построение базы эталонов из BDF-шрифта.&lt;/div&gt;&lt;div&gt;findReferenceGlyphs :: ReferenceDB -&amp;gt; Char -&amp;gt; [ReferenceGlyph] — поиск эталонов по символу.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-97" parent="1" style="swimlane;" value=" Report" vertex="1">
-          <mxGeometry height="350" width="485" x="925" y="550" as="geometry" />
+          <mxGeometry height="280" width="485" x="925" y="550" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-98" parent="1WdxroztGDoRLidxNaA0-97" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Report экспортирует функции:&lt;/div&gt;&lt;div&gt;assembleReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; :: BDFFont&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; FontMetrics&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [Anomaly]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [ReplacementSuggestion]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; AnalysisReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; — сборка итогового отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;formatReportText :: AnalysisReport -&amp;gt; Text&lt;/div&gt;&lt;div&gt;&amp;nbsp; — форматирование отчёта для вывода.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Report экспортирует типы:&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;BDFFont, FontMetrics, GlyphMetrics, Anomaly, ReplacementSuggestion, AnalysisReport, ReportSection, Text, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="290" width="445" x="15" y="40" as="geometry" />
+        <mxCell id="1WdxroztGDoRLidxNaA0-98" parent="1WdxroztGDoRLidxNaA0-97" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Report экспортирует функции:&lt;/div&gt;&lt;div&gt;assembleReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; :: BDFFont&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; FontMetrics&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [Anomaly]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [ReplacementSuggestion]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; AnalysisReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; — сборка итогового отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;formatReportText :: AnalysisReport -&amp;gt; Text&lt;/div&gt;&lt;div&gt;&amp;nbsp; — форматирование отчёта для вывода.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="220" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="L" vertex="1">
           <mxGeometry height="30" width="30" x="-580" y="930" as="geometry" />
@@ -190,10 +190,11 @@
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-25" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="1WdxroztGDoRLidxNaA0-63" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
+              <mxPoint x="290" y="870" />
               <mxPoint x="200" y="870" />
               <mxPoint x="200" y="1060" />
             </Array>
-            <mxPoint x="250" y="870" as="sourcePoint" />
+            <mxPoint x="290" y="770" as="sourcePoint" />
             <mxPoint x="430" y="800" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -227,39 +228,39 @@
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-40" edge="1" parent="1" source="1WdxroztGDoRLidxNaA0-20" style="endArrow=classic;html=1;rounded=0;exitX=0.879;exitY=-0.002;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="1WdxroztGDoRLidxNaA0-91" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint y="-10" />
+              <mxPoint y="10" />
             </Array>
             <mxPoint x="440" y="80" as="sourcePoint" />
-            <mxPoint x="490" y="30" as="targetPoint" />
+            <mxPoint x="840" y="-10" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-41" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;BDFFont&lt;/span&gt;" vertex="1">
-          <mxGeometry height="40" width="80" x="150" y="-40" as="geometry" />
+          <mxGeometry height="40" width="80" x="150" y="-20" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-42" edge="1" parent="1" source="1WdxroztGDoRLidxNaA0-91" style="endArrow=classic;html=1;rounded=0;exitX=-0.011;exitY=0.062;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.704;entryY=-0.005;entryDx=0;entryDy=0;entryPerimeter=0;" target="1WdxroztGDoRLidxNaA0-20" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="-91" y="-70" />
+              <mxPoint x="-91" y="-30" />
             </Array>
             <mxPoint x="270" y="240" as="sourcePoint" />
             <mxPoint x="320" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-43" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FilePath" vertex="1">
-          <mxGeometry height="30" width="60" x="30" y="-100" as="geometry" />
+          <mxGeometry height="30" width="60" x="60" y="-70" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-44" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="1WdxroztGDoRLidxNaA0-84" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="1550" y="160" />
-              <mxPoint x="1550" y="1063" />
+              <mxPoint x="1550" y="120" />
+              <mxPoint x="1550" y="1040" />
             </Array>
-            <mxPoint x="1320" y="160" as="sourcePoint" />
+            <mxPoint x="1320" y="120" as="sourcePoint" />
             <mxPoint x="1210" y="390" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-45" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;ReferenceDB&lt;/span&gt;" vertex="1">
-          <mxGeometry height="40" width="110" x="1450" y="130" as="geometry" />
+          <mxGeometry height="40" width="110" x="1450" y="90" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-46" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -273,7 +274,7 @@
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-48" edge="1" parent="1" source="1WdxroztGDoRLidxNaA0-84" style="endArrow=classic;html=1;rounded=0;exitX=0.149;exitY=-0.008;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="570" y="900" as="sourcePoint" />
-            <mxPoint x="1000" y="900" as="targetPoint" />
+            <mxPoint x="1000" y="830" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-49" parent="1" style="text;whiteSpace=wrap;" value="[ReplacementSuggestion]" vertex="1">
@@ -287,7 +288,10 @@
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-59" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="740" y="810" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="700" y="810" />
+            </Array>
+            <mxPoint x="700" y="770" as="sourcePoint" />
             <mxPoint x="930" y="810" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -311,6 +315,60 @@
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-66" parent="1" style="text;whiteSpace=wrap;" value="AnalysisReport" vertex="1">
           <mxGeometry height="40" width="110" x="-560" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-1" parent="1" style="swimlane;" value="Tests" vertex="1">
+          <mxGeometry height="250" width="510" x="-440" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-2" parent="pKNMlktk48adDu8VhVlw-1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Tests экспортирует функции:&lt;/div&gt;&lt;div&gt;runTests :: IO () — запуск тестов.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prop_densityInRange :: Glyph -&amp;gt; Bool — плотность глифа находится в диапазоне [0; 1].&lt;/div&gt;&lt;div&gt;prop_readabilityInRange :: Glyph -&amp;gt; Bool — читаемость глифа находится в диапазоне [0; 1].&lt;/div&gt;&lt;div&gt;testAnalyzePreservesGlyphCount :: BDFFont -&amp;gt; Bool — число метрик глифов равно числу глифов шрифта.&lt;/div&gt;&lt;div&gt;testDetectLowDensity :: DetectionThresholds -&amp;gt; FontMetrics -&amp;gt; Bool — низкая плотность определяется как аномалия.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="475" x="15" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="L" vertex="1">
+          <mxGeometry height="30" width="30" x="1260" y="-110" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-5" edge="1" parent="1" source="1WdxroztGDoRLidxNaA0-91" style="endArrow=classic;html=1;rounded=0;exitX=0.898;exitY=-0.013;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="pKNMlktk48adDu8VhVlw-4" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="900" y="30" as="sourcePoint" />
+            <mxPoint x="950" y="-20" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="T" vertex="1">
+          <mxGeometry height="30" width="30" x="-560" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-7" edge="1" parent="1" source="pKNMlktk48adDu8VhVlw-6" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-410" y="1390" as="sourcePoint" />
+            <mxPoint x="-440" y="1325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-8" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pKNMlktk48adDu8VhVlw-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="480" y="770" as="sourcePoint" />
+            <mxPoint x="480" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="T" vertex="1">
+          <mxGeometry height="30" width="30" x="470" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-10" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;Glyph,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;BDFFont&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="60" x="480" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-11" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pKNMlktk48adDu8VhVlw-13" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="515" />
+            </Array>
+            <mxPoint x="1280" y="460" as="sourcePoint" />
+            <mxPoint x="1390" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-12" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;DetectionThresholds&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="140" x="1280" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="T" vertex="1">
+          <mxGeometry height="30" width="30" x="1400" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-14" parent="1" style="text;whiteSpace=wrap;html=1;" value="Text" vertex="1">
+          <mxGeometry height="40" width="90" x="1280" y="-75" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
