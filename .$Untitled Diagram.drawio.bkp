@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="g8gxatPBcLfHt5_yAsHy">
-    <mxGraphModel dx="3505" dy="2713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="4470" dy="3300" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,7 +13,7 @@
         <mxCell id="1WdxroztGDoRLidxNaA0-8" parent="1" style="swimlane;" value="Input.CLI" vertex="1">
           <mxGeometry height="220" width="480" x="250" y="260" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-9" parent="1WdxroztGDoRLidxNaA0-8" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;&lt;div&gt;Input.CLI экспортирует функции:&lt;/div&gt;&lt;div&gt;runCLI :: AppConfig -&amp;gt; IO () — запуск меню и обработка действий пользователя.&lt;/div&gt;&lt;div&gt;askBDFPath :: IO FilePath — ввод пути к анализируемому BDF-файлу.&lt;/div&gt;&lt;div&gt;askSavePath :: IO (Maybe FilePath) — ввод пути сохранения отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;AppConfig, FilePath, Maybe, Either, AppError, AnalysisReport, IO.&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-9" parent="1WdxroztGDoRLidxNaA0-8" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;Input.CLI экспортирует функции:&lt;/div&gt;&lt;div&gt;runCLI :: AppConfig -&amp;gt; IO () — запуск меню и обработка действий пользователя.&lt;/div&gt;&lt;div&gt;askBDFPath :: IO FilePath — ввод пути к анализируемому BDF-файлу.&lt;/div&gt;&lt;div&gt;askSavePath :: IO (Maybe FilePath) — ввод пути сохранения отчёта.&lt;/div&gt;&lt;div&gt;showReportResult :: Either AppError AnalysisReport -&amp;gt; IO () — показ результата анализа.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;AppConfig, FilePath, Maybe, Either, AppError, AnalysisReport, IO.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="160" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-11" parent="1" style="swimlane;" value="  Config.App " vertex="1">
@@ -85,7 +85,7 @@
         <mxCell id="1WdxroztGDoRLidxNaA0-97" parent="1" style="swimlane;" value=" Report" vertex="1">
           <mxGeometry height="350" width="485" x="925" y="550" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-98" parent="1WdxroztGDoRLidxNaA0-97" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Report экспортирует функции:&lt;/div&gt;&lt;div&gt;assembleReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; :: BDFFont&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; FontMetrics&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [Anomaly]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [ReplacementSuggestion]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; AnalysisReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; — сборка итогового отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;formatReportText :: AnalysisReport -&amp;gt; Text&lt;/div&gt;&lt;div&gt;&amp;nbsp; — форматирование отчёта для вывода.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Report экспортирует типы:&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;BDFFont, FontMetrics, GlyphMetrics, Anomaly, ReplacementSuggestion, AnalysisReport, ReportSection, Text, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-98" parent="1WdxroztGDoRLidxNaA0-97" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Report экспортирует функции:&lt;/div&gt;&lt;div&gt;assembleReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; :: BDFFont&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; FontMetrics&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [Anomaly]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; [ReplacementSuggestion]&lt;/div&gt;&lt;div&gt;&amp;nbsp; -&amp;gt; AnalysisReport&lt;/div&gt;&lt;div&gt;&amp;nbsp; — сборка итогового отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;formatReportText :: AnalysisReport -&amp;gt; Text&lt;/div&gt;&lt;div&gt;&amp;nbsp; — форматирование отчёта для вывода.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Report экспортирует типы:&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;ReportSection — раздел отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;BDFFont, FontMetrics, GlyphMetrics, Anomaly, ReplacementSuggestion, AnalysisReport, ReportSection, Text, List.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="290" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="L" vertex="1">
@@ -280,10 +280,19 @@
           <mxGeometry height="40" width="170" x="1010" y="910" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-52" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="AR" vertex="1">
-          <mxGeometry height="30" width="30" x="765" y="570" as="geometry" />
+          <mxGeometry height="30" width="30" x="815" y="550" as="geometry" />
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-53" parent="1" style="text;whiteSpace=wrap;" value="AnalysisReport" vertex="1">
-          <mxGeometry height="40" width="110" x="815" y="560" as="geometry" />
+          <mxGeometry height="40" width="110" x="980" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_NXFcUPBCpxkDEqAN7-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="AR" vertex="1">
+          <mxGeometry height="30" width="30" x="570" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_NXFcUPBCpxkDEqAN7-57" edge="1" parent="1" source="l2_NXFcUPBCpxkDEqAN7-56" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.698;entryY=0.007;entryDx=0;entryDy=0;entryPerimeter=0;" target="1WdxroztGDoRLidxNaA0-8" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="480" y="470" as="sourcePoint" />
+            <mxPoint x="530" y="420" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-59" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -292,25 +301,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="l2_NXFcUPBCpxkDEqAN7-60" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(27, 29, 30); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;FontMetrics&lt;/span&gt;" vertex="1">
-          <mxGeometry height="40" width="100" x="810" y="780" as="geometry" />
-        </mxCell>
-        <mxCell id="l2_NXFcUPBCpxkDEqAN7-61" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="l2_NXFcUPBCpxkDEqAN7-52" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="920" y="585" as="sourcePoint" />
-            <mxPoint x="900" y="580" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="l2_NXFcUPBCpxkDEqAN7-64" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="AR" vertex="1">
-          <mxGeometry height="30" width="30" x="-600" y="700" as="geometry" />
-        </mxCell>
-        <mxCell id="l2_NXFcUPBCpxkDEqAN7-65" edge="1" parent="1" source="l2_NXFcUPBCpxkDEqAN7-64" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="-110" y="640" as="sourcePoint" />
-            <mxPoint x="-440" y="715" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="l2_NXFcUPBCpxkDEqAN7-66" parent="1" style="text;whiteSpace=wrap;" value="AnalysisReport" vertex="1">
-          <mxGeometry height="40" width="110" x="-560" y="690" as="geometry" />
+          <mxGeometry height="40" width="100" x="780" y="780" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
