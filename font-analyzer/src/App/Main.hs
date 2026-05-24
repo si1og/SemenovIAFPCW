@@ -1,8 +1,8 @@
 module App.Main (main) where
 
-import qualified Config.App as Config
-import qualified Input.CLI as CLI
-import qualified Logging
+import Config.App qualified as Config
+import Input.CLI qualified as CLI
+import Logging qualified
 
 main :: IO ()
 main = do
