@@ -102,4 +102,7 @@ data AppError
 data ParseError
   = EmptyBDF
   | InvalidBDF Text
+  | MissingFontName
+  | MissingGlyphEncoding Text
+  | MissingGlyphBitmap Text
   deriving (Eq, Show)
