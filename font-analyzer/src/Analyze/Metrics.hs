@@ -1,12 +1,13 @@
 module Analyze.Metrics
-  ( analyzeFont
-  , buildGlyphMetrics
-  , calcReadability
-  , calcProportion
-  , calcFillDensity
-  , calcDistinctness
-  , glyphDistance
-  ) where
+  ( analyzeFont,
+    buildGlyphMetrics,
+    calcReadability,
+    calcProportion,
+    calcFillDensity,
+    calcDistinctness,
+    glyphDistance,
+  )
+where
 
 import Data.Char (digitToInt, isHexDigit)
 import Data.List (delete, foldl', maximumBy)
@@ -20,14 +21,14 @@ analyzeFont font = FontMetrics (map (buildGlyphMetrics font) (fontGlyphs font))
 buildGlyphMetrics :: BDFFont -> Glyph -> GlyphMetrics
 buildGlyphMetrics font glyph =
   GlyphMetrics
-    { gmGlyph = glyph
-    , gmReadability = calcReadability glyph
-    , gmProportion = calcProportion glyph
-    , gmDensity = calcFillDensity glyph
-    , gmDistinctness = calcDistinctness glyph (fontGlyphs font)
+    { gmGlyph = glyph,
+      gmReadability = calcReadability glyph,
+      gmProportion = calcProportion glyph,
+      gmDensity = calcFillDensity glyph,
+      gmDistinctness = calcDistinctness glyph (fontGlyphs font)
     }
 
--- Source: Flood fill connected-component idea:
+-- идея взята из алгоритма flood fill:
 -- https://en.wikipedia.org/wiki/Flood_fill
 -- https://rosettacode.org/wiki/Bitmap/Flood_fill#Haskell
 calcReadability :: Glyph -> ReadabilityScore
@@ -35,6 +36,8 @@ calcReadability glyph
   | totalPixels == 0 = 0
   | filledPixels == 0 = 0
   | otherwise =
+      -- веса эвристические: плотность важнее всего, связность чуть слабее,
+      -- покрытие bounding box используется как дополнительный фактор; сумма равна 1
       clamp01
         ( 0.45 * densityBalance
             + 0.35 * mainComponentRatio
@@ -55,7 +58,7 @@ calcReadability glyph
     mainComponentRatio = ratio largestComponent filledPixels
     boundingBoxCoverage = ratio (filledBoundingBoxArea pixels) totalPixels
 
--- Source: glyph dimensions and bitmap metrics:
+-- расчёт основан на размерах bitmap-глифа:
 -- https://freetype.org/freetype2/docs/glyphs/glyphs-3.html
 calcProportion :: Glyph -> ProportionScore
 calcProportion glyph =
@@ -63,14 +66,14 @@ calcProportion glyph =
     (_width, 0) -> 0
     (width, height) -> fromIntegral width / fromIntegral height
 
--- Source: BDF bitmap rows are represented as hexadecimal bitmap data:
+-- строки bitmap в bdf представлены шестнадцатеричными значениями:
 -- https://font.tomchen.org/bdf_spec/examples/
 calcFillDensity :: Glyph -> FillRatio
 calcFillDensity glyph =
   let pixels = glyphPixels glyph
-  in ratio (countFilled pixels) (bitmapArea pixels)
+   in ratio (countFilled pixels) (bitmapArea pixels)
 
--- Source: modified Hamming-distance style comparison for glyph bitmaps:
+-- сравнение основано на модифицированной мере хэмминга для bitmap-глифов:
 -- Modified Hamming Distance Measure.pdf
 calcDistinctness :: Glyph -> [Glyph] -> DistinctnessScore
 calcDistinctness glyph glyphs =
@@ -78,7 +81,7 @@ calcDistinctness glyph glyphs =
     [] -> 1
     others -> clamp01 (minimum (map (glyphDistance glyph) others))
 
--- Source: modified Hamming-distance style comparison for glyph bitmaps:
+-- сравнение основано на модифицированной мере хэмминга для bitmap-глифов:
 -- Modified Hamming Distance Measure.pdf
 glyphDistance :: Glyph -> Glyph -> Double
 glyphDistance left right =
@@ -102,10 +105,10 @@ decodeHexRow =
 
 hexDigitBits :: Char -> [Bool]
 hexDigitBits char =
-  [ testBitValue 8
-  , testBitValue 4
-  , testBitValue 2
-  , testBitValue 1
+  [ testBitValue 8,
+    testBitValue 4,
+    testBitValue 2,
+    testBitValue 1
   ]
   where
     value = digitToInt char
@@ -126,7 +129,7 @@ bitmapSize pixels = (maximum (0 : map length pixels), length pixels)
 bitmapArea :: [[Bool]] -> Int
 bitmapArea pixels =
   let (width, height) = bitmapSize pixels
-  in width * height
+   in width * height
 
 countFilled :: [[Bool]] -> Int
 countFilled = length . filter id . concat
@@ -140,13 +143,13 @@ filledBoundingBoxArea pixels =
           ys = map snd coordinates
           width = maximum xs - minimum xs + 1
           height = maximum ys - minimum ys + 1
-      in width * height
+       in width * height
 
 filledCoordinates :: [[Bool]] -> [(Int, Int)]
 filledCoordinates pixels =
   [ (x, y)
-  | (y, row) <- zip [0 ..] pixels
-  , (x, True) <- zip [0 ..] row
+    | (y, row) <- zip [0 ..] pixels,
+      (x, True) <- zip [0 ..] row
   ]
 
 connectedComponents :: [[Bool]] -> [[(Int, Int)]]
@@ -156,7 +159,7 @@ connectedComponents pixels = go [] (filledCoordinates pixels)
     go components (point : remaining) =
       let component = floodFill remaining [point] []
           unvisited = foldl' (flip delete) remaining component
-      in go (component : components) unvisited
+       in go (component : components) unvisited
 
 floodFill :: [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)]
 floodFill _ [] visited = visited
@@ -164,14 +167,14 @@ floodFill unvisited (point : queue) visited
   | point `elem` visited = floodFill unvisited queue visited
   | otherwise =
       let adjacent = filter (`elem` unvisited) (neighbors point)
-      in floodFill unvisited (queue <> adjacent) (point : visited)
+       in floodFill unvisited (queue <> adjacent) (point : visited)
 
 neighbors :: (Int, Int) -> [(Int, Int)]
 neighbors (x, y) =
   [ (x + dx, y + dy)
-  | dx <- [-1 .. 1]
-  , dy <- [-1 .. 1]
-  , (dx, dy) /= (0, 0)
+    | dx <- [-1 .. 1],
+      dy <- [-1 .. 1],
+      (dx, dy) /= (0, 0)
   ]
 
 flattenNormalized :: Glyph -> Int -> Int -> [Bool]
