@@ -1,0 +1,85 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.38.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           font-analyzer
+version:        0.1.0.0
+description:    BDF bitmap font analyzer coursework.
+homepage:       https://github.com/ilyasemenov/font-analyzer#readme
+bug-reports:    https://github.com/ilyasemenov/font-analyzer/issues
+author:         Ilya Semenov
+maintainer:     ilya@example.com
+copyright:      2026 Ilya Semenov
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/ilyasemenov/font-analyzer
+
+library
+  exposed-modules:
+      Analyze.Metrics
+      App.Main
+      Config.App
+      Diagnose.Anomaly
+      Diagnose.Replacement
+      Domain.Types
+      Input.BDF
+      Input.CLI
+      Logging
+      Output
+      Reference.Database
+      Report
+  other-modules:
+      Paths_font_analyzer
+  autogen-modules:
+      Paths_font_analyzer
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , text
+    , time
+  default-language: Haskell2010
+
+executable font-analyzer-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_font_analyzer
+  autogen-modules:
+      Paths_font_analyzer
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , font-analyzer
+    , text
+    , time
+  default-language: Haskell2010
+
+test-suite font-analyzer-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_font_analyzer
+  autogen-modules:
+      Paths_font_analyzer
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , font-analyzer
+    , text
+    , time
+  default-language: Haskell2010
