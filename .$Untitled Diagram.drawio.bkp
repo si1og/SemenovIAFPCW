@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="g8gxatPBcLfHt5_yAsHy">
-    <mxGraphModel dx="3476" dy="3166" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="4250" dy="2993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,7 +13,7 @@
         <mxCell id="1WdxroztGDoRLidxNaA0-8" parent="1" style="swimlane;" value="Input.CLI" vertex="1">
           <mxGeometry height="220" width="480" x="250" y="260" as="geometry" />
         </mxCell>
-        <mxCell id="1WdxroztGDoRLidxNaA0-9" parent="1WdxroztGDoRLidxNaA0-8" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;&lt;div&gt;Input.CLI экспортирует функции:&lt;/div&gt;&lt;div&gt;runCLI :: AppConfig -&amp;gt; IO () — запуск меню и обработка действий пользователя.&lt;/div&gt;&lt;div&gt;askBDFPath :: IO FilePath — ввод пути к анализируемому BDF-файлу.&lt;/div&gt;&lt;div&gt;askSavePath :: IO (Maybe FilePath) — ввод пути сохранения отчёта.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Используемые типы:&lt;/div&gt;&lt;div&gt;AppConfig, FilePath, Maybe, Either, AppError, AnalysisReport, IO.&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="1WdxroztGDoRLidxNaA0-9" parent="1WdxroztGDoRLidxNaA0-8" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;&lt;div&gt;Input.CLI экспортирует функции:&lt;/div&gt;&lt;div&gt;runCLI :: AppConfig -&amp;gt; IO () — запуск меню и обработка действий пользователя.&lt;/div&gt;&lt;div&gt;askBDFPath :: IO FilePath — ввод пути к анализируемому BDF-файлу.&lt;/div&gt;&lt;div&gt;askSavePath :: IO (Maybe FilePath) — ввод пути сохранения отчёта.&lt;/div&gt;&lt;/div&gt;&lt;div&gt;runAnalysisFlow :: AppConfig -&amp;gt; FilePath -&amp;gt; Maybe FilePath -&amp;gt; IO ()&lt;/div&gt;" vertex="1">
           <mxGeometry height="160" width="445" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="1WdxroztGDoRLidxNaA0-11" parent="1" style="swimlane;" value="  Config.App " vertex="1">
@@ -366,6 +366,9 @@
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="T" vertex="1">
           <mxGeometry height="30" width="30" x="1400" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="pKNMlktk48adDu8VhVlw-14" parent="1" style="text;whiteSpace=wrap;html=1;" value="Text" vertex="1">
+          <mxGeometry height="40" width="90" x="1280" y="-75" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

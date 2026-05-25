@@ -19,7 +19,16 @@ extra-source-files:
     README.md
     CHANGELOG.md
 data-files:
+    "data/Terminus 12n.bdf"
+    "data/Terminus 14n.bdf"
+    "data/Terminus 16n.bdf"
     "data/Terminus 16v.bdf"
+    "data/Terminus 18n.bdf"
+    "data/Terminus 20n.bdf"
+    "data/Terminus 22n.bdf"
+    "data/Terminus 24n.bdf"
+    "data/Terminus 28n.bdf"
+    "data/Terminus 32n.bdf"
 
 source-repository head
   type: git
