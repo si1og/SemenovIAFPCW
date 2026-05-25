@@ -57,21 +57,21 @@ formatPreamble options thresholds =
   where
     selectedMetricDescriptions =
       concat
-        [ [ Text.pack "readability  — читаемость глифа, допустимо: "
+        [ [ Text.pack "читаемость       — насколько легко распознать глиф, допустимо: "
               <> showScore (dtMinReadability thresholds)
               <> Text.pack " <= value <= 1.0"
             | aoAnalyzeReadability options
           ],
-          [ Text.pack "proportion   — отношение ширины bitmap к высоте"
+          [ Text.pack "пропорция        — отношение ширины bitmap к высоте"
             | aoAnalyzeProportion options
           ],
-          [ Text.pack "density      — доля закрашенных пикселей, допустимо: "
+          [ Text.pack "плотность        — доля закрашенных пикселей, допустимо: "
               <> showScore (dtMinDensity thresholds)
               <> Text.pack " <= value <= "
               <> showScore (dtMaxDensity thresholds)
             | aoAnalyzeDensity options
           ],
-          [ Text.pack "distinctness — различимость относительно ближайших отличающихся глифов, допустимо: "
+          [ Text.pack "различимость     — отличие от ближайшего визуально похожего глифа, допустимо: "
               <> showScore (dtMinDistinctness thresholds)
               <> Text.pack " <= value <= 1.0"
             | aoAnalyzeDistinctness options
@@ -111,12 +111,12 @@ comparedGlyphBlock options thresholds metrics =
 
 metricHeader :: AnalysisOptions -> [Text]
 metricHeader options =
-  [Text.pack "glyph", Text.pack "code"]
-    <> [Text.pack "readability" | aoAnalyzeReadability options]
-    <> [Text.pack "proportion" | aoAnalyzeProportion options]
-    <> [Text.pack "density" | aoAnalyzeDensity options]
-    <> [Text.pack "distinctness" | aoAnalyzeDistinctness options]
-    <> [Text.pack "compared_with" | aoAnalyzeDistinctness options]
+  [Text.pack "символ", Text.pack "код"]
+    <> [Text.pack "читаемость" | aoAnalyzeReadability options]
+    <> [Text.pack "пропорциональность" | aoAnalyzeProportion options]
+    <> [Text.pack "плотность" | aoAnalyzeDensity options]
+    <> [Text.pack "различимость" | aoAnalyzeDistinctness options]
+    <> [Text.pack "похожий глиф" | aoAnalyzeDistinctness options]
 
 metricColumns :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> [Text]
 metricColumns options thresholds metrics =
@@ -170,26 +170,26 @@ formatAnomalyReason :: DetectionThresholds -> Maybe GlyphMetrics -> AnomalyReaso
 formatAnomalyReason thresholds metrics reason =
   case (metrics, reason) of
     (Just glyphMetrics, LowReadability) ->
-      Text.pack "readability: "
+      Text.pack "читаемость: "
         <> showScore (gmReadability glyphMetrics)
         <> Text.pack " < "
         <> showScore (dtMinReadability thresholds)
     (Just glyphMetrics, TooSparse) ->
-      Text.pack "density: "
+      Text.pack "плотность: "
         <> showScore (gmDensity glyphMetrics)
         <> Text.pack " < "
         <> showScore (dtMinDensity thresholds)
     (Just glyphMetrics, TooDense) ->
-      Text.pack "density: "
+      Text.pack "плотность: "
         <> showScore (gmDensity glyphMetrics)
         <> Text.pack " > "
         <> showScore (dtMaxDensity thresholds)
     (Just glyphMetrics, LowDistinctness) ->
-      Text.pack "distinctness: "
+      Text.pack "различимость: "
         <> showScore (gmDistinctness glyphMetrics)
         <> Text.pack " < "
         <> showScore (dtMinDistinctness thresholds)
-    (_, BadProportion) -> Text.pack "proportion: нарушена пропорция"
+    (_, BadProportion) -> Text.pack "пропорциональность: нарушена пропорциональность"
     _ -> formatAnomalyReasonName reason
 
 formatAnomalyReasonName :: AnomalyReason -> Text
@@ -212,11 +212,11 @@ formatReplacements suggestions =
 
 replacementHeader :: [Text]
 replacementHeader =
-  [ Text.pack "source",
-    Text.pack "code",
-    Text.pack "replacement",
-    Text.pack "replacement_code",
-    Text.pack "similarity"
+  [ Text.pack "исходный символ",
+    Text.pack "код",
+    Text.pack "замена",
+    Text.pack "код замены",
+    Text.pack "сходство"
   ]
 
 replacementColumns :: ReplacementSuggestion -> [Text]

@@ -54,3 +54,7 @@
 [Info] пользователь выбрал настройку параметров анализа
 [Info] параметры анализа изменены: AnalysisOptions {aoAnalyzeReadability = False, aoAnalyzeProportion = True, aoAnalyzeDensity = True, aoAnalyzeDistinctness = True}
 [Info] пользователь выбрал запуск анализа
+[Info] пользователь выбрал запуск анализа
+[Info] запущен анализ bdf-файла
+[Info] отчёт сохранён: report.txt
+[Info] пользователь завершил работу
