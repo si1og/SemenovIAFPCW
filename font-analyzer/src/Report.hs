@@ -60,21 +60,21 @@ formatPreamble options thresholds =
         [ [ Text.pack "readability  — читаемость глифа, допустимо: "
               <> showScore (dtMinReadability thresholds)
               <> Text.pack " <= value <= 1.0"
-          | aoAnalyzeReadability options
-          ]
-        , [ Text.pack "proportion   — отношение ширины bitmap к высоте"
-          | aoAnalyzeProportion options
-          ]
-        , [ Text.pack "density      — доля закрашенных пикселей, допустимо: "
+            | aoAnalyzeReadability options
+          ],
+          [ Text.pack "proportion   — отношение ширины bitmap к высоте"
+            | aoAnalyzeProportion options
+          ],
+          [ Text.pack "density      — доля закрашенных пикселей, допустимо: "
               <> showScore (dtMinDensity thresholds)
               <> Text.pack " <= value <= "
               <> showScore (dtMaxDensity thresholds)
-          | aoAnalyzeDensity options
-          ]
-        , [ Text.pack "distinctness — различимость относительно ближайших отличающихся глифов, допустимо: "
+            | aoAnalyzeDensity options
+          ],
+          [ Text.pack "distinctness — различимость относительно ближайших отличающихся глифов, допустимо: "
               <> showScore (dtMinDistinctness thresholds)
               <> Text.pack " <= value <= 1.0"
-          | aoAnalyzeDistinctness options
+            | aoAnalyzeDistinctness options
           ]
         ]
 
@@ -127,7 +127,7 @@ metricColumns options thresholds metrics =
     <> [showScore (gmProportion metrics) | aoAnalyzeProportion options]
     <> [showScore (gmDensity metrics) | aoAnalyzeDensity options]
     <> [showScore (gmDistinctness metrics) | aoAnalyzeDistinctness options]
-    <> [ comparedWithValue | aoAnalyzeDistinctness options]
+    <> [comparedWithValue | aoAnalyzeDistinctness options]
   where
     comparedWithValue =
       if gmDistinctness metrics < dtMinDistinctness thresholds
@@ -147,8 +147,8 @@ formatAnomalies report
 
 anomalyHeader :: [Text]
 anomalyHeader =
-  [ Text.pack "glyph",
-    Text.pack "code",
+  [ Text.pack "символ",
+    Text.pack "код символа",
     Text.pack "нарушенные критерии"
   ]
 
