@@ -1,29 +1,43 @@
 module Diagnose.Anomaly
   ( detectAnomalies
+  , detectAnomaliesWithOptions
   , classifyAnomaly
+  , classifyAnomalyWithOptions
   , isAnomalous
+  , isAnomalousWithOptions
   ) where
 
 import Domain.Types
 
 detectAnomalies :: DetectionThresholds -> FontMetrics -> [Anomaly]
-detectAnomalies thresholds =
-  map toAnomaly . filter (isAnomalous thresholds) . fmGlyphMetrics
+detectAnomalies = detectAnomaliesWithOptions defaultAnalysisOptions
+
+detectAnomaliesWithOptions :: AnalysisOptions -> DetectionThresholds -> FontMetrics -> [Anomaly]
+detectAnomaliesWithOptions options thresholds =
+  map toAnomaly . filter (isAnomalousWithOptions options thresholds) . fmGlyphMetrics
   where
     toAnomaly metrics =
       Anomaly
         { anomalyGlyph = gmGlyph metrics
-        , anomalyReasons = classifyAnomaly thresholds metrics
+        , anomalyReasons = classifyAnomalyWithOptions options thresholds metrics
         }
 
 classifyAnomaly :: DetectionThresholds -> GlyphMetrics -> [AnomalyReason]
-classifyAnomaly thresholds metrics =
+classifyAnomaly = classifyAnomalyWithOptions defaultAnalysisOptions
+
+classifyAnomalyWithOptions :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> [AnomalyReason]
+classifyAnomalyWithOptions options thresholds metrics =
   concat
-    [ [LowReadability | gmReadability metrics < dtMinReadability thresholds]
-    , [TooSparse | gmDensity metrics < dtMinDensity thresholds]
-    , [TooDense | gmDensity metrics > dtMaxDensity thresholds]
-    , [LowDistinctness | gmDistinctness metrics < dtMinDistinctness thresholds]
+    [ [LowReadability | aoAnalyzeReadability options && gmReadability metrics < dtMinReadability thresholds]
+    , [] -- proportion is calculated and shown as a metric; no threshold is defined for it in DetectionThresholds.
+    , [TooSparse | aoAnalyzeDensity options && gmDensity metrics < dtMinDensity thresholds]
+    , [TooDense | aoAnalyzeDensity options && gmDensity metrics > dtMaxDensity thresholds]
+    , [LowDistinctness | aoAnalyzeDistinctness options && gmDistinctness metrics < dtMinDistinctness thresholds]
     ]
 
 isAnomalous :: DetectionThresholds -> GlyphMetrics -> Bool
-isAnomalous thresholds metrics = not (null (classifyAnomaly thresholds metrics))
+isAnomalous = isAnomalousWithOptions defaultAnalysisOptions
+
+isAnomalousWithOptions :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> Bool
+isAnomalousWithOptions options thresholds metrics =
+  not (null (classifyAnomalyWithOptions options thresholds metrics))

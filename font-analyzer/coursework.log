@@ -18,3 +18,19 @@
 [Info] отчёт сохранён
 [Info] запущен анализ bdf-файла
 [Info] отчёт сохранён
+[Info] запущен анализ bdf-файла
+[Info] отчёт сохранён
+[Info] запущен анализ bdf-файла
+[Info] отчёт сохранён
+[Info] запущен анализ bdf-файла
+[Info] пользователь выбрал настройку отчёта
+[Info] параметры отчёта изменены: ReportOptions {roShowDescription = True, roShowMetrics = True, roShowBitmaps = True, roShowAnomalies = True, roShowReplacements = True}
+[Info] пользователь выбрал запуск анализа
+[Info] запущен анализ bdf-файла
+[Info] отчёт сохранён: report.txt
+[Info] пользователь выбрал настройку отчёта
+[Info] параметры отчёта изменены: ReportOptions {roShowDescription = True, roShowMetrics = True, roShowBitmaps = True, roShowAnomalies = True, roShowReplacements = True}
+[Info] пользователь завершил работу
+[Info] пользователь выбрал запуск анализа
+[Info] запущен анализ bdf-файла
+[Info] отчёт сохранён: report.txt

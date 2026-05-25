@@ -1,122 +1,138 @@
 module Report
-  ( assembleReport
-  , formatReportText
-  ) where
+  ( assembleReport,
+    formatReportText,
+    formatReportTextWithOptions,
+  )
+where
 
-import Data.Text (Text)
 import Data.Char (digitToInt, isHexDigit)
-import qualified Data.Text as Text
+import Data.Text (Text)
+import Data.Text qualified as Text
 import Domain.Types
 import Numeric (showFFloat)
 
-assembleReport
-  :: BDFFont
-  -> FontMetrics
-  -> DetectionThresholds
-  -> [Anomaly]
-  -> [ReplacementSuggestion]
-  -> AnalysisReport
+assembleReport ::
+  BDFFont ->
+  FontMetrics ->
+  DetectionThresholds ->
+  [Anomaly] ->
+  [ReplacementSuggestion] ->
+  AnalysisReport
 assembleReport font metrics thresholds anomalies replacements =
   AnalysisReport
-    { reportFont = font
-    , reportMetrics = metrics
-    , reportThresholds = thresholds
-    , reportAnomalies = anomalies
-    , reportReplacements = replacements
+    { reportFont = font,
+      reportMetrics = metrics,
+      reportThresholds = thresholds,
+      reportAnomalies = anomalies,
+      reportReplacements = replacements
     }
 
 formatReportText :: AnalysisReport -> Text
-formatReportText report =
+formatReportText = formatReportTextWithOptions defaultAnalysisOptions
+
+formatReportTextWithOptions :: AnalysisOptions -> AnalysisReport -> Text
+formatReportTextWithOptions options report =
   Text.intercalate
     (Text.pack "\n\n")
-    [ formatHeader report
-    , formatPreamble (reportThresholds report)
-    , formatMetrics (reportThresholds report) (reportMetrics report)
-    , formatAnomalies report
-    , formatReplacements (reportReplacements report)
+    [ formatHeader report,
+      formatPreamble options (reportThresholds report),
+      formatMetrics options (reportThresholds report) (reportMetrics report),
+      formatAnomalies report,
+      formatReplacements (reportReplacements report)
     ]
 
 formatHeader :: AnalysisReport -> Text
 formatHeader report =
   Text.unlines
-    [ Text.pack "отчёт анализа bdf-шрифта"
-    , Text.pack "шрифт: " <> fontName (reportFont report)
-    , Text.pack "глифов: " <> showText (length (fontGlyphs (reportFont report)))
-    , Text.pack "аномалий: " <> showText (length (reportAnomalies report))
-    , Text.pack "предложений замены: " <> showText (length (reportReplacements report))
+    [ Text.pack "отчёт анализа bdf-шрифта",
+      Text.pack "шрифт: " <> fontName (reportFont report),
+      Text.pack "глифов: " <> showText (length (fontGlyphs (reportFont report))),
+      Text.pack "аномалий: " <> showText (length (reportAnomalies report)),
+      Text.pack "предложений замены: " <> showText (length (reportReplacements report))
     ]
 
-formatPreamble :: DetectionThresholds -> Text
-formatPreamble thresholds =
-  Text.unlines
-    [ Text.pack "описание метрик:"
-    , Text.pack "readability  — читаемость глифа, допустимо: "
-        <> showScore (dtMinReadability thresholds)
-        <> Text.pack " <= value <= 1.0"
-    , Text.pack "proportion   — отношение ширины bitmap к высоте, используется как справочная метрика"
-    , Text.pack "density      — доля закрашенных пикселей, допустимо: "
-        <> showScore (dtMinDensity thresholds)
-        <> Text.pack " <= value <= "
-        <> showScore (dtMaxDensity thresholds)
-    , Text.pack "distinctness — различимость относительно ближайших отличающихся глифов, допустимо: "
-        <> showScore (dtMinDistinctness thresholds)
-        <> Text.pack " <= value <= 1.0"
-    ]
+formatPreamble :: AnalysisOptions -> DetectionThresholds -> Text
+formatPreamble options thresholds =
+  Text.unlines (Text.pack "параметры анализа:" : selectedMetricDescriptions)
+  where
+    selectedMetricDescriptions =
+      concat
+        [ [ Text.pack "readability  — читаемость глифа, допустимо: "
+              <> showScore (dtMinReadability thresholds)
+              <> Text.pack " <= value <= 1.0"
+          | aoAnalyzeReadability options
+          ]
+        , [ Text.pack "proportion   — отношение ширины bitmap к высоте"
+          | aoAnalyzeProportion options
+          ]
+        , [ Text.pack "density      — доля закрашенных пикселей, допустимо: "
+              <> showScore (dtMinDensity thresholds)
+              <> Text.pack " <= value <= "
+              <> showScore (dtMaxDensity thresholds)
+          | aoAnalyzeDensity options
+          ]
+        , [ Text.pack "distinctness — различимость относительно ближайших отличающихся глифов, допустимо: "
+              <> showScore (dtMinDistinctness thresholds)
+              <> Text.pack " <= value <= 1.0"
+          | aoAnalyzeDistinctness options
+          ]
+        ]
 
-formatMetrics :: DetectionThresholds -> FontMetrics -> Text
-formatMetrics thresholds metrics =
+formatMetrics :: AnalysisOptions -> DetectionThresholds -> FontMetrics -> Text
+formatMetrics options thresholds metrics =
   Text.intercalate (Text.pack "\n") (Text.pack "метрики глифов:" : header : separator : rows)
   where
     glyphMetrics = fmGlyphMetrics metrics
-    metricRows = map (metricColumns thresholds) glyphMetrics
-    widths = columnWidths ([metricHeader] <> metricRows)
-    header = formatColumns widths metricHeader
+    metricRows = map (metricColumns options thresholds) glyphMetrics
+    widths = columnWidths ([metricHeader options] <> metricRows)
+    header = formatColumns widths (metricHeader options)
     separator = Text.pack (replicate (Text.length header) '-')
-    rows = zipWith (formatGlyphMetricBlock thresholds widths) glyphMetrics metricRows
+    rows = zipWith (formatGlyphMetricBlock options thresholds widths) glyphMetrics metricRows
 
-formatGlyphMetricBlock :: DetectionThresholds -> [Int] -> GlyphMetrics -> [Text] -> Text
-formatGlyphMetricBlock thresholds widths metrics columns =
+formatGlyphMetricBlock :: AnalysisOptions -> DetectionThresholds -> [Int] -> GlyphMetrics -> [Text] -> Text
+formatGlyphMetricBlock options thresholds widths metrics columns =
   Text.unlines
-    ( [ formatColumns widths columns
-      , Text.pack "bitmap:"
-      , formatGlyphBitmap (gmGlyph metrics)
+    ( [ formatColumns widths columns,
+        Text.pack "bitmap:",
+        formatGlyphBitmap (gmGlyph metrics)
       ]
-        <> comparedGlyphBlock thresholds metrics
+        <> comparedGlyphBlock options thresholds metrics
     )
 
-comparedGlyphBlock :: DetectionThresholds -> GlyphMetrics -> [Text]
-comparedGlyphBlock thresholds metrics =
+comparedGlyphBlock :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> [Text]
+comparedGlyphBlock options thresholds metrics =
   case gmDistinctnessGlyph metrics of
     Just glyph
-      | gmDistinctness metrics < dtMinDistinctness thresholds ->
-          [ Text.pack "визуально похожий глиф: " <> formatGlyphRef glyph
-          , formatGlyphBitmap glyph
+      | aoAnalyzeDistinctness options && gmDistinctness metrics < dtMinDistinctness thresholds ->
+          [ Text.pack "визуально похожий глиф: " <> formatGlyphRef glyph,
+            formatGlyphBitmap glyph
           ]
     _ -> []
 
-metricHeader :: [Text]
-metricHeader =
-  [ Text.pack "glyph"
-  , Text.pack "code"
-  , Text.pack "readability"
-  , Text.pack "proportion"
-  , Text.pack "density"
-  , Text.pack "distinctness"
-  , Text.pack "compared_with"
-  ]
+metricHeader :: AnalysisOptions -> [Text]
+metricHeader options =
+  [Text.pack "glyph", Text.pack "code"]
+    <> [Text.pack "readability" | aoAnalyzeReadability options]
+    <> [Text.pack "proportion" | aoAnalyzeProportion options]
+    <> [Text.pack "density" | aoAnalyzeDensity options]
+    <> [Text.pack "distinctness" | aoAnalyzeDistinctness options]
+    <> [Text.pack "compared_with" | aoAnalyzeDistinctness options]
 
-metricColumns :: DetectionThresholds -> GlyphMetrics -> [Text]
-metricColumns thresholds metrics =
-  [ glyphName (gmGlyph metrics)
-  , showText (glyphCode (gmGlyph metrics))
-  , showScore (gmReadability metrics)
-  , showScore (gmProportion metrics)
-  , showScore (gmDensity metrics)
-  , showScore (gmDistinctness metrics)
-  , if gmDistinctness metrics < dtMinDistinctness thresholds
-      then maybe (Text.pack "-") formatGlyphRef (gmDistinctnessGlyph metrics)
-      else Text.pack "-"
+metricColumns :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> [Text]
+metricColumns options thresholds metrics =
+  [ glyphName (gmGlyph metrics),
+    showText (glyphCode (gmGlyph metrics))
   ]
+    <> [showScore (gmReadability metrics) | aoAnalyzeReadability options]
+    <> [showScore (gmProportion metrics) | aoAnalyzeProportion options]
+    <> [showScore (gmDensity metrics) | aoAnalyzeDensity options]
+    <> [showScore (gmDistinctness metrics) | aoAnalyzeDistinctness options]
+    <> [ comparedWithValue | aoAnalyzeDistinctness options]
+  where
+    comparedWithValue =
+      if gmDistinctness metrics < dtMinDistinctness thresholds
+        then maybe (Text.pack "-") formatGlyphRef (gmDistinctnessGlyph metrics)
+        else Text.pack "-"
 
 formatAnomalies :: AnalysisReport -> Text
 formatAnomalies report
@@ -131,16 +147,16 @@ formatAnomalies report
 
 anomalyHeader :: [Text]
 anomalyHeader =
-  [ Text.pack "glyph"
-  , Text.pack "code"
-  , Text.pack "нарушенные критерии"
+  [ Text.pack "glyph",
+    Text.pack "code",
+    Text.pack "нарушенные критерии"
   ]
 
 anomalyColumns :: AnalysisReport -> Anomaly -> [Text]
 anomalyColumns report anomaly =
-  [ glyphName (anomalyGlyph anomaly)
-  , showText (glyphCode (anomalyGlyph anomaly))
-  , Text.intercalate (Text.pack "; ") (map (formatAnomalyReason thresholds metrics) (anomalyReasons anomaly))
+  [ glyphName (anomalyGlyph anomaly),
+    showText (glyphCode (anomalyGlyph anomaly)),
+    Text.intercalate (Text.pack "; ") (map (formatAnomalyReason thresholds metrics) (anomalyReasons anomaly))
   ]
   where
     thresholds = reportThresholds report
@@ -196,20 +212,20 @@ formatReplacements suggestions =
 
 replacementHeader :: [Text]
 replacementHeader =
-  [ Text.pack "source"
-  , Text.pack "code"
-  , Text.pack "replacement"
-  , Text.pack "replacement_code"
-  , Text.pack "similarity"
+  [ Text.pack "source",
+    Text.pack "code",
+    Text.pack "replacement",
+    Text.pack "replacement_code",
+    Text.pack "similarity"
   ]
 
 replacementColumns :: ReplacementSuggestion -> [Text]
 replacementColumns suggestion =
-  [ glyphName source
-  , showText (glyphCode source)
-  , glyphName replacement
-  , showText (glyphCode replacement)
-  , showScore (rsSimilarity suggestion)
+  [ glyphName source,
+    showText (glyphCode source),
+    glyphName replacement,
+    showText (glyphCode replacement),
+    showScore (rsSimilarity suggestion)
   ]
   where
     source = anomalyGlyph (rsAnomaly suggestion)
@@ -229,10 +245,10 @@ formatBitmapRow =
 
 hexDigitBits :: Char -> [Bool]
 hexDigitBits char =
-  [ testBitValue 8
-  , testBitValue 4
-  , testBitValue 2
-  , testBitValue 1
+  [ testBitValue 8,
+    testBitValue 4,
+    testBitValue 2,
+    testBitValue 1
   ]
   where
     value = digitToInt char
@@ -273,5 +289,5 @@ safeHead (x : _) = Just x
 showScore :: Double -> Text
 showScore value = Text.pack (showFFloat (Just 3) value "")
 
-showText :: Show a => a -> Text
+showText :: (Show a) => a -> Text
 showText = Text.pack . show
