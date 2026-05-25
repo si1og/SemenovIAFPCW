@@ -47,7 +47,7 @@ defaultThresholds :: DetectionThresholds
 defaultThresholds =
   DetectionThresholds
     { dtMinReadability = 0.4
-    , dtMinDistinctness = 0.05
+    , dtMinDistinctness = 0.016
     , dtMinDensity = 0.05
     , dtMaxDensity = 0.85
     }

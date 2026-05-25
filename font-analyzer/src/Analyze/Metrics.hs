@@ -10,7 +10,7 @@ module Analyze.Metrics
 where
 
 import Data.Char (digitToInt, isHexDigit)
-import Data.List (delete, foldl', maximumBy, sort, sortOn)
+import Data.List (delete, foldl', maximumBy, sortOn)
 import Data.Ord (comparing)
 import Data.Text qualified as Text
 import Domain.Types
@@ -25,7 +25,8 @@ buildGlyphMetrics font glyph =
       gmReadability = calcReadability glyph,
       gmProportion = calcProportion glyph,
       gmDensity = calcFillDensity glyph,
-      gmDistinctness = calcDistinctness glyph (fontGlyphs font)
+      gmDistinctness = calcDistinctness glyph (fontGlyphs font),
+      gmDistinctnessGlyph = closestDistinctnessGlyph glyph (fontGlyphs font)
     }
 
 -- идея взята из алгоритма flood fill:
@@ -77,14 +78,18 @@ calcFillDensity glyph =
 -- Modified Hamming Distance Measure.pdf
 calcDistinctness :: Glyph -> [Glyph] -> DistinctnessScore
 calcDistinctness glyph glyphs =
+  maybe 1 (clamp01 . glyphDistance glyph) (closestDistinctnessGlyph glyph glyphs)
+
+closestDistinctnessGlyph :: Glyph -> [Glyph] -> Maybe Glyph
+closestDistinctnessGlyph glyph glyphs =
   case filter (/= glyph) glyphs of
-    [] -> 1
+    [] -> Nothing
     others ->
       let candidates = visuallySimilarCandidates glyph others
-          nearestDistances = filter (> 0) (sort (map (glyphDistance glyph) candidates))
-       in case nearestDistances of
-          [] -> 0
-          distance : _ -> clamp01 distance
+          nearestGlyphs = filter ((> 0) . fst) (sortOn fst (map (\other -> (glyphDistance glyph other, other)) candidates))
+       in case nearestGlyphs of
+          [] -> Nothing
+          (_distance, candidate) : _ -> Just candidate
 
 -- сравнение основано на модифицированной мере хэмминга для bitmap-глифов:
 -- Modified Hamming Distance Measure.pdf

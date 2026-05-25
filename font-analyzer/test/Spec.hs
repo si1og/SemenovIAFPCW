@@ -43,6 +43,7 @@ prop_detectNoAnomaliesForNormalMetrics glyph =
             , gmProportion = 1
             , gmDensity = 0.4
             , gmDistinctness = 0.7
+            , gmDistinctnessGlyph = Nothing
             }
         ]
 
@@ -63,6 +64,7 @@ instance Arbitrary GlyphMetrics where
       <*> choose (0, 10)
       <*> choose (0, 1)
       <*> choose (0, 1)
+      <*> arbitrary
 
 arbitraryText :: Gen Text.Text
 arbitraryText = Text.pack <$> arbitrary

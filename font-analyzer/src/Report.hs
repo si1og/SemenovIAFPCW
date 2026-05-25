@@ -31,9 +31,8 @@ formatReportText report =
     (Text.pack "\n\n")
     [ formatHeader report
     , formatPreamble (reportThresholds report)
-    , formatMetrics (reportMetrics report)
+    , formatMetrics (reportThresholds report) (reportMetrics report)
     , formatAnomalies report
-    , formatAnomalyGlyphs report
     , formatReplacements (reportReplacements report)
     ]
 
@@ -64,15 +63,36 @@ formatPreamble thresholds =
         <> Text.pack " <= value <= 1.0"
     ]
 
-formatMetrics :: FontMetrics -> Text
-formatMetrics metrics =
-  Text.unlines (Text.pack "метрики глифов:" : header : separator : rows)
+formatMetrics :: DetectionThresholds -> FontMetrics -> Text
+formatMetrics thresholds metrics =
+  Text.intercalate (Text.pack "\n") (Text.pack "метрики глифов:" : header : separator : rows)
   where
-    metricRows = map metricColumns (fmGlyphMetrics metrics)
+    glyphMetrics = fmGlyphMetrics metrics
+    metricRows = map (metricColumns thresholds) glyphMetrics
     widths = columnWidths ([metricHeader] <> metricRows)
     header = formatColumns widths metricHeader
     separator = Text.pack (replicate (Text.length header) '-')
-    rows = map (formatColumns widths) metricRows
+    rows = zipWith (formatGlyphMetricBlock thresholds widths) glyphMetrics metricRows
+
+formatGlyphMetricBlock :: DetectionThresholds -> [Int] -> GlyphMetrics -> [Text] -> Text
+formatGlyphMetricBlock thresholds widths metrics columns =
+  Text.unlines
+    ( [ formatColumns widths columns
+      , Text.pack "bitmap:"
+      , formatGlyphBitmap (gmGlyph metrics)
+      ]
+        <> comparedGlyphBlock thresholds metrics
+    )
+
+comparedGlyphBlock :: DetectionThresholds -> GlyphMetrics -> [Text]
+comparedGlyphBlock thresholds metrics =
+  case gmDistinctnessGlyph metrics of
+    Just glyph
+      | gmDistinctness metrics < dtMinDistinctness thresholds ->
+          [ Text.pack "визуально похожий глиф: " <> formatGlyphRef glyph
+          , formatGlyphBitmap glyph
+          ]
+    _ -> []
 
 metricHeader :: [Text]
 metricHeader =
@@ -82,16 +102,20 @@ metricHeader =
   , Text.pack "proportion"
   , Text.pack "density"
   , Text.pack "distinctness"
+  , Text.pack "compared_with"
   ]
 
-metricColumns :: GlyphMetrics -> [Text]
-metricColumns metrics =
+metricColumns :: DetectionThresholds -> GlyphMetrics -> [Text]
+metricColumns thresholds metrics =
   [ glyphName (gmGlyph metrics)
   , showText (glyphCode (gmGlyph metrics))
   , showScore (gmReadability metrics)
   , showScore (gmProportion metrics)
   , showScore (gmDensity metrics)
   , showScore (gmDistinctness metrics)
+  , if gmDistinctness metrics < dtMinDistinctness thresholds
+      then maybe (Text.pack "-") formatGlyphRef (gmDistinctnessGlyph metrics)
+      else Text.pack "-"
   ]
 
 formatAnomalies :: AnalysisReport -> Text
@@ -162,13 +186,13 @@ formatAnomalyReasonName LowDistinctness = Text.pack "низкая различи
 formatReplacements :: [ReplacementSuggestion] -> Text
 formatReplacements [] = Text.pack "замены: не предложены"
 formatReplacements suggestions =
-  Text.unlines (Text.pack "замены:" : header : separator : rows)
+  Text.intercalate (Text.pack "\n") (Text.pack "замены:" : header : separator : rows)
   where
     replacementRows = map replacementColumns suggestions
     widths = columnWidths ([replacementHeader] <> replacementRows)
     header = formatColumns widths replacementHeader
     separator = Text.pack (replicate (Text.length header) '-')
-    rows = map (formatColumns widths) replacementRows
+    rows = zipWith (formatReplacementBlock widths) suggestions replacementRows
 
 replacementHeader :: [Text]
 replacementHeader =
@@ -191,30 +215,9 @@ replacementColumns suggestion =
     source = anomalyGlyph (rsAnomaly suggestion)
     replacement = rgGlyph (rsReplacement suggestion)
 
-formatAnomalyGlyphs :: AnalysisReport -> Text
-formatAnomalyGlyphs report
-  | null (reportAnomalies report) = Text.pack "bitmap-глифы: не требуются"
-  | otherwise =
-      Text.unlines
-        (Text.pack "bitmap-глифы аномалий:" : map (formatAnomalyGlyph report) (reportAnomalies report))
-
-formatAnomalyGlyph :: AnalysisReport -> Anomaly -> Text
-formatAnomalyGlyph report anomaly =
-  Text.unlines
-    [ Text.pack ""
-    , glyphName source <> Text.pack " (" <> showText (glyphCode source) <> Text.pack ")"
-    , Text.pack "исходный:"
-    , formatGlyphBitmap source
-    , Text.pack "похожий эталон:"
-    , maybe (Text.pack "не найден") (formatGlyphBitmap . rgGlyph . rsReplacement) replacement
-    ]
-  where
-    source = anomalyGlyph anomaly
-    replacement = findReplacementFor anomaly (reportReplacements report)
-
-findReplacementFor :: Anomaly -> [ReplacementSuggestion] -> Maybe ReplacementSuggestion
-findReplacementFor anomaly =
-  safeHead . filter ((== anomaly) . rsAnomaly)
+formatReplacementBlock :: [Int] -> ReplacementSuggestion -> [Text] -> Text
+formatReplacementBlock widths _suggestion columns =
+  Text.unlines [formatColumns widths columns]
 
 formatGlyphBitmap :: Glyph -> Text
 formatGlyphBitmap glyph =
@@ -238,6 +241,10 @@ hexDigitBits char =
 pixelChar :: Bool -> Char
 pixelChar True = '#'
 pixelChar False = '.'
+
+formatGlyphRef :: Glyph -> Text
+formatGlyphRef glyph =
+  glyphName glyph <> Text.pack " (" <> showText (glyphCode glyph) <> Text.pack ")"
 
 formatColumns :: [Int] -> [Text] -> Text
 formatColumns widths columns =

@@ -45,6 +45,7 @@ data GlyphMetrics = GlyphMetrics
   , gmProportion :: ProportionScore
   , gmDensity :: FillRatio
   , gmDistinctness :: DistinctnessScore
+  , gmDistinctnessGlyph :: Maybe Glyph
   }
   deriving (Eq, Show)
 
