@@ -8,6 +8,7 @@ module Domain.Types
   , FillRatio
   , DistinctnessScore
   , SimilarityScore
+  , DetectionThresholds(..)
   , Anomaly(..)
   , AnomalyReason(..)
   , ReferenceDB(..)
@@ -53,6 +54,14 @@ type FillRatio = Double
 type DistinctnessScore = Double
 type SimilarityScore = Double
 
+data DetectionThresholds = DetectionThresholds
+  { dtMinReadability :: Double
+  , dtMinDistinctness :: Double
+  , dtMinDensity :: Double
+  , dtMaxDensity :: Double
+  }
+  deriving (Eq, Show)
+
 data Anomaly = Anomaly
   { anomalyGlyph :: Glyph
   , anomalyReasons :: [AnomalyReason]
@@ -87,6 +96,7 @@ data ReplacementSuggestion = ReplacementSuggestion
 data AnalysisReport = AnalysisReport
   { reportFont :: BDFFont
   , reportMetrics :: FontMetrics
+  , reportThresholds :: DetectionThresholds
   , reportAnomalies :: [Anomaly]
   , reportReplacements :: [ReplacementSuggestion]
   }

@@ -4,9 +4,6 @@ module Diagnose.Anomaly
   , isAnomalous
   ) where
 
-import Config.App
-  ( DetectionThresholds(..)
-  )
 import Domain.Types
 
 detectAnomalies :: DetectionThresholds -> FontMetrics -> [Anomaly]

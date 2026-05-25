@@ -10,7 +10,7 @@ module Analyze.Metrics
 where
 
 import Data.Char (digitToInt, isHexDigit)
-import Data.List (delete, foldl', maximumBy)
+import Data.List (delete, foldl', maximumBy, sort)
 import Data.Ord (comparing)
 import Data.Text qualified as Text
 import Domain.Types
@@ -79,7 +79,11 @@ calcDistinctness :: Glyph -> [Glyph] -> DistinctnessScore
 calcDistinctness glyph glyphs =
   case filter (/= glyph) glyphs of
     [] -> 1
-    others -> clamp01 (minimum (map (glyphDistance glyph) others))
+    others ->
+      let nearestDistances = take 5 (filter (> 0) (sort (map (glyphDistance glyph) others)))
+      in case nearestDistances of
+          [] -> 0
+          distances -> clamp01 (sum distances / fromIntegral (length distances))
 
 -- сравнение основано на модифицированной мере хэмминга для bitmap-глифов:
 -- Modified Hamming Distance Measure.pdf

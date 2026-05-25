@@ -7,6 +7,10 @@ module Config.App
   , defaultThresholds
   ) where
 
+import Domain.Types
+  ( DetectionThresholds(..)
+  )
+
 data AppConfig = AppConfig
   { acReportOutputPath :: FilePath
   , acLogConfig :: LogConfig
@@ -19,14 +23,6 @@ data LogConfig = LogConfig
   { lcLogFile :: FilePath
   , lcMinLevel :: String
   , lcAppendMode :: Bool
-  }
-  deriving (Eq, Show)
-
-data DetectionThresholds = DetectionThresholds
-  { dtMinReadability :: Double
-  , dtMinDistinctness :: Double
-  , dtMinDensity :: Double
-  , dtMaxDensity :: Double
   }
   deriving (Eq, Show)
 
@@ -51,7 +47,7 @@ defaultThresholds :: DetectionThresholds
 defaultThresholds =
   DetectionThresholds
     { dtMinReadability = 0.4
-    , dtMinDistinctness = 0.4
+    , dtMinDistinctness = 0.05
     , dtMinDensity = 0.05
     , dtMaxDensity = 0.85
     }

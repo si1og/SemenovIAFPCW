@@ -47,7 +47,7 @@ runAnalysisFlow config inputPath outputPath = do
           anomalies = detectAnomalies (acThresholds config) metrics
           referenceDB = buildReferenceDB referenceFont
           replacements = findReplacements referenceDB anomalies
-          report = assembleReport inputFont metrics anomalies replacements
+          report = assembleReport inputFont metrics (acThresholds config) anomalies replacements
           reportPath = maybe (acReportOutputPath config) id outputPath
       Output.printReport report
       writeResult <- Output.writeReportToFile reportPath report
