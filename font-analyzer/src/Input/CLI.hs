@@ -1,21 +1,22 @@
 module Input.CLI
-  ( runCLI
-  , askBDFPath
-  , askSavePath
-  , askAnalysisOptions
-  , runAnalysisFlow
-  , runAnalysisFlowWithOptions
-  ) where
+  ( runCLI,
+    askBDFPath,
+    askSavePath,
+    askAnalysisOptions,
+    runAnalysisFlow,
+    runAnalysisFlowWithOptions,
+  )
+where
 
 import Analyze.Metrics (analyzeFont)
 import Config.App
-  ( AppConfig(..)
+  ( AppConfig (..),
   )
 import Data.Char (toLower)
 import Data.Text qualified as Text
 import Diagnose.Anomaly (detectAnomaliesWithOptions)
 import Diagnose.Replacement (findReplacements)
-import Domain.Types (AnalysisOptions(..), defaultAnalysisOptions)
+import Domain.Types (AnalysisOptions (..), defaultAnalysisOptions)
 import Input.BDF (loadBDFFont)
 import Logging qualified
 import Output qualified
@@ -70,16 +71,16 @@ askSavePath = do
 askAnalysisOptions :: IO AnalysisOptions
 askAnalysisOptions = do
   putStrLn "настройка параметров анализа: пустой ввод означает 'да'"
-  analyzeReadability <- askYesNo "анализировать readability / читаемость?" True
-  analyzeProportion <- askYesNo "анализировать proportion / пропорции?" True
-  analyzeDensity <- askYesNo "анализировать density / плотность?" True
-  analyzeDistinctness <- askYesNo "анализировать distinctness / различимость?" True
+  analyzeReadability <- askYesNo "анализировать читаемость?" True
+  analyzeProportion <- askYesNo "анализировать пропорциональность?" True
+  analyzeDensity <- askYesNo "анализировать плотность?" True
+  analyzeDistinctness <- askYesNo "анализировать различимость?" True
   pure
     AnalysisOptions
-      { aoAnalyzeReadability = analyzeReadability
-      , aoAnalyzeProportion = analyzeProportion
-      , aoAnalyzeDensity = analyzeDensity
-      , aoAnalyzeDistinctness = analyzeDistinctness
+      { aoAnalyzeReadability = analyzeReadability,
+        aoAnalyzeProportion = analyzeProportion,
+        aoAnalyzeDensity = analyzeDensity,
+        aoAnalyzeDistinctness = analyzeDistinctness
       }
 
 askYesNo :: String -> Bool -> IO Bool
@@ -103,11 +104,11 @@ askYesNo question defaultValue = do
 formatAnalysisOptions :: AnalysisOptions -> String
 formatAnalysisOptions options =
   unlines
-    [ "текущие параметры анализа:"
-    , "readability / читаемость: " <> yesNo (aoAnalyzeReadability options)
-    , "proportion / пропорции: " <> yesNo (aoAnalyzeProportion options)
-    , "density / плотность: " <> yesNo (aoAnalyzeDensity options)
-    , "distinctness / различимость: " <> yesNo (aoAnalyzeDistinctness options)
+    [ "текущие параметры анализа:",
+      "читаемость: " <> yesNo (aoAnalyzeReadability options),
+      "пропорциональность: " <> yesNo (aoAnalyzeProportion options),
+      "плотность: " <> yesNo (aoAnalyzeDensity options),
+      "различимость: " <> yesNo (aoAnalyzeDistinctness options)
     ]
   where
     yesNo True = "да"
