@@ -1,0 +1,126 @@
+\section*{Приложение А. SQL-скрипт создания таблиц базы данных}
+\phantomsection
+\label{app:init-sql}
+\addcontentsline{toc}{section}{Приложение А. SQL-скрипт создания таблиц базы данных}
+
+\renewcommand{\theFancyVerbLine}{%
+    \scriptsize\ttfamily\textcolor{gray}{\arabic{FancyVerbLine}}%
+}
+
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1, fontsize=\scriptsize]{sql}
+DROP TABLE IF EXISTS Symbol CASCADE;
+
+DROP TABLE IF EXISTS Alphabet CASCADE;
+
+DROP TABLE IF EXISTS Installation CASCADE;
+
+DROP TABLE IF EXISTS License CASCADE;
+
+DROP TABLE IF EXISTS OS CASCADE;
+
+DROP TABLE IF EXISTS Publisher CASCADE;
+
+DROP TABLE IF EXISTS Workstation CASCADE;
+
+DROP TABLE IF EXISTS Typeface CASCADE;
+
+DROP TABLE IF EXISTS Font_family CASCADE;
+
+DROP TABLE IF EXISTS Language CASCADE;
+
+DROP TABLE IF EXISTS Format CASCADE;
+
+DROP TABLE IF EXISTS Category CASCADE;
+
+DROP TABLE IF EXISTS Weight CASCADE;
+
+DROP TABLE IF EXISTS Slope CASCADE;
+
+DROP TABLE IF EXISTS Extension CASCADE;
+
+DROP TABLE IF EXISTS ISO_code CASCADE;
+
+DROP TABLE IF EXISTS Writing_direction CASCADE;
+
+DROP TABLE IF EXISTS Script_type CASCADE;
+
+CREATE TABLE Category (
+    id_Category SERIAL PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description TEXT,
+    Icon TEXT,
+    Font_family_count INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE Weight (
+    id_Weight SERIAL PRIMARY KEY,
+    Name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE Slope (
+    id_Slope SERIAL PRIMARY KEY,
+    Name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE Extension (
+    id_Extension SERIAL PRIMARY KEY,
+    Name VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE Writing_direction (
+    id_Writing_direction SERIAL PRIMARY KEY,
+    Name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE Script_type (
+    id_Script_type SERIAL PRIMARY KEY,
+    Name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE Format (
+    id_Format SERIAL PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    id_Extension INT NOT NULL REFERENCES Extension(id_Extension),
+    Year_released SMALLINT,
+    Description TEXT,
+    Web_support BOOLEAN NOT NULL
+);
+
+CREATE TABLE Language (
+    id_Language SERIAL PRIMARY KEY,
+    Name VARCHAR(60) NOT NULL,
+    ISO_code CHAR(3) NOT NULL UNIQUE,
+    id_Writing_direction INT NOT NULL REFERENCES Writing_direction(id_Writing_direction),
+    id_Script_type INT NOT NULL REFERENCES Script_type(id_Script_type)
+);
+
+CREATE TABLE Font_family (
+    id_Font_family SERIAL PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Year_created SMALLINT,
+    Description TEXT,
+    Typeface_count SMALLINT NOT NULL DEFAULT 0,
+    id_Category INT NOT NULL REFERENCES Category(id_Category)
+);
+
+CREATE TABLE Typeface (
+    id_Typeface SERIAL PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    id_Weight INT NOT NULL REFERENCES Weight(id_Weight),
+    id_Slope INT NOT NULL REFERENCES Slope(id_Slope),
+    File_size INT NOT NULL,
+    id_Font_family INT NOT NULL REFERENCES Font_family(id_Font_family),
+    id_Format INT NOT NULL REFERENCES Format(id_Format)
+);
+
+CREATE TABLE Symbol (
+    id_Symbol SERIAL PRIMARY KEY,
+    Value VARCHAR(8) NOT NULL,
+    Unicode_code VARCHAR(10) NOT NULL,
+    id_Typeface INT NOT NULL REFERENCES Typeface(id_Typeface),
+    id_Language INT NOT NULL REFERENCES Language(id_Language),
+
+    CONSTRAINT uq_symbol_value_typeface_language
+        UNIQUE (Value, id_Typeface, id_Language)
+);
+\end{minted}

@@ -1,0 +1,35 @@
+\section{Проектирование}
+
+\subsection{Практическая работа №1}
+
+Первая работа проектировалась как набор небольших чистых функций. Основной способ обработки данных --- рекурсия по спискам и сопоставление с образцом. Для функций с возможным отсутствием значения использовался тип \mintinline{haskell}{Maybe}, а для выбора одной из двух функций на защите использовался тип \mintinline{haskell}{Either}.
+
+\subsection{Практическая работа №2}
+
+Во второй работе были выделены пользовательские типы и их представители классов типов \mintinline{haskell}{Show}, \mintinline{haskell}{Read}, \mintinline{haskell}{Eq}, \mintinline{haskell}{Ord}, \mintinline{haskell}{Enum}, \mintinline{haskell}{Bounded}, \mintinline{haskell}{Functor}, \mintinline{haskell}{Applicative} и \mintinline{haskell}{Foldable}. Отдельный проект был создан для парсеров: часть парсеров реализована вручную, часть --- с использованием библиотек.
+
+\subsection{Практическая работа №3}
+
+Проект \mintinline{text}{glitcher} был спроектирован как последовательность действий над байтовым содержимым изображения. Чистые функции вынесены в отдельные модули, а \mintinline{haskell}{Main} отвечает за чтение аргументов командной строки, чтение файла, последовательный запуск действий и запись результатов.
+
+Проект \mintinline{text}{maze-rws} хранит лабиринт как граф комнат. Поиск пути выполняется обходом в глубину в функции \mintinline{haskell}{tryRooms}. Монада \mintinline{haskell}{RWS} выбрана потому, что одна функция поиска должна одновременно иметь доступ к лабиринту, запоминать посещённые комнаты и вести лог.
+
+\subsection{Практическая работа №4}
+
+В проекте \mintinline{text}{mazeGame} лабиринт представлен типом \mintinline{haskell}{Map Room [Room]}, где ключ --- комната, а значение --- список соседних комнат, в которые можно перейти. Исходный файл лабиринта содержит пары комнат в формате \mintinline{text}{room,room}. По этим парам строится неориентированный граф.
+
+Тип игры был спроектирован как стек трансформеров:
+
+\captionof{listing}{Тип игрового действия}
+\label{lst:game-type}
+\begin{minted}{haskell}
+type Game = ReaderT Maze (WriterT [String] (MyStateT Room IO))
+\end{minted}
+
+\mintinline{haskell}{ReaderT} хранит карту лабиринта, \mintinline{haskell}{WriterT} собирает лог, \mintinline{haskell}{MyStateT} хранит текущую комнату, а \mintinline{haskell}{IO} остаётся внутренней монадой для ввода и вывода.
+
+\subsection{Практическая работа №5}
+
+Для пятой работы были выбраны две функции: сложение по модулю \mintinline{haskell}{addMod} и разворот порядка слов \mintinline{haskell}{reverseWords}. Для проверки были спроектированы генераторы \mintinline{haskell}{genWord}, \mintinline{haskell}{genSentence} и \mintinline{haskell}{genMod}. Свойства проверяют эквивалентность сложения по модулю, нейтральный элемент, коммутативность, обработку пустой строки, одного слова, нескольких слов и двойное применение \mintinline{haskell}{reverseWords}.
+
+\newpage

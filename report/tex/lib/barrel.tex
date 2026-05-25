@@ -1,0 +1,74 @@
+\usepackage[14pt]{extsizes}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2cm, bottom=2cm}
+\usepackage[small]{titlesec}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{float}
+\floatstyle{plaintop}
+\restylefloat{listing}
+
+\usepackage{tabularx}
+
+\usepackage{tabularray}
+\DeclareTblrTemplate{contfoot-text}{normal}{Продолжение на следующей странице}
+\SetTblrTemplate{contfoot-text}{normal}
+\DeclareTblrTemplate{conthead-text}{normal}{(Продолженная)}
+\SetTblrTemplate{conthead-text}{normal}
+\UseTblrLibrary{amsmath}
+
+\UseTblrLibrary{amsmath}
+\UseTblrLibrary{tikz}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{indentfirst}
+\usepackage{pdfpages}
+\setlength{\columnsep}{0.8cm}
+
+\captionsetup[listing]{
+    position=above,
+    singlelinecheck=false,
+    justification=raggedright,
+    skip=0pt,
+    font=normalsize,
+}
+
+\usepackage{fvextra}
+\usepackage{minted}
+\usemintedstyle{lovelace}
+\setminted{
+    fontsize=\small,
+    baselinestretch=1.0,
+    breaklines,
+    frame=none,
+    numbersep=8pt,
+}
+\renewcommand{\theFancyVerbLine}{%
+    \small\ttfamily\textcolor{gray}{\arabic{FancyVerbLine}}%
+}
+\renewcommand{\listingscaption}{Листинг}
+
+\usepackage{xcolor}
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    pdfborder={0 0 0}
+]{hyperref}
+\input{./tex/lib/macroses.tex}

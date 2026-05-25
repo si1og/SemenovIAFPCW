@@ -1,0 +1,1078 @@
+\section*{Приложение Б. Программа на TypeScript для заполнения базы данных тестовыми данными}
+\phantomsection
+\label{app:seed-ts}
+\addcontentsline{toc}{section}{Приложение Б. Программа на TypeScript для заполнения базы данных тестовыми данными}
+
+\renewcommand{\theFancyVerbLine}{%
+    \scriptsize\ttfamily\textcolor{gray}{\arabic{FancyVerbLine}}%
+}
+
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1, fontsize=\scriptsize]{typescript}
+// db.ts
+import pg from "pg";
+
+export const pool = new pg.Pool({
+  host: "localhost",
+  port: 5432,
+  database: "typography",
+  user: "ilyasemenov",
+  password: "type",
+});
+
+
+// init.ts
+import { readFileSync } from "fs";
+import { pool } from "./db.js";
+
+async function init() {
+  const sql = readFileSync("init.sql", "utf-8");
+  await pool.query(sql);
+  console.log("Tables created successfully");
+  await pool.end();
+}
+
+init().catch(console.error);
+
+
+// constants.ts
+import { faker } from "@faker-js/faker";
+
+export const BASE_COUNTS = {
+  categories: 12,
+  formats: 5,
+  languages: 40,
+} as const;
+
+export const COEFFICIENT_LIMITS = {
+  fontFamiliesPerCategory: { min: 15, max: 20 },
+  typefacesPerFamily: { min: 18, max: 22 },
+  languagesPerTypeface: { min: 2, max: 5 },
+  symbolsPerTypefaceLanguage: { min: 33, max: 45 },
+} as const;
+
+export const COEFFICIENTS = {
+  fontFamiliesPerCategory: faker.number.int(
+    COEFFICIENT_LIMITS.fontFamiliesPerCategory,
+  ),
+
+  typefacesPerFamily: faker.number.int(COEFFICIENT_LIMITS.typefacesPerFamily),
+
+  languagesPerTypeface: faker.number.int(
+    COEFFICIENT_LIMITS.languagesPerTypeface,
+  ),
+
+  symbolsPerTypefaceLanguage: faker.number.int(
+    COEFFICIENT_LIMITS.symbolsPerTypefaceLanguage,
+  ),
+} as const;
+
+export const COUNTS = {
+  categories: BASE_COUNTS.categories,
+  formats: BASE_COUNTS.formats,
+  languages: BASE_COUNTS.languages,
+
+  fontFamilies: BASE_COUNTS.categories * COEFFICIENTS.fontFamiliesPerCategory,
+
+  typefaces:
+    BASE_COUNTS.categories *
+    COEFFICIENTS.fontFamiliesPerCategory *
+    COEFFICIENTS.typefacesPerFamily,
+
+  symbols:
+    BASE_COUNTS.categories *
+      COEFFICIENTS.fontFamiliesPerCategory *
+      COEFFICIENTS.typefacesPerFamily *
+      COEFFICIENTS.languagesPerTypeface *
+      COEFFICIENTS.symbolsPerTypefaceLanguage,
+} as const;
+export const categoryNames = [
+  "Serif",
+  "Sans-serif",
+  "Monospace",
+  "Display",
+  "Handwriting",
+  "Slab-serif",
+  "Geometric",
+  "Humanist",
+  "Grotesque",
+  "Neo-grotesque",
+  "Transitional",
+  "Didone",
+];
+
+export const categoryDescs: Record<string, string> = {
+  Serif: "Typefaces with decorative strokes at the ends of letterforms",
+  "Sans-serif": "Typefaces without decorative strokes",
+  Monospace: "Typefaces where each character occupies the same width",
+  Display: "Typefaces designed for headlines and large sizes",
+  Handwriting: "Typefaces imitating handwritten text",
+  "Slab-serif": "Typefaces with thick rectangular serifs",
+  Geometric: "Sans-serif typefaces based on geometric shapes",
+  Humanist: "Typefaces with organic strokes inspired by calligraphy",
+  Grotesque: "Early sans-serif typefaces with irregular proportions",
+  "Neo-grotesque": "Refined sans-serif typefaces with uniform strokes",
+  Transitional: "Serif typefaces bridging old-style and modern designs",
+  Didone: "High-contrast serif typefaces with thin hairlines",
+};
+
+export const formats = [
+  {
+    name: "TrueType",
+    ext: ".ttf",
+    year: 1991,
+    desc: "Scalable font format developed by Apple",
+    web: false,
+  },
+  {
+    name: "OpenType",
+    ext: ".otf",
+    year: 1996,
+    desc: "Scalable font format by Microsoft and Adobe",
+    web: false,
+  },
+  {
+    name: "WOFF",
+    ext: ".woff",
+    year: 2010,
+    desc: "Web Open Font Format",
+    web: true,
+  },
+  {
+    name: "WOFF2",
+    ext: ".woff2",
+    year: 2014,
+    desc: "Compressed Web Open Font Format",
+    web: true,
+  },
+  {
+    name: "TrueType Collection",
+    ext: ".ttc",
+    year: 1994,
+    desc: "Multiple TrueType fonts in a single file",
+    web: false,
+  },
+];
+
+export const languages = [
+  {
+    name: "English",
+    iso: "eng",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Russian",
+    iso: "rus",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "German",
+    iso: "deu",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "French",
+    iso: "fra",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Spanish",
+    iso: "spa",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Italian",
+    iso: "ita",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Portuguese",
+    iso: "por",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Dutch",
+    iso: "nld",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Polish",
+    iso: "pol",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Czech",
+    iso: "ces",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Slovak",
+    iso: "slk",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Ukrainian",
+    iso: "ukr",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Belarusian",
+    iso: "bel",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Serbian",
+    iso: "srp",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Croatian",
+    iso: "hrv",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Bulgarian",
+    iso: "bul",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Greek",
+    iso: "ell",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Turkish",
+    iso: "tur",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Finnish",
+    iso: "fin",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Swedish",
+    iso: "swe",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Norwegian",
+    iso: "nor",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Danish",
+    iso: "dan",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Icelandic",
+    iso: "isl",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Irish",
+    iso: "gle",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Welsh",
+    iso: "cym",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Arabic",
+    iso: "ara",
+    writingDirection: "right-to-left",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Hebrew",
+    iso: "heb",
+    writingDirection: "right-to-left",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Persian",
+    iso: "fas",
+    writingDirection: "right-to-left",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Urdu",
+    iso: "urd",
+    writingDirection: "right-to-left",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Hindi",
+    iso: "hin",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Bengali",
+    iso: "ben",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Tamil",
+    iso: "tam",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Telugu",
+    iso: "tel",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Thai",
+    iso: "tha",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Lao",
+    iso: "lao",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Chinese",
+    iso: "zho",
+    writingDirection: "left-to-right",
+    scriptType: "logographic",
+  },
+  {
+    name: "Japanese",
+    iso: "jpn",
+    writingDirection: "left-to-right",
+    scriptType: "logographic",
+  },
+  {
+    name: "Korean",
+    iso: "kor",
+    writingDirection: "left-to-right",
+    scriptType: "syllabic",
+  },
+  {
+    name: "Vietnamese",
+    iso: "vie",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+  {
+    name: "Indonesian",
+    iso: "ind",
+    writingDirection: "left-to-right",
+    scriptType: "alphabetic",
+  },
+];
+
+export const weights = [
+  "Thin",
+  "ExtraLight",
+  "Light",
+  "Regular",
+  "Medium",
+  "SemiBold",
+  "Bold",
+  "ExtraBold",
+  "Black",
+];
+
+export const slopes = ["Upright", "Italic", "Oblique"];
+
+export const tables = [
+  "Category",
+  "Format",
+  "Language",
+  "Font_family",
+  "Typeface",
+  "Symbol",
+];
+
+
+// seed.ts
+import { faker } from "@faker-js/faker";
+import { pool } from "./db.js";
+import {
+  BASE_COUNTS,
+  COEFFICIENTS,
+  COUNTS,
+  categoryNames,
+  categoryDescs,
+  formats,
+  languages,
+  weights,
+  slopes,
+  tables,
+} from "./constants.js";
+import type { PoolClient } from "pg";
+
+type IdMap = Map<string, number>;
+
+type TypefaceRow = {
+  id: number;
+  fontFamilyId: number;
+};
+
+class Seeder {
+  private client!: PoolClient;
+
+  private categoryIds: number[] = [];
+  private formatIds: number[] = [];
+  private languageIds: number[] = [];
+  private fontFamilyIds: number[] = [];
+  private typefaces: TypefaceRow[] = [];
+
+  private weightIds: IdMap = new Map();
+  private slopeIds: IdMap = new Map();
+  private extensionIds: IdMap = new Map();
+  private writingDirectionIds: IdMap = new Map();
+  private scriptTypeIds: IdMap = new Map();
+
+  async run() {
+    this.client = await pool.connect();
+
+    try {
+      await this.client.query("BEGIN");
+
+      await this.clearTables();
+
+      await this.seedDictionaries();
+
+      await this.seedCategories();
+      await this.seedFormats();
+      await this.seedLanguages();
+
+      await this.seedFontFamilies();
+      await this.seedTypefaces();
+      await this.seedSymbols();
+
+      await this.updateCategoryCounts();
+
+      await this.client.query("COMMIT");
+
+      console.log("\nSeeding complete!");
+      await this.printSummary();
+    } catch (error) {
+      await this.client.query("ROLLBACK");
+      throw error;
+    } finally {
+      this.client.release();
+      await pool.end();
+    }
+  }
+
+  private async clearTables() {
+    await this.client.query(`
+      TRUNCATE TABLE
+        Symbol,
+        Typeface,
+        Font_family,
+        Language,
+        Format,
+        Category,
+        Weight,
+        Slope,
+        Extension,
+        Writing_direction,
+        Script_type
+      RESTART IDENTITY CASCADE
+    `);
+
+    console.log("Tables cleared");
+  }
+
+  private async seedDictionaries() {
+    await this.seedWeightDictionary();
+    await this.seedSlopeDictionary();
+    await this.seedExtensionDictionary();
+    await this.seedWritingDirectionDictionary();
+    await this.seedScriptTypeDictionary();
+  }
+
+  private async seedWeightDictionary() {
+    for (const name of weights) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Weight (Name)
+        VALUES ($1)
+        RETURNING id_Weight
+        `,
+        [name],
+      );
+
+      this.weightIds.set(name, result.rows[0].id_weight);
+    }
+
+    console.log(`Weight: ${this.weightIds.size}`);
+  }
+
+  private async seedSlopeDictionary() {
+    for (const name of slopes) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Slope (Name)
+        VALUES ($1)
+        RETURNING id_Slope
+        `,
+        [name],
+      );
+
+      this.slopeIds.set(name, result.rows[0].id_slope);
+    }
+
+    console.log(`Slope: ${this.slopeIds.size}`);
+  }
+
+  private async seedExtensionDictionary() {
+    const uniqueExtensions = [...new Set(formats.map((format) => format.ext))];
+
+    for (const extension of uniqueExtensions) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Extension (Name)
+        VALUES ($1)
+        RETURNING id_Extension
+        `,
+        [extension],
+      );
+
+      this.extensionIds.set(extension, result.rows[0].id_extension);
+    }
+
+    console.log(`Extension: ${this.extensionIds.size}`);
+  }
+
+  private async seedWritingDirectionDictionary() {
+    const selectedLanguages = languages.slice(0, BASE_COUNTS.languages);
+    const uniqueWritingDirections = [
+      ...new Set(
+        selectedLanguages.map((language) => language.writingDirection),
+      ),
+    ];
+
+    for (const name of uniqueWritingDirections) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Writing_direction (Name)
+        VALUES ($1)
+        RETURNING id_Writing_direction
+        `,
+        [name],
+      );
+
+      this.writingDirectionIds.set(name, result.rows[0].id_writing_direction);
+    }
+
+    console.log(`Writing_direction: ${this.writingDirectionIds.size}`);
+  }
+
+  private async seedScriptTypeDictionary() {
+    const selectedLanguages = languages.slice(0, BASE_COUNTS.languages);
+    const uniqueScriptTypes = [
+      ...new Set(selectedLanguages.map((language) => language.scriptType)),
+    ];
+
+    for (const name of uniqueScriptTypes) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Script_type (Name)
+        VALUES ($1)
+        RETURNING id_Script_type
+        `,
+        [name],
+      );
+
+      this.scriptTypeIds.set(name, result.rows[0].id_script_type);
+    }
+
+    console.log(`Script_type: ${this.scriptTypeIds.size}`);
+  }
+
+  private async seedCategories() {
+    const selectedCategories = categoryNames.slice(0, BASE_COUNTS.categories);
+
+    for (const name of selectedCategories) {
+      const result = await this.client.query(
+        `
+        INSERT INTO Category
+          (Name, Description, Icon, Font_family_count)
+        VALUES
+          ($1, $2, $3, 0)
+        RETURNING id_Category
+        `,
+        [name, categoryDescs[name], `/icons/${this.slugify(name)}.svg`],
+      );
+
+      this.categoryIds.push(result.rows[0].id_category);
+    }
+
+    console.log(`Category: ${this.categoryIds.length}`);
+  }
+
+  private async seedFormats() {
+    const selectedFormats = formats.slice(0, BASE_COUNTS.formats);
+
+    for (const format of selectedFormats) {
+      const extensionId = this.getRequiredId(
+        this.extensionIds,
+        format.ext,
+        "Extension",
+      );
+
+      const result = await this.client.query(
+        `
+        INSERT INTO Format
+          (Name, id_Extension, Year_released, Description, Web_support)
+        VALUES
+          ($1, $2, $3, $4, $5)
+        RETURNING id_Format
+        `,
+        [format.name, extensionId, format.year, format.desc, format.web],
+      );
+
+      this.formatIds.push(result.rows[0].id_format);
+    }
+
+    console.log(`Format: ${this.formatIds.length}`);
+  }
+
+  private async seedLanguages() {
+    const selectedLanguages = languages.slice(0, BASE_COUNTS.languages);
+
+    for (const language of selectedLanguages) {
+      const writingDirectionId = this.getRequiredId(
+        this.writingDirectionIds,
+        language.writingDirection,
+        "Writing_direction",
+      );
+
+      const scriptTypeId = this.getRequiredId(
+        this.scriptTypeIds,
+        language.scriptType,
+        "Script_type",
+      );
+
+      const result = await this.client.query(
+        `
+        INSERT INTO Language
+          (
+            Name,
+            ISO_code,
+            id_Writing_direction,
+            id_Script_type
+          )
+        VALUES
+          ($1, $2, $3, $4)
+        RETURNING id_Language
+        `,
+        [language.name, language.iso, writingDirectionId, scriptTypeId],
+      );
+
+      this.languageIds.push(result.rows[0].id_language);
+    }
+
+    console.log(`Language: ${this.languageIds.length}`);
+  }
+
+  private async seedFontFamilies() {
+    let created = 0;
+
+    const batchSize = 1000;
+    let values: unknown[] = [];
+    let placeholders: string[] = [];
+
+    for (const categoryId of this.categoryIds) {
+      for (let i = 0; i < COEFFICIENTS.fontFamiliesPerCategory; i++) {
+        const index = values.length;
+
+        placeholders.push(
+          `($${index + 1}, $${index + 2}, $${index + 3}, $${index + 4}, $${index + 5})`,
+        );
+
+        values.push(
+          this.makeFontFamilyName(created),
+          faker.number.int({ min: 1950, max: 2024 }),
+          faker.lorem.sentence(),
+          COEFFICIENTS.typefacesPerFamily,
+          categoryId,
+        );
+
+        created++;
+
+        if (placeholders.length >= batchSize) {
+          await this.insertFontFamilyBatch(placeholders, values);
+          values = [];
+          placeholders = [];
+        }
+      }
+
+      console.log(
+        `  Font_family by category: ${this.categoryIds.indexOf(categoryId) + 1}/${this.categoryIds.length}`,
+      );
+    }
+
+    if (placeholders.length > 0) {
+      await this.insertFontFamilyBatch(placeholders, values);
+    }
+
+    console.log(`Font_family: ${this.fontFamilyIds.length}`);
+  }
+
+  private async insertFontFamilyBatch(
+    placeholders: string[],
+    values: unknown[],
+  ) {
+    const result = await this.client.query(
+      `
+      INSERT INTO Font_family
+        (
+          Name,
+          Year_created,
+          Description,
+          Typeface_count,
+          id_Category
+        )
+      VALUES
+        ${placeholders.join(", ")}
+      RETURNING id_Font_family
+      `,
+      values,
+    );
+
+    for (const row of result.rows) {
+      this.fontFamilyIds.push(row.id_font_family);
+    }
+  }
+
+  private async seedTypefaces() {
+    let created = 0;
+
+    const batchSize = 1000;
+    let values: unknown[] = [];
+    let placeholders: string[] = [];
+
+    for (const fontFamilyId of this.fontFamilyIds) {
+      const familyName = this.makeTypefaceFamilyPrefix(fontFamilyId);
+
+      for (let i = 0; i < COEFFICIENTS.typefacesPerFamily; i++) {
+        const weight = weights[i % weights.length];
+        const slope = slopes[i % slopes.length];
+
+        const weightId = this.getRequiredId(this.weightIds, weight, "Weight");
+        const slopeId = this.getRequiredId(this.slopeIds, slope, "Slope");
+
+        const formatId = this.formatIds[i % this.formatIds.length];
+
+        const typefaceName =
+          slope === "Upright"
+            ? `${familyName} ${weight}`
+            : `${familyName} ${weight} ${slope}`;
+
+        const index = values.length;
+
+        placeholders.push(
+          `($${index + 1}, $${index + 2}, $${index + 3}, $${index + 4}, $${index + 5}, $${index + 6})`,
+        );
+
+        values.push(
+          typefaceName.slice(0, 100),
+          weightId,
+          slopeId,
+          faker.number.int({ min: 30_000, max: 400_000 }),
+          fontFamilyId,
+          formatId,
+        );
+
+        created++;
+
+        if (placeholders.length >= batchSize) {
+          await this.insertTypefaceBatch(placeholders, values);
+          values = [];
+          placeholders = [];
+
+          if (created % 5000 === 0) {
+            console.log(`  Typeface: ${created}/${COUNTS.typefaces}`);
+          }
+        }
+      }
+    }
+
+    if (placeholders.length > 0) {
+      await this.insertTypefaceBatch(placeholders, values);
+    }
+
+    console.log(`Typeface: ${this.typefaces.length}`);
+  }
+
+  private async insertTypefaceBatch(placeholders: string[], values: unknown[]) {
+    const result = await this.client.query(
+      `
+      INSERT INTO Typeface
+        (
+          Name,
+          id_Weight,
+          id_Slope,
+          File_size,
+          id_Font_family,
+          id_Format
+        )
+      VALUES
+        ${placeholders.join(", ")}
+      RETURNING id_Typeface, id_Font_family
+      `,
+      values,
+    );
+
+    for (const row of result.rows) {
+      this.typefaces.push({
+        id: row.id_typeface,
+        fontFamilyId: row.id_font_family,
+      });
+    }
+  }
+
+  private async seedSymbols() {
+    let created = 0;
+
+    const symbolRows = this.buildSymbolRows();
+
+    const batchSize = 5000;
+    let values: unknown[] = [];
+    let placeholders: string[] = [];
+
+    for (const row of symbolRows) {
+      const index = values.length;
+      const symbol = this.makeSymbol(row.languageIndex, row.symbolOffset);
+
+      placeholders.push(
+        `($${index + 1}, $${index + 2}, $${index + 3}, $${index + 4})`,
+      );
+
+      values.push(
+        symbol.value,
+        symbol.unicodeCode,
+        row.typefaceId,
+        row.languageId,
+      );
+
+      created++;
+
+      if (placeholders.length >= batchSize) {
+        await this.insertSymbolBatch(placeholders, values);
+        values = [];
+        placeholders = [];
+
+        if (created % 50_000 === 0) {
+          console.log(`  Symbol: ${created}/${symbolRows.length}`);
+        }
+      }
+    }
+
+    if (placeholders.length > 0) {
+      await this.insertSymbolBatch(placeholders, values);
+    }
+
+    console.log(`Symbol: ${created}`);
+  }
+
+  private buildSymbolRows(): Array<{
+    typefaceId: number;
+    languageId: number;
+    languageIndex: number;
+    symbolOffset: number;
+  }> {
+    const languagesPerTypeface = COEFFICIENTS.languagesPerTypeface;
+    const symbolsPerTypefaceLanguage = COEFFICIENTS.symbolsPerTypefaceLanguage;
+
+    if (this.typefaces.length === 0) {
+      throw new Error("Cannot seed Symbol: no typefaces");
+    }
+
+    if (this.languageIds.length === 0) {
+      throw new Error("Cannot seed Symbol: no languages");
+    }
+
+    if (languagesPerTypeface > this.languageIds.length) {
+      throw new Error(
+        `Cannot seed Symbol: languagesPerTypeface=${languagesPerTypeface}, but languages=${this.languageIds.length}`,
+      );
+    }
+
+    const totalSymbolRows =
+      this.typefaces.length *
+      languagesPerTypeface *
+      symbolsPerTypefaceLanguage;
+
+    if (totalSymbolRows !== COUNTS.symbols) {
+      console.warn(
+        `Symbol target mismatch: generated ${totalSymbolRows}, constants contain ${COUNTS.symbols}`,
+      );
+    }
+
+    const rows: Array<{
+      typefaceId: number;
+      languageId: number;
+      languageIndex: number;
+      symbolOffset: number;
+    }> = [];
+
+    for (
+      let typefaceIndex = 0;
+      typefaceIndex < this.typefaces.length;
+      typefaceIndex++
+    ) {
+      const typeface = this.typefaces[typefaceIndex];
+
+      for (let offset = 0; offset < languagesPerTypeface; offset++) {
+        const languageIndex =
+          (typefaceIndex + offset) % this.languageIds.length;
+
+        const languageId = this.languageIds[languageIndex];
+
+        for (
+          let symbolOffset = 0;
+          symbolOffset < symbolsPerTypefaceLanguage;
+          symbolOffset++
+        ) {
+          rows.push({
+            typefaceId: typeface.id,
+            languageId,
+            languageIndex,
+            symbolOffset,
+          });
+        }
+      }
+    }
+
+    if (rows.length !== totalSymbolRows) {
+      throw new Error(
+        `Cannot seed Symbol: created ${rows.length}/${totalSymbolRows} rows`,
+      );
+    }
+
+    return rows;
+  }
+
+  private async insertSymbolBatch(placeholders: string[], values: unknown[]) {
+    await this.client.query(
+      `
+      INSERT INTO Symbol
+        (
+          Value,
+          Unicode_code,
+          id_Typeface,
+          id_Language
+        )
+      VALUES
+        ${placeholders.join(", ")}
+      `,
+      values,
+    );
+  }
+
+  private async updateCategoryCounts() {
+    await this.client.query(`
+      UPDATE Category
+      SET Font_family_count = (
+        SELECT COUNT(*)
+        FROM Font_family
+        WHERE Font_family.id_Category = Category.id_Category
+      )
+    `);
+
+    console.log("Category counts updated");
+  }
+
+  private makeFontFamilyName(index: number): string {
+    const adjective = faker.word.adjective();
+    const noun = faker.word.noun();
+
+    const generated = `${adjective} ${noun}`
+      .split(" ")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+
+    return `${generated} ${index + 1}`.slice(0, 100);
+  }
+
+  private makeTypefaceFamilyPrefix(fontFamilyId: number): string {
+    return `Family ${fontFamilyId}`;
+  }
+
+  private makeSymbol(languageIndex: number, symbolOffset: number) {
+    const codePoint = 0x0100 + languageIndex * 64 + symbolOffset;
+    const value = String.fromCodePoint(codePoint);
+
+    return {
+      value,
+      unicodeCode: `U+${codePoint.toString(16).toUpperCase().padStart(4, "0")}`,
+    };
+  }
+
+  private getRequiredId(map: IdMap, key: string, tableName: string): number {
+    const id = map.get(key);
+
+    if (id === undefined) {
+      throw new Error(`Missing dictionary value in ${tableName}: ${key}`);
+    }
+
+    return id;
+  }
+
+  private slugify(value: string): string {
+    return value.toLowerCase().replaceAll(" ", "-").replaceAll("_", "-");
+  }
+
+  private async printSummary() {
+    let total = 0;
+
+    console.log("\nTable counts:");
+
+    for (const table of tables) {
+      const result = await pool.query(`SELECT COUNT(*) FROM ${table}`);
+      const count = Number(result.rows[0].count);
+
+      total += count;
+      console.log(`  ${table}: ${count}`);
+    }
+
+    console.log(`  TOTAL: ${total}`);
+  }
+}
+
+new Seeder().run().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
+\end{minted}

@@ -1,0 +1,40 @@
+\section{Практическая работа №5}
+\label{sec:pr5}
+
+\subsection{Выполненные задания}
+
+В пятой практической работе был создан Stack-проект \mintinline{text}{qc}. В проект добавлена библиотека QuickCheck и реализованы функции \mintinline{haskell}{addMod} и \mintinline{haskell}{reverseWords}. Для тестов создан каталог \mintinline{text}{test} и файл \mintinline{text}{Spec.hs}.
+
+Перед свойствами были написаны генераторы:
+
+\captionof{listing}{Генераторы для тестов}
+\label{lst:generators-pr5}
+\begin{minted}{haskell}
+genWord :: Gen String
+genWord = listOf1 $ elements ['a' .. 'z']
+
+genSentence :: Gen String
+genSentence =
+  choose (0, 8) >>= \n ->
+    replicateM n genWord >>= \wordsList ->
+      return $ intercalate " " wordsList
+
+genMod :: Gen Int
+genMod = choose (1, 1000)
+\end{minted}
+
+Всего написано семь свойств: три для \mintinline{haskell}{addMod} и четыре для \mintinline{haskell}{reverseWords}. Тесты запускаются с подписями в консоли.
+
+Основные коммиты практики: \mintinline{text}{7bf6419}, \mintinline{text}{ad439ae}, \mintinline{text}{928bdbe}, \mintinline{text}{462c309}, \mintinline{text}{c7d26e5}, \mintinline{text}{707ccf8}.
+
+\subsection{Использование нейросетей}
+
+История взаимодействия с LLM для пятой практики сохранена в файле \mintinline{text}{practice_05/qc/llm.txt}. Модель использовалась для обсуждения генераторов, свойств QuickCheck, типа \mintinline{haskell}{Arbitrary} и формы записи тестов.
+
+\subsection{Вопросы защиты и их решения}
+
+\mintinline{haskell}{Arbitrary} --- это класс типов QuickCheck для значений, которые можно автоматически генерировать. Если свойство имеет тип вроде \mintinline{haskell}{Int -> Int -> Bool}, QuickCheck берёт генераторы из представителей \mintinline{haskell}{Arbitrary} для \mintinline{haskell}{Int}. В работе также использовались собственные генераторы, чтобы ограничить модуль положительными значениями от 1 до 1000 и генерировать осмысленные строки из слов.
+
+Функция \mintinline{haskell}{unwords} нужна для обратной сборки предложения из списка слов. \mintinline{haskell}{words} разбивает строку на слова, \mintinline{haskell}{reverse} меняет порядок слов, а \mintinline{haskell}{unwords} соединяет их обратно через пробел.
+
+\newpage

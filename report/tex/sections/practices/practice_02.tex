@@ -1,0 +1,32 @@
+\section{Практическая работа №2}
+\label{sec:pr2}
+
+\subsection{Выполненные задания}
+
+Во второй практической работе были созданы проекты \mintinline{text}{MyEvolProject} и \mintinline{text}{myParser}. В первом проекте реализован тип \mintinline{haskell}{MyEvolution} и представители классов типов \mintinline{haskell}{Show}, \mintinline{haskell}{Read}, \mintinline{haskell}{Eq}, \mintinline{haskell}{Ord}, \mintinline{haskell}{Enum}, \mintinline{haskell}{Bounded}. Также добавлен вариант типа с автоматическим выводом представителей классов типов.
+
+Во втором проекте реализованы пользовательские типы \mintinline{haskell}{MyEither}, \mintinline{haskell}{MyMaybe}, \mintinline{haskell}{MyTree} и представители классов типов для них. Отдельно были реализованы парсеры: лекционный парсер, парсер на Parsec и парсер на Attoparsec.
+
+Основные коммиты практики: \mintinline{text}{49f3596}, \mintinline{text}{bd2c465}, \mintinline{text}{75ef59e}, \mintinline{text}{17cca30}, \mintinline{text}{0f6b475}, \mintinline{text}{fcf49d8}, \mintinline{text}{b78507d}, \mintinline{text}{5c30b85}, \mintinline{text}{dc5e0eb}.
+
+\subsection{Использование нейросетей}
+
+Сведения об использовании модели были добавлены в README и комментарии к файлам практики. Нейросеть использовалась для пояснения представителей классов типов и для проверки структуры парсеров.
+
+\subsection{Вопросы защиты и их решения}
+
+На защите разбиралось выражение с applicative-оператором \mintinline{haskell}{(<*>)} для типа \mintinline{haskell}{(Either a Int, String)}. Для пары applicative-операции выполняются покомпонентно: в первой компоненте работает \mintinline{haskell}{Either}, во второй компоненте строки объединяются как моноид.
+
+\captionof{listing}{Выражение для защиты практической работы №2}
+\label{lst:lab2-defense}
+\begin{minted}{haskell}
+( Right (\x y -> x + y + 1 :: Int)
+  <*> Right (1 :: Int)
+  <*> Right (1 :: Int)
+, "abc"
+) :: (Either a Int, String)
+\end{minted}
+
+Результат выражения равен \mintinline{haskell}{(Right 3, "abc")}.
+
+\newpage
