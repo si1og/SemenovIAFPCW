@@ -18,6 +18,8 @@ build-type:     Simple
 extra-source-files:
     README.md
     CHANGELOG.md
+data-files:
+    "data/Terminus 16v.bdf"
 
 source-repository head
   type: git

@@ -36,7 +36,7 @@ defaultConfig =
     { acReportOutputPath = "report.txt"
     , acLogConfig = defaultLogConfig
     , acThresholds = defaultThresholds
-    , acReferenceFontPath = "data/terminus-8x16.bdf"
+    , acReferenceFontPath = "data/Terminus 16v.bdf"
     }
 
 defaultLogConfig :: LogConfig

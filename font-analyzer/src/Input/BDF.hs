@@ -14,7 +14,9 @@ import Domain.Types
 readBDFFile :: FilePath -> IO (Either AppError String)
 readBDFFile path = do
   result <- try (readFile path) :: IO (Either IOException String)
-  pure $ either (const (Left (FileReadError path))) Right result
+  pure $ case result of
+    Left _ -> Left (FileReadError path)
+    Right content -> Right content
 
 -- разбор основан на структуре bdf из спецификации:
 -- BDF Specification.pdf
@@ -66,9 +68,12 @@ parseGlyphName =
 
 parseGlyphEncoding :: [String] -> Maybe Int
 parseGlyphEncoding block =
-  case words =<< findLineWith "ENCODING " block of
-    [_keyword, value] -> readInt value
-    _ -> Nothing
+  case findLineWith "ENCODING " block of
+    Just row ->
+      case words row of
+        [_keyword, value] -> readInt value
+        _ -> Nothing
+    Nothing -> Nothing
 
 parseGlyphBitmap :: String -> [String] -> Either ParseError [String]
 parseGlyphBitmap name block =
