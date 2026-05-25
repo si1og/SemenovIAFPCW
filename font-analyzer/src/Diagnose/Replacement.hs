@@ -7,9 +7,29 @@ module Diagnose.Replacement
 
 import Domain.Types
 import Analyze.Metrics (glyphDistance)
+import Data.List (maximumBy)
+import Data.Ord (comparing)
 
 findReplacement :: ReferenceDB -> Anomaly -> Maybe ReplacementSuggestion
-findReplacement _db _anomaly = Nothing
+findReplacement db anomaly =
+  case candidateGlyphs of
+    [] -> Nothing
+    candidates ->
+      let replacement = maximumBy (comparing score) candidates
+      in Just
+          ReplacementSuggestion
+            { rsAnomaly = anomaly
+            , rsReplacement = replacement
+            , rsSimilarity = score replacement
+            }
+  where
+    sourceGlyph = anomalyGlyph anomaly
+    sameCode = filter ((== glyphCode sourceGlyph) . glyphCode . rgGlyph) (referenceGlyphs db)
+    candidateGlyphs =
+      case sameCode of
+        [] -> referenceGlyphs db
+        _ -> sameCode
+    score = glyphSimilarity sourceGlyph . rgGlyph
 
 findReplacements :: ReferenceDB -> [Anomaly] -> [ReplacementSuggestion]
 findReplacements db = foldMap (maybe [] pure . findReplacement db)

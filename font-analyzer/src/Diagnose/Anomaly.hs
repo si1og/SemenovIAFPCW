@@ -4,7 +4,9 @@ module Diagnose.Anomaly
   , isAnomalous
   ) where
 
-import Config.App (DetectionThresholds)
+import Config.App
+  ( DetectionThresholds(..)
+  )
 import Domain.Types
 
 detectAnomalies :: DetectionThresholds -> FontMetrics -> [Anomaly]
@@ -18,7 +20,13 @@ detectAnomalies thresholds =
         }
 
 classifyAnomaly :: DetectionThresholds -> GlyphMetrics -> [AnomalyReason]
-classifyAnomaly _thresholds _metrics = []
+classifyAnomaly thresholds metrics =
+  concat
+    [ [LowReadability | gmReadability metrics < dtMinReadability thresholds]
+    , [TooSparse | gmDensity metrics < dtMinDensity thresholds]
+    , [TooDense | gmDensity metrics > dtMaxDensity thresholds]
+    , [LowDistinctness | gmDistinctness metrics < dtMinDistinctness thresholds]
+    ]
 
 isAnomalous :: DetectionThresholds -> GlyphMetrics -> Bool
 isAnomalous thresholds metrics = not (null (classifyAnomaly thresholds metrics))

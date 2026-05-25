@@ -31,9 +31,20 @@ prop_analyzePreservesGlyphCount :: BDFFont -> Bool
 prop_analyzePreservesGlyphCount font =
   length (fmGlyphMetrics (analyzeFont font)) == length (fontGlyphs font)
 
-prop_detectNoAnomaliesForNormalMetrics :: FontMetrics -> Bool
-prop_detectNoAnomaliesForNormalMetrics metrics =
+prop_detectNoAnomaliesForNormalMetrics :: Glyph -> Bool
+prop_detectNoAnomaliesForNormalMetrics glyph =
   null (detectAnomalies defaultThresholds metrics)
+  where
+    metrics =
+      FontMetrics
+        [ GlyphMetrics
+            { gmGlyph = glyph
+            , gmReadability = 0.7
+            , gmProportion = 1
+            , gmDensity = 0.4
+            , gmDistinctness = 0.7
+            }
+        ]
 
 instance Arbitrary Glyph where
   arbitrary = Glyph <$> arbitraryText <*> arbitrary <*> listOf arbitraryText
