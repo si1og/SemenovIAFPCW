@@ -10,7 +10,7 @@ module Analyze.Metrics
 where
 
 import Data.Char (digitToInt, isHexDigit)
-import Data.List (delete, foldl', maximumBy, sort)
+import Data.List (delete, foldl', maximumBy, sort, sortOn)
 import Data.Ord (comparing)
 import Data.Text qualified as Text
 import Domain.Types
@@ -80,10 +80,11 @@ calcDistinctness glyph glyphs =
   case filter (/= glyph) glyphs of
     [] -> 1
     others ->
-      let nearestDistances = take 5 (filter (> 0) (sort (map (glyphDistance glyph) others)))
-      in case nearestDistances of
+      let candidates = visuallySimilarCandidates glyph others
+          nearestDistances = filter (> 0) (sort (map (glyphDistance glyph) candidates))
+       in case nearestDistances of
           [] -> 0
-          distances -> clamp01 (sum distances / fromIntegral (length distances))
+          distance : _ -> clamp01 distance
 
 -- сравнение основано на модифицированной мере хэмминга для bitmap-глифов:
 -- Modified Hamming Distance Measure.pdf
@@ -98,6 +99,56 @@ glyphDistance left right =
     (rightWidth, rightHeight) = bitmapSize (glyphPixels right)
     width = max leftWidth rightWidth
     height = max leftHeight rightHeight
+
+visuallySimilarCandidates :: Glyph -> [Glyph] -> [Glyph]
+visuallySimilarCandidates glyph glyphs =
+  case filter (isVisuallyClose glyph) glyphs of
+    [] -> take 32 (map snd (sortOn fst (map (\other -> (featureDistance glyph other, other)) glyphs)))
+    candidates -> candidates
+
+isVisuallyClose :: Glyph -> Glyph -> Bool
+isVisuallyClose left right =
+  sameSize && closeDensity && closeBox && closeComponents
+  where
+    leftFeatures = glyphFeatures left
+    rightFeatures = glyphFeatures right
+    sameSize = abs (featureWidth leftFeatures - featureWidth rightFeatures) <= 2
+      && abs (featureHeight leftFeatures - featureHeight rightFeatures) <= 2
+    closeDensity = abs (featureDensity leftFeatures - featureDensity rightFeatures) <= 0.12
+    closeBox = abs (featureBoxCoverage leftFeatures - featureBoxCoverage rightFeatures) <= 0.20
+    closeComponents = abs (featureComponents leftFeatures - featureComponents rightFeatures) <= 2
+
+featureDistance :: Glyph -> Glyph -> Double
+featureDistance left right =
+  abs (fromIntegral (featureWidth leftFeatures - featureWidth rightFeatures))
+    + abs (fromIntegral (featureHeight leftFeatures - featureHeight rightFeatures))
+    + 8 * abs (featureDensity leftFeatures - featureDensity rightFeatures)
+    + 4 * abs (featureBoxCoverage leftFeatures - featureBoxCoverage rightFeatures)
+    + abs (fromIntegral (featureComponents leftFeatures - featureComponents rightFeatures))
+  where
+    leftFeatures = glyphFeatures left
+    rightFeatures = glyphFeatures right
+
+data GlyphFeatures = GlyphFeatures
+  { featureWidth :: Int
+  , featureHeight :: Int
+  , featureDensity :: Double
+  , featureBoxCoverage :: Double
+  , featureComponents :: Int
+  }
+
+glyphFeatures :: Glyph -> GlyphFeatures
+glyphFeatures glyph =
+  GlyphFeatures
+    { featureWidth = width
+    , featureHeight = height
+    , featureDensity = ratio (countFilled pixels) (bitmapArea pixels)
+    , featureBoxCoverage = ratio (filledBoundingBoxArea pixels) (bitmapArea pixels)
+    , featureComponents = length (connectedComponents pixels)
+    }
+  where
+    pixels = glyphPixels glyph
+    (width, height) = bitmapSize pixels
 
 glyphPixels :: Glyph -> [[Bool]]
 glyphPixels =

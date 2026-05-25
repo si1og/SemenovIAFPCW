@@ -4,6 +4,7 @@ module Report
   ) where
 
 import Data.Text (Text)
+import Data.Char (digitToInt, isHexDigit)
 import qualified Data.Text as Text
 import Domain.Types
 import Numeric (showFFloat)
@@ -32,6 +33,7 @@ formatReportText report =
     , formatPreamble (reportThresholds report)
     , formatMetrics (reportMetrics report)
     , formatAnomalies report
+    , formatAnomalyGlyphs report
     , formatReplacements (reportReplacements report)
     ]
 
@@ -188,6 +190,54 @@ replacementColumns suggestion =
   where
     source = anomalyGlyph (rsAnomaly suggestion)
     replacement = rgGlyph (rsReplacement suggestion)
+
+formatAnomalyGlyphs :: AnalysisReport -> Text
+formatAnomalyGlyphs report
+  | null (reportAnomalies report) = Text.pack "bitmap-глифы: не требуются"
+  | otherwise =
+      Text.unlines
+        (Text.pack "bitmap-глифы аномалий:" : map (formatAnomalyGlyph report) (reportAnomalies report))
+
+formatAnomalyGlyph :: AnalysisReport -> Anomaly -> Text
+formatAnomalyGlyph report anomaly =
+  Text.unlines
+    [ Text.pack ""
+    , glyphName source <> Text.pack " (" <> showText (glyphCode source) <> Text.pack ")"
+    , Text.pack "исходный:"
+    , formatGlyphBitmap source
+    , Text.pack "похожий эталон:"
+    , maybe (Text.pack "не найден") (formatGlyphBitmap . rgGlyph . rsReplacement) replacement
+    ]
+  where
+    source = anomalyGlyph anomaly
+    replacement = findReplacementFor anomaly (reportReplacements report)
+
+findReplacementFor :: Anomaly -> [ReplacementSuggestion] -> Maybe ReplacementSuggestion
+findReplacementFor anomaly =
+  safeHead . filter ((== anomaly) . rsAnomaly)
+
+formatGlyphBitmap :: Glyph -> Text
+formatGlyphBitmap glyph =
+  Text.unlines (map formatBitmapRow (glyphRows glyph))
+
+formatBitmapRow :: Text -> Text
+formatBitmapRow =
+  Text.pack . map pixelChar . concatMap hexDigitBits . filter isHexDigit . Text.unpack
+
+hexDigitBits :: Char -> [Bool]
+hexDigitBits char =
+  [ testBitValue 8
+  , testBitValue 4
+  , testBitValue 2
+  , testBitValue 1
+  ]
+  where
+    value = digitToInt char
+    testBitValue mask = value `div` mask `mod` 2 == 1
+
+pixelChar :: Bool -> Char
+pixelChar True = '#'
+pixelChar False = '.'
 
 formatColumns :: [Int] -> [Text] -> Text
 formatColumns widths columns =
