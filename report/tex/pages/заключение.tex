@@ -20,7 +20,7 @@
 
 \subsection{Диаграмма Ганта}
 
-На рисунке~\ref{fig:gantt-fact} показаны фактические сроки выполнения этапов по истории коммитов.
+На рисунке~\ref{fig:gantt-fact} показано сравнение запланированных и фактических сроков выполнения этапов. Запланированные сроки выделены синим цветом, фактические сроки --- зелёным.
 
 \begin{figure}[htbp]
 \centering
@@ -35,12 +35,7 @@
     title label font=\footnotesize\bfseries,
     bar label font=\footnotesize,
     bar label node/.append style={left=0cm, anchor=east},
-    bar height=0.5,
-    bar/.append style={
-        pattern=north east lines,
-        pattern color=black!50,
-        draw=black!60
-    },
+    bar height=0.45,
     time slot format=isodate,
     time slot unit=day
 ]{2026-03-27}{2026-05-26}
@@ -56,18 +51,18 @@
 \gantttitle[title label font=\footnotesize]{8--14}{7}
 \gantttitle[title label font=\footnotesize]{15--21}{7}
 \gantttitle[title label font=\footnotesize]{22--26}{5} \\
-\ganttbar{Этап 1: постановка задачи}{2026-03-27}{2026-04-09} \\
-\ganttbar{Этап 2: корректировка ТЗ}{2026-04-09}{2026-04-24} \\
-\ganttbar{Этап 3: диаграмма модулей}{2026-04-24}{2026-05-26} \\
-\ganttbar{Этап 4: реализация}{2026-05-24}{2026-05-26} \\
-\ganttbar{Этап 5: отчёт}{2026-05-25}{2026-05-26}
-\ganttlink{elem0}{elem1}
-\ganttlink{elem1}{elem2}
-\ganttlink{elem2}{elem3}
-\ganttlink{elem3}{elem4}
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: ТЗ}{2026-04-09}{2026-04-17} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: постановка задачи}{2026-03-27}{2026-04-09} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: диаграмма типов}{2026-04-17}{2026-04-24} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: корректировка ТЗ}{2026-04-09}{2026-04-24} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: реализация}{2026-04-24}{2026-05-15} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: диаграмма модулей}{2026-04-24}{2026-05-26} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: отчёт и защита}{2026-05-15}{2026-05-22} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: реализация}{2026-05-24}{2026-05-26} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: отчёт}{2026-05-25}{2026-05-26}
 \end{ganttchart}
 }
-\caption{Фактическая диаграмма Ганта}
+\caption{Сравнение запланированной и фактической диаграммы Ганта}
 \label{fig:gantt-fact}
 \end{figure}
 
@@ -128,7 +123,8 @@ dd1d5cc & 2026-05-25 & Переведены на русский метрики �
 90d117f & 2026-05-26 & Рефакторинг: ве типы на диаграмме модулей приведены к единому стилю - цвет текста чёрный, заливка - белая \\
 c821647 & 2026-05-26 & Рефакторниг: в конце отчёта выводится исходный глиф и глиф эталонного шрифта; исправлена допустимая область пргрешности для параметра различимости \\
 e5aee92 & 2026-05-26 & Добавлен текст отчёта со всеми секциями \\
-текущий & 2026-05-26 & Обновлены источники и история коммитов в отчёте \\
+888a78a & 2026-05-26 & Обновлены источники и история коммитов в отчёте \\
+текущий & 2026-05-26 & Добавлены предметная область и сравнение диаграмм Ганта \\
 \end{longtblr}
 \normalsize
 
