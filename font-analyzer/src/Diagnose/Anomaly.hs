@@ -32,7 +32,7 @@ classifyAnomalyWithOptions options thresholds metrics =
     , [] -- proportion is calculated and shown as a metric; no threshold is defined for it in DetectionThresholds.
     , [TooSparse | aoAnalyzeDensity options && gmDensity metrics < dtMinDensity thresholds]
     , [TooDense | aoAnalyzeDensity options && gmDensity metrics > dtMaxDensity thresholds]
-    , [LowDistinctness | aoAnalyzeDistinctness options && gmDistinctness metrics < dtMinDistinctness thresholds]
+    , [LowDistinctness | aoAnalyzeDistinctness options && isLowDistinctness thresholds (gmDistinctness metrics)]
     ]
 
 isAnomalous :: DetectionThresholds -> GlyphMetrics -> Bool
@@ -41,3 +41,10 @@ isAnomalous = isAnomalousWithOptions defaultAnalysisOptions
 isAnomalousWithOptions :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> Bool
 isAnomalousWithOptions options thresholds metrics =
   not (null (classifyAnomalyWithOptions options thresholds metrics))
+
+isLowDistinctness :: DetectionThresholds -> DistinctnessScore -> Bool
+isLowDistinctness thresholds value =
+  value < dtMinDistinctness thresholds - distinctnessTolerance
+
+distinctnessTolerance :: Double
+distinctnessTolerance = 0.0005

@@ -103,7 +103,7 @@ comparedGlyphBlock :: AnalysisOptions -> DetectionThresholds -> GlyphMetrics -> 
 comparedGlyphBlock options thresholds metrics =
   case gmDistinctnessGlyph metrics of
     Just glyph
-      | aoAnalyzeDistinctness options && gmDistinctness metrics < dtMinDistinctness thresholds ->
+      | aoAnalyzeDistinctness options && isLowDistinctness thresholds (gmDistinctness metrics) ->
           [ Text.pack "визуально похожий глиф: " <> formatGlyphRef glyph,
             formatGlyphBitmap glyph
           ]
@@ -130,7 +130,7 @@ metricColumns options thresholds metrics =
     <> [comparedWithValue | aoAnalyzeDistinctness options]
   where
     comparedWithValue =
-      if gmDistinctness metrics < dtMinDistinctness thresholds
+      if isLowDistinctness thresholds (gmDistinctness metrics)
         then maybe (Text.pack "-") formatGlyphRef (gmDistinctnessGlyph metrics)
         else Text.pack "-"
 
@@ -232,8 +232,17 @@ replacementColumns suggestion =
     replacement = rgGlyph (rsReplacement suggestion)
 
 formatReplacementBlock :: [Int] -> ReplacementSuggestion -> [Text] -> Text
-formatReplacementBlock widths _suggestion columns =
-  Text.unlines [formatColumns widths columns]
+formatReplacementBlock widths suggestion columns =
+  Text.unlines
+    [ formatColumns widths columns,
+      Text.pack "исходный глиф:",
+      formatGlyphBitmap source,
+      Text.pack "глиф terminus:",
+      formatGlyphBitmap replacement
+    ]
+  where
+    source = anomalyGlyph (rsAnomaly suggestion)
+    replacement = rgGlyph (rsReplacement suggestion)
 
 formatGlyphBitmap :: Glyph -> Text
 formatGlyphBitmap glyph =
@@ -285,6 +294,13 @@ padRightText width value =
 safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
 safeHead (x : _) = Just x
+
+isLowDistinctness :: DetectionThresholds -> DistinctnessScore -> Bool
+isLowDistinctness thresholds value =
+  value < dtMinDistinctness thresholds - distinctnessTolerance
+
+distinctnessTolerance :: Double
+distinctnessTolerance = 0.0005
 
 showScore :: Double -> Text
 showScore value = Text.pack (showFFloat (Just 3) value "")
