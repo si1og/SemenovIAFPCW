@@ -24,19 +24,19 @@ parseBDFContent :: String -> Either ParseError BDFFont
 parseBDFContent content
   | null content = Left EmptyBDF
   | not (any (isPrefixOf "STARTFONT") rows) = Left (InvalidBDF (Text.pack "missing STARTFONT"))
-  | otherwise = do
-      name <- maybe (Left MissingFontName) Right (parseFontName rows)
-      glyphs <- traverse parseGlyphBlock (glyphBlocks rows)
-      Right (BDFFont {fontName = Text.pack name, fontGlyphs = glyphs})
+  | otherwise =
+      BDFFont
+        <$> (Text.pack <$> maybe (Left MissingFontName) Right (parseFontName rows))
+        <*> traverse parseGlyphBlock (glyphBlocks rows)
   where
     rows = lines content
 
 loadBDFFont :: FilePath -> IO (Either AppError BDFFont)
-loadBDFFont path = do
-  contentResult <- readBDFFile path
-  pure $ case contentResult of
-    Left err -> Left err
-    Right content -> either (Left . BDFParseError) Right (parseBDFContent content)
+loadBDFFont path =
+  fmap parseContentResult (readBDFFile path)
+  where
+    parseContentResult (Left err) = Left err
+    parseContentResult (Right content) = either (Left . BDFParseError) Right (parseBDFContent content)
 
 parseFontName :: [String] -> Maybe String
 parseFontName =
@@ -47,20 +47,17 @@ glyphBlocks [] = []
 glyphBlocks (row : rows)
   | "STARTCHAR " `isPrefixOf` row =
       let (blockBody, rest) = break (== "ENDCHAR") rows
-      in (row : blockBody) : glyphBlocks (drop 1 rest)
+       in (row : blockBody) : glyphBlocks (drop 1 rest)
   | otherwise = glyphBlocks rows
 
 parseGlyphBlock :: [String] -> Either ParseError Glyph
-parseGlyphBlock block = do
-  name <- maybe (Left (InvalidBDF (Text.pack "missing STARTCHAR"))) Right (parseGlyphName block)
-  code <- maybe (Left (MissingGlyphEncoding (Text.pack name))) Right (parseGlyphEncoding block)
-  bitmap <- parseGlyphBitmap name block
-  Right
-    Glyph
-      { glyphName = Text.pack name
-      , glyphCode = code
-      , glyphRows = map Text.pack bitmap
-      }
+parseGlyphBlock block =
+  maybe (Left (InvalidBDF (Text.pack "missing STARTCHAR"))) parseNamedGlyph (parseGlyphName block)
+  where
+    parseNamedGlyph name =
+      Glyph (Text.pack name)
+        <$> maybe (Left (MissingGlyphEncoding (Text.pack name))) Right (parseGlyphEncoding block)
+        <*> (map Text.pack <$> parseGlyphBitmap name block)
 
 parseGlyphName :: [String] -> Maybe String
 parseGlyphName =
@@ -81,9 +78,9 @@ parseGlyphBitmap name block =
     [] -> Left (MissingGlyphBitmap (Text.pack name))
     (_bitmapMarker : bitmapRows) ->
       let rows = takeWhile (/= "ENDCHAR") bitmapRows
-      in if null rows || any (not . isBitmapRow) rows
-          then Left (MissingGlyphBitmap (Text.pack name))
-          else Right rows
+       in if null rows || any (not . isBitmapRow) rows
+            then Left (MissingGlyphBitmap (Text.pack name))
+            else Right rows
 
 isBitmapRow :: String -> Bool
 isBitmapRow row = not (null row) && all isHexDigit row

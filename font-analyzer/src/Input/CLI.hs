@@ -49,39 +49,35 @@ runCLI config = menuLoop defaultAnalysisOptions
           newOptions <- askAnalysisOptions
           Logging.logEvent (acLogConfig config) Logging.Info (Text.pack ("параметры анализа изменены: " <> show newOptions))
           menuLoop newOptions
-        "3" -> do
-          putStrLn (formatAnalysisOptions options)
-          menuLoop options
-        "0" -> do
+        "3" ->
+          putStrLn (formatAnalysisOptions options) >> menuLoop options
+        "0" ->
           Logging.logEvent (acLogConfig config) Logging.Info (Text.pack "пользователь завершил работу")
-          putStrLn "выход"
-        _ -> do
+            >> putStrLn "выход"
+        _ ->
           Logging.logEvent (acLogConfig config) Logging.Warning (Text.pack ("некорректный пункт меню: " <> action))
-          putStrLn "некорректный ввод, выберите пункт меню ещё раз"
-          menuLoop options
+            >> putStrLn "некорректный ввод, выберите пункт меню ещё раз"
+            >> menuLoop options
 
 askBDFPath :: IO FilePath
 askBDFPath = getLine
 
 askSavePath :: IO (Maybe FilePath)
-askSavePath = do
-  path <- getLine
-  pure $ if null path then Nothing else Just path
+askSavePath = emptyToMaybe <$> getLine
+  where
+    emptyToMaybe path
+      | null path = Nothing
+      | otherwise = Just path
 
 askAnalysisOptions :: IO AnalysisOptions
-askAnalysisOptions = do
+askAnalysisOptions =
   putStrLn "настройка параметров анализа: пустой ввод означает 'да'"
-  analyzeReadability <- askYesNo "анализировать читаемость?" True
-  analyzeProportion <- askYesNo "анализировать пропорциональность?" True
-  analyzeDensity <- askYesNo "анализировать плотность?" True
-  analyzeDistinctness <- askYesNo "анализировать различимость?" True
-  pure
-    AnalysisOptions
-      { aoAnalyzeReadability = analyzeReadability,
-        aoAnalyzeProportion = analyzeProportion,
-        aoAnalyzeDensity = analyzeDensity,
-        aoAnalyzeDistinctness = analyzeDistinctness
-      }
+    >> ( AnalysisOptions
+           <$> askYesNo "анализировать читаемость?" True
+           <*> askYesNo "анализировать пропорциональность?" True
+           <*> askYesNo "анализировать плотность?" True
+           <*> askYesNo "анализировать различимость?" True
+       )
 
 askYesNo :: String -> Bool -> IO Bool
 askYesNo question defaultValue = do
@@ -97,9 +93,9 @@ askYesNo question defaultValue = do
     "no" -> pure False
     "н" -> pure False
     "нет" -> pure False
-    _ -> do
+    _ ->
       putStrLn "некорректный ввод, введите y/n или да/нет"
-      askYesNo question defaultValue
+        >> askYesNo question defaultValue
 
 formatAnalysisOptions :: AnalysisOptions -> String
 formatAnalysisOptions options =
@@ -139,8 +135,8 @@ runAnalysisFlowWithOptions config analysisOptions inputPath outputPath = do
       Output.printReportWithOptions analysisOptions report
       writeResult <- Output.writeReportToFileWithOptions reportPath analysisOptions report
       case writeResult of
-        Left err -> do
+        Left err ->
           Logging.logEvent (acLogConfig config) Logging.Error (Text.pack ("ошибка записи отчёта: " <> show err))
-          Output.printError err
+            >> Output.printError err
         Right () ->
           Logging.logEvent (acLogConfig config) Logging.Info (Text.pack ("отчёт сохранён: " <> reportPath))
