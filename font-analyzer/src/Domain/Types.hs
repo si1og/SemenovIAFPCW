@@ -9,8 +9,6 @@ module Domain.Types
   , DistinctnessScore
   , SimilarityScore
   , DetectionThresholds(..)
-  , AnalysisOptions(..)
-  , defaultAnalysisOptions
   , Anomaly(..)
   , AnomalyReason(..)
   , ReferenceDB(..)
@@ -64,23 +62,6 @@ data DetectionThresholds = DetectionThresholds
   , dtMaxDensity :: Double
   }
   deriving (Eq, Show)
-
-data AnalysisOptions = AnalysisOptions
-  { aoAnalyzeReadability :: Bool
-  , aoAnalyzeProportion :: Bool
-  , aoAnalyzeDensity :: Bool
-  , aoAnalyzeDistinctness :: Bool
-  }
-  deriving (Eq, Show)
-
-defaultAnalysisOptions :: AnalysisOptions
-defaultAnalysisOptions =
-  AnalysisOptions
-    { aoAnalyzeReadability = True
-    , aoAnalyzeProportion = True
-    , aoAnalyzeDensity = True
-    , aoAnalyzeDistinctness = True
-    }
 
 data Anomaly = Anomaly
   { anomalyGlyph :: Glyph

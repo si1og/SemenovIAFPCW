@@ -11,12 +11,13 @@ where
 import Analyze.Metrics (analyzeFont)
 import Config.App
   ( AppConfig (..),
+    AnalysisOptions (..),
+    defaultAnalysisOptions,
   )
 import Data.Char (toLower)
 import Data.Text qualified as Text
 import Diagnose.Anomaly (detectAnomaliesWithOptions)
 import Diagnose.Replacement (findReplacements)
-import Domain.Types (AnalysisOptions (..), defaultAnalysisOptions)
 import Input.BDF (loadBDFFont)
 import Logging qualified
 import Output qualified

@@ -7,6 +7,7 @@ module Output
   ) where
 
 import Control.Exception (IOException, catch)
+import Config.App (AnalysisOptions, defaultAnalysisOptions)
 import qualified Data.Text.IO as Text
 import Domain.Types
 import Report (formatReportText, formatReportTextWithOptions)

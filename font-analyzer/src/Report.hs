@@ -8,6 +8,7 @@ where
 import Data.Char (digitToInt, isHexDigit)
 import Data.Text (Text)
 import Data.Text qualified as Text
+import Config.App (AnalysisOptions (..), defaultAnalysisOptions)
 import Domain.Types
 import Numeric (showFFloat)
 

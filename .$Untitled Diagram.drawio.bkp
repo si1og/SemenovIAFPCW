@@ -427,8 +427,8 @@
             <mxPoint x="120" y="1340" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-37" parent="1" style="text;whiteSpace=wrap;html=1;" value="BDFFont,&lt;div&gt;Glyph,&lt;/div&gt;&lt;div&gt;ParseError,&lt;/div&gt;&lt;div&gt;AppError&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="90" x="80" y="1460" as="geometry" />
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-37" parent="1" style="text;whiteSpace=wrap;html=1;" value="BDFFont,&lt;div&gt;Glyph,&lt;/div&gt;&lt;div&gt;ParseError,&lt;/div&gt;&lt;div&gt;AppErrorб&lt;/div&gt;&lt;div&gt;AnalysisOptions&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="90" x="80" y="1450" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-38" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTI" vertex="1">
           <mxGeometry height="30" width="30" x="770" y="470" as="geometry" />

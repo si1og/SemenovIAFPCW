@@ -2,9 +2,11 @@ module Config.App
   ( AppConfig(..)
   , LogConfig(..)
   , DetectionThresholds(..)
+  , AnalysisOptions(..)
   , defaultConfig
   , defaultLogConfig
   , defaultThresholds
+  , defaultAnalysisOptions
   ) where
 
 import Domain.Types
@@ -23,6 +25,14 @@ data LogConfig = LogConfig
   { lcLogFile :: FilePath
   , lcMinLevel :: String
   , lcAppendMode :: Bool
+  }
+  deriving (Eq, Show)
+
+data AnalysisOptions = AnalysisOptions
+  { aoAnalyzeReadability :: Bool
+  , aoAnalyzeProportion :: Bool
+  , aoAnalyzeDensity :: Bool
+  , aoAnalyzeDistinctness :: Bool
   }
   deriving (Eq, Show)
 
@@ -50,4 +60,13 @@ defaultThresholds =
     , dtMinDistinctness = 0.016
     , dtMinDensity = 0.05
     , dtMaxDensity = 0.85
+    }
+
+defaultAnalysisOptions :: AnalysisOptions
+defaultAnalysisOptions =
+  AnalysisOptions
+    { aoAnalyzeReadability = True
+    , aoAnalyzeProportion = True
+    , aoAnalyzeDensity = True
+    , aoAnalyzeDistinctness = True
     }

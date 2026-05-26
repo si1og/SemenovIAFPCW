@@ -7,6 +7,7 @@ module Diagnose.Anomaly
   , isAnomalousWithOptions
   ) where
 
+import Config.App (AnalysisOptions (..), defaultAnalysisOptions)
 import Domain.Types
 
 detectAnomalies :: DetectionThresholds -> FontMetrics -> [Anomaly]
