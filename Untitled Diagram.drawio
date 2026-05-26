@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="g8gxatPBcLfHt5_yAsHy">
-    <mxGraphModel dx="5828" dy="4125" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3750" dy="2908" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -284,7 +284,7 @@
           <mxGeometry height="40" width="110" x="-560" y="690" as="geometry" />
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-1" parent="1" style="swimlane;" value="Tests" vertex="1">
-          <mxGeometry height="250" width="510" x="-440" y="1250" as="geometry" />
+          <mxGeometry height="250" width="510" x="-440" y="1170" as="geometry" />
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-2" parent="pKNMlktk48adDu8VhVlw-1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Tests экспортирует функции:&lt;/div&gt;&lt;div&gt;runTests :: IO () — запуск тестов.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prop_densityInRange :: Glyph -&amp;gt; Bool — плотность глифа находится в диапазоне [0; 1].&lt;/div&gt;&lt;div&gt;prop_readabilityInRange :: Glyph -&amp;gt; Bool — читаемость глифа находится в диапазоне [0; 1].&lt;/div&gt;&lt;div&gt;testAnalyzePreservesGlyphCount :: BDFFont -&amp;gt; Bool — число метрик глифов равно числу глифов шрифта.&lt;/div&gt;&lt;div&gt;testDetectLowDensity :: DetectionThresholds -&amp;gt; FontMetrics -&amp;gt; Bool — низкая плотность определяется как аномалия.&lt;/div&gt;" vertex="1">
           <mxGeometry height="190" width="475" x="15" y="40" as="geometry" />
@@ -299,12 +299,12 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="T" vertex="1">
-          <mxGeometry height="30" width="30" x="-560" y="1310" as="geometry" />
+          <mxGeometry height="30" width="30" x="-560" y="1230" as="geometry" />
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-7" edge="1" parent="1" source="pKNMlktk48adDu8VhVlw-6" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="-410" y="1390" as="sourcePoint" />
-            <mxPoint x="-440" y="1325" as="targetPoint" />
+            <mxPoint x="-410" y="1310" as="sourcePoint" />
+            <mxPoint x="-440" y="1245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="pKNMlktk48adDu8VhVlw-8" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pKNMlktk48adDu8VhVlw-9" value="">
@@ -411,6 +411,135 @@
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-28" parent="1" style="text;whiteSpace=wrap;html=1;" value="DetectionThresholds" vertex="1">
           <mxGeometry height="40" width="90" x="120" y="1075" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-29" parent="1" style="swimlane;" value="Domain.Types" vertex="1">
+          <mxGeometry height="290" width="510" x="-440" y="1480" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-30" parent="CRuxua_TFoJBEfZJ6sKi-29" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Domain.Types экспортирует типы:&lt;/div&gt;&lt;div&gt;BDFFont — разобранный BDF-шрифт.&lt;/div&gt;&lt;div&gt;Glyph — глиф шрифта.&lt;/div&gt;&lt;div&gt;FontMetrics — метрики всего шрифта.&lt;/div&gt;&lt;div&gt;GlyphMetrics — метрики одного глифа.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;AnalysisOptions — выбранные параметры анализа.&lt;/div&gt;&lt;div&gt;Anomaly — найденная аномалия.&lt;/div&gt;&lt;div&gt;AnomalyReason — причина аномалии.&lt;/div&gt;&lt;div&gt;ReferenceDB — база эталонных глифов.&lt;/div&gt;&lt;div&gt;ReferenceGlyph — эталонный глиф.&lt;/div&gt;&lt;div&gt;ReplacementSuggestion — предложенная замена.&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;AppError — ошибка приложения.&lt;/div&gt;&lt;div&gt;ParseError — ошибка разбора BDF.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="475" x="15" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-33" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTI" vertex="1">
+          <mxGeometry height="30" width="30" x="210" y="1520" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-34" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CRuxua_TFoJBEfZJ6sKi-33" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="70" y="1540" as="sourcePoint" />
+            <mxPoint x="120" y="1340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-37" parent="1" style="text;whiteSpace=wrap;html=1;" value="BDFFont,&lt;div&gt;Glyph,&lt;/div&gt;&lt;div&gt;ParseError,&lt;/div&gt;&lt;div&gt;AppErrorб&lt;/div&gt;&lt;div&gt;AnalysisOptions&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="90" x="80" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-38" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTI" vertex="1">
+          <mxGeometry height="30" width="30" x="770" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-39" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-38" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="580" y="430" as="sourcePoint" />
+            <mxPoint x="730" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-40" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTM" vertex="1">
+          <mxGeometry height="30" width="30" x="215" y="1620" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-41" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-29" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="CRuxua_TFoJBEfZJ6sKi-40" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="120" y="1685" as="sourcePoint" />
+            <mxPoint x="260" y="1680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-42" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="90" x="80" y="1570" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-43" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTM" vertex="1">
+          <mxGeometry height="30" width="30" x="330" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-44" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-43" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="460" y="860" as="sourcePoint" />
+            <mxPoint x="345" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-45" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTA" vertex="1">
+          <mxGeometry height="30" width="30" x="215" y="1720" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-46" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CRuxua_TFoJBEfZJ6sKi-45" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="70" y="1730" as="sourcePoint" />
+            <mxPoint x="20" y="1570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-47" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="80" y="1690" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-48" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTA" vertex="1">
+          <mxGeometry height="30" width="30" x="330" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-49" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-48" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.203;entryY=0.006;entryDx=0;entryDy=0;entryPerimeter=0;" target="1WdxroztGDoRLidxNaA0-63" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="520" y="1010" as="sourcePoint" />
+            <mxPoint x="570" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-50" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTR" vertex="1">
+          <mxGeometry height="30" width="30" x="215" y="1840" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-51" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CRuxua_TFoJBEfZJ6sKi-50" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="1855" />
+            </Array>
+            <mxPoint x="20" y="1770" as="sourcePoint" />
+            <mxPoint x="90" y="1760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-52" parent="1" style="text;whiteSpace=wrap;html=1;" value="ReferenceDB,&lt;div&gt;ReferenceGlyph,&lt;/div&gt;&lt;div&gt;ReplacementSuggestion&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="30" y="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-53" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTO" vertex="1">
+          <mxGeometry height="30" width="30" x="-110" y="1850" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-54" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="CRuxua_TFoJBEfZJ6sKi-53" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-90" y="1770" as="sourcePoint" />
+            <mxPoint x="-80" y="1740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-55" parent="1" style="text;whiteSpace=wrap;html=1;" value="AnalysisReport,&lt;div&gt;AppError&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="-210" y="1790" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTO" vertex="1">
+          <mxGeometry height="30" width="30" x="-600" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-57" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-56" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="-410" y="820" />
+            </Array>
+            <mxPoint x="-260" y="730" as="sourcePoint" />
+            <mxPoint x="-410" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-58" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTR" vertex="1">
+          <mxGeometry height="30" width="30" x="-320" y="1850" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-59" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="CRuxua_TFoJBEfZJ6sKi-58" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-310" y="1770" as="sourcePoint" />
+            <mxPoint x="-220" y="1880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-60" parent="1" style="text;whiteSpace=wrap;html=1;" value="AnalysisReport" vertex="1">
+          <mxGeometry height="40" width="90" x="-410" y="1790" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-61" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTR" vertex="1">
+          <mxGeometry height="30" width="30" x="1480" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-62" edge="1" parent="1" source="CRuxua_TFoJBEfZJ6sKi-61" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1160" y="780" as="sourcePoint" />
+            <mxPoint x="1410" y="700" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

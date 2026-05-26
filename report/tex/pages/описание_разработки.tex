@@ -29,6 +29,7 @@
 
 \begin{itemize}
     \item \texttt{Input.CLI} --- консольное меню, ввод пути к анализируемому файлу, выбор параметров анализа и запуск основного сценария.
+    \item \texttt{Domain.Types} --- общие типы предметной области: шрифт, глиф, метрики, аномалии, предложения замены, отчёт и ошибки приложения.
     \item \texttt{Input.BDF} --- чтение BDF-файла и разбор его содержимого в структуру \texttt{BDFFont}.
     \item \texttt{Config.App} --- конфигурация приложения: путь отчёта по умолчанию, настройки логирования, пороги обнаружения аномалий и путь к эталонному шрифту.
     \item \texttt{Analyze.Metrics} --- расчёт метрик глифа и шрифта.
@@ -39,6 +40,13 @@
     \item \texttt{Output} --- вывод отчёта и ошибок, запись отчёта в файл.
     \item \texttt{Logging} --- запись событий работы программы в журнал.
 \end{itemize}
+
+Схема взаимодействия модулей программного комплекса приведена на рисунке~\ref{fig:img/module-diagram.png}.
+
+\clearpage
+\phantomsection
+\label{fig:img/module-diagram.png}
+\includepdf[pages=1,fitpaper=true]{tex/standalone/module-diagram-a3.pdf}
 
 \subsection{Технические особенности реализации}
 
