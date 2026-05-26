@@ -436,7 +436,7 @@
             <mxPoint x="260" y="1680" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-42" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-42" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="90" x="80" y="1570" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-43" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTM" vertex="1">
@@ -457,8 +457,8 @@
             <mxPoint x="20" y="1570" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-47" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason&lt;/div&gt;" vertex="1">
-          <mxGeometry height="40" width="90" x="80" y="1690" as="geometry" />
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-47" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="80" y="1680" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-48" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTA" vertex="1">
           <mxGeometry height="30" width="30" x="330" y="890" as="geometry" />
@@ -493,7 +493,7 @@
             <mxPoint x="-80" y="1740" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-55" parent="1" style="text;whiteSpace=wrap;html=1;" value="AnalysisReport,&lt;div&gt;AppError&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-55" parent="1" style="text;whiteSpace=wrap;html=1;" value="AnalysisReport" vertex="1">
           <mxGeometry height="40" width="90" x="-210" y="1790" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTO" vertex="1">
@@ -559,10 +559,10 @@
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-73" parent="1" style="text;whiteSpace=wrap;html=1;" value="AppError" vertex="1">
           <mxGeometry height="60" width="90" x="-410" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-77" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason&lt;/div&gt;" vertex="1">
-          <mxGeometry height="40" width="90" x="360" y="930" as="geometry" />
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-77" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="357.5" y="920" as="geometry" />
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-78" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-78" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="90" x="360" y="790" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-79" parent="1" style="text;whiteSpace=wrap;html=1;" value="ReferenceDB,&lt;div&gt;ReferenceGlyph&lt;/div&gt;" vertex="1">

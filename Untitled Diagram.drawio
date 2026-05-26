@@ -415,7 +415,7 @@
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-29" parent="1" style="swimlane;" value="Domain.Types" vertex="1">
           <mxGeometry height="290" width="510" x="-440" y="1480" as="geometry" />
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-30" parent="CRuxua_TFoJBEfZJ6sKi-29" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Domain.Types экспортирует типы:&lt;/div&gt;&lt;div&gt;BDFFont — разобранный BDF-шрифт.&lt;/div&gt;&lt;div&gt;Glyph — глиф шрифта.&lt;/div&gt;&lt;div&gt;FontMetrics — метрики всего шрифта.&lt;/div&gt;&lt;div&gt;GlyphMetrics — метрики одного глифа.&lt;/div&gt;&lt;div&gt;DetectionThresholds — пороги обнаружения аномалий.&lt;/div&gt;&lt;div&gt;Anomaly — найденная аномалия.&lt;/div&gt;&lt;div&gt;AnomalyReason — причина аномалии.&lt;/div&gt;&lt;div&gt;ReferenceDB — база эталонных глифов.&lt;/div&gt;&lt;div&gt;ReferenceGlyph — эталонный глиф.&lt;/div&gt;&lt;div&gt;ReplacementSuggestion — предложенная замена.&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;AppError — ошибка приложения.&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-30" parent="CRuxua_TFoJBEfZJ6sKi-29" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;Domain.Types экспортирует типы:&lt;/div&gt;&lt;div&gt;BDFFont — разобранный BDF-шрифт.&lt;/div&gt;&lt;div&gt;Glyph — глиф шрифта.&lt;/div&gt;&lt;div&gt;FontMetrics — метрики всего шрифта.&lt;/div&gt;&lt;div&gt;GlyphMetrics — метрики одного глифа.&lt;/div&gt;&lt;div&gt;Anomaly — найденная аномалия.&lt;/div&gt;&lt;div&gt;AnomalyReason — причина аномалии.&lt;/div&gt;&lt;div&gt;ReferenceDB — база эталонных глифов.&lt;/div&gt;&lt;div&gt;ReferenceGlyph — эталонный глиф.&lt;/div&gt;&lt;div&gt;ReplacementSuggestion — предложенная замена.&lt;/div&gt;&lt;div&gt;AnalysisReport — итоговый отчёт анализа.&lt;/div&gt;&lt;div&gt;AppError — ошибка приложения.&lt;/div&gt;" vertex="1">
           <mxGeometry height="230" width="475" x="15" y="40" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-33" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTF" vertex="1">
@@ -457,7 +457,7 @@
             <mxPoint x="20" y="1570" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-47" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-47" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason&lt;/div&gt;" vertex="1">
           <mxGeometry height="40" width="90" x="80" y="1680" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-48" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="DTA" vertex="1">
@@ -559,7 +559,7 @@
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-73" parent="1" style="text;whiteSpace=wrap;html=1;" value="AppError" vertex="1">
           <mxGeometry height="60" width="90" x="-410" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="CRuxua_TFoJBEfZJ6sKi-77" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason,&lt;/div&gt;&lt;div&gt;DetectionThresholds&lt;/div&gt;" vertex="1">
+        <mxCell id="CRuxua_TFoJBEfZJ6sKi-77" parent="1" style="text;whiteSpace=wrap;html=1;" value="Anomaly,&lt;div&gt;AnomalyReason&lt;/div&gt;" vertex="1">
           <mxGeometry height="40" width="90" x="357.5" y="920" as="geometry" />
         </mxCell>
         <mxCell id="CRuxua_TFoJBEfZJ6sKi-78" parent="1" style="text;whiteSpace=wrap;html=1;" value="FontMetrics,&lt;div&gt;GlyphMetrics&lt;/div&gt;" vertex="1">
