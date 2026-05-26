@@ -5,18 +5,18 @@ module Input.BDF
   )
 where
 
-import Control.Exception (IOException, try)
+import Control.Exception (IOException, catch)
 import Data.Char (isHexDigit)
 import Data.List (isPrefixOf)
 import Data.Text qualified as Text
 import Domain.Types
 
 readBDFFile :: FilePath -> IO (Either AppError String)
-readBDFFile path = do
-  result <- try (readFile path) :: IO (Either IOException String)
-  pure $ case result of
-    Left _ -> Left (FileReadError path)
-    Right content -> Right content
+readBDFFile path =
+  (Right <$> readFile path) `catch` handleReadError
+  where
+    handleReadError :: IOException -> IO (Either AppError String)
+    handleReadError _ = pure (Left (FileReadError path))
 
 -- разбор основан на структуре bdf из спецификации:
 -- BDF Specification.pdf
