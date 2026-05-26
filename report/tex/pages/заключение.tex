@@ -22,7 +22,7 @@
 
 На рисунке~\ref{fig:gantt-fact} показано сравнение запланированных и фактических сроков выполнения этапов. Запланированные сроки выделены синим цветом, фактические сроки --- зелёным.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{ganttchart}[
@@ -38,27 +38,23 @@
     bar height=0.45,
     time slot format=isodate,
     time slot unit=day
-]{2026-03-27}{2026-05-26}
-\gantttitle[title label font=\footnotesize\bfseries]{Март}{5}
-\gantttitle[title label font=\footnotesize\bfseries]{Апрель}{30}
-\gantttitle[title label font=\footnotesize\bfseries]{Май}{26} \\
-\gantttitle[title label font=\footnotesize]{27--31}{5}
+]{2026-04-09}{2026-05-28}
+\gantttitle[title label font=\footnotesize\bfseries]{Апрель}{22}
+\gantttitle[title label font=\footnotesize\bfseries]{Май}{28} \\
+\gantttitle[title label font=\footnotesize]{9--15}{7}
+\gantttitle[title label font=\footnotesize]{16--22}{7}
+\gantttitle[title label font=\footnotesize]{23--30}{8}
 \gantttitle[title label font=\footnotesize]{1--7}{7}
 \gantttitle[title label font=\footnotesize]{8--14}{7}
 \gantttitle[title label font=\footnotesize]{15--21}{7}
-\gantttitle[title label font=\footnotesize]{22--30}{9}
-\gantttitle[title label font=\footnotesize]{1--7}{7}
-\gantttitle[title label font=\footnotesize]{8--14}{7}
-\gantttitle[title label font=\footnotesize]{15--21}{7}
-\gantttitle[title label font=\footnotesize]{22--26}{5} \\
-\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: ТЗ}{2026-04-09}{2026-04-17} \\
-\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: постановка задачи}{2026-03-27}{2026-04-09} \\
-\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: диаграмма типов}{2026-04-17}{2026-04-24} \\
-\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: корректировка ТЗ}{2026-04-09}{2026-04-24} \\
-\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: реализация}{2026-04-24}{2026-05-15} \\
-\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: диаграмма модулей}{2026-04-24}{2026-05-26} \\
-\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: отчёт и защита}{2026-05-15}{2026-05-22} \\
+\gantttitle[title label font=\footnotesize]{22--28}{7} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: Этап 1: ТЗ}{2026-04-09}{2026-04-17} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: ТЗ}{2026-04-09}{2026-04-24} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: Этап 2: Диаграмма типов}{2026-04-17}{2026-04-24} \\
+\ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: диаграмма типов}{2026-04-24}{2026-05-26} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: Этап 3: Реализация}{2026-04-24}{2026-05-15} \\
 \ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: реализация}{2026-05-24}{2026-05-26} \\
+\ganttbar[bar/.append style={fill=blue!25, draw=blue!60}]{План: Этап 4: Отчёт и защита}{2026-05-15}{2026-05-22} \\
 \ganttbar[bar/.append style={fill=green!30, draw=green!60!black}]{Факт: отчёт}{2026-05-25}{2026-05-26}
 \end{ganttchart}
 }
@@ -124,7 +120,8 @@ dd1d5cc & 2026-05-25 & Переведены на русский метрики �
 c821647 & 2026-05-26 & Рефакторниг: в конце отчёта выводится исходный глиф и глиф эталонного шрифта; исправлена допустимая область пргрешности для параметра различимости \\
 e5aee92 & 2026-05-26 & Добавлен текст отчёта со всеми секциями \\
 888a78a & 2026-05-26 & Обновлены источники и история коммитов в отчёте \\
-текущий & 2026-05-26 & Добавлены предметная область и сравнение диаграмм Ганта \\
+0970368 & 2026-05-26 & Добавлены предметная область и сравнение диаграмм Ганта \\
+ & 2026-05-26 & Обновлены диаграмма Ганта и список литературы \\
 \end{longtblr}
 \normalsize
 
